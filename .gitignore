@@ -1,0 +1,22 @@
+# Binaries
+*.bak
+*.bin
+*.~*
+
+# Quartus-files
+undo_redo.txt
+serv_req_info.txt
+
+# Temporary files
+*.tmp
+
+# Directories
+db/
+greybox_tmp/
+incremental_db/
+output_files/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Rr]eleases/

@@ -1,0 +1,284 @@
+ -- Copyright (C) 1991-2009 Altera Corporation
+ -- Your use of Altera Corporation's design tools, logic functions 
+ -- and other software and tools, and its AMPP partner logic 
+ -- functions, and any output files from any of the foregoing 
+ -- (including device programming or simulation files), and any 
+ -- associated documentation or information are expressly subject 
+ -- to the terms and conditions of the Altera Program License 
+ -- Subscription Agreement, Altera MegaCore Function License 
+ -- Agreement, or other applicable license agreement, including, 
+ -- without limitation, that your use is for the sole purpose of 
+ -- programming logic devices manufactured by Altera and sold by 
+ -- Altera or its authorized distributors.  Please refer to the 
+ -- applicable agreement for further details.
+ -- 
+ -- This is a Quartus II output file. It is for reporting purposes only, and is
+ -- not intended for use as a Quartus II input file. This file cannot be used
+ -- to make Quartus II pin assignments - for instructions on how to make pin
+ -- assignments, please see Quartus II help.
+ ------------------------------------------------------------------------------
+
+
+
+ ------------------------------------------------------------------------------
+ -- NC         : No Connect. This pin has no internal connection to the device.
+ -- VCC_INT    : Dedicated power pin, which MUST be connected to VCC  (5.0V).
+ -- VCC_IO     : Dedicated power pin, which MUST be connected to VCC  (Refer to
+ --              the table below for voltage).
+ -- GND        : Dedicated ground pin, which MUST be connected to GND.
+ -- GND+       : Unused input. This pin should be connected to GND. It may also
+ --              be connected  to a  valid signal  on the board  (low, high, or
+ --              toggling)  if that signal is required for a different revision
+ --              of the design.
+ -- GND*       : Unused  I/O  pin.   This pin can either be left unconnected or
+ --              connected to GND.  Connecting this pin to GND will improve the
+ --              device's immunity to noise.
+ ------------------------------------------------------------------------------
+
+
+File Generation Date & Time: Sun Feb 23 20:56:28 2025
+Quartus II Version 9.0 Build 132 02/25/2009 SJ Web Edition
+CHIP  "PCICard"  ASSIGNED TO AN: EPF10K50RC240-3
+
+Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
+-------------------------------------------------------------------------------------------------------------
+TCK                          : 1         : input  :                   :         :           :                
+CONF_DONE                    : 2         : bidir  :                   :         :           :                
+nCEO                         : 3         : output :                   :         :           :                
+TDO                          : 4         : output :                   :         :           :                
+VCC_INT                      : 5         : power  :                   : 5.0V    :           :                
+GND*                         : 6         :        :                   :         :           :                
+GND*                         : 7         :        :                   :         :           :                
+GND*                         : 8         :        :                   :         :           :                
+GND*                         : 9         :        :                   :         :           :                
+GND_INT                      : 10        : gnd    :                   :         :           :                
+GND*                         : 11        :        :                   :         :           :                
+GND*                         : 12        :        :                   :         :           :                
+GND*                         : 13        :        :                   :         :           :                
+GND*                         : 14        :        :                   :         :           :                
+GND*                         : 15        :        :                   :         :           :                
+VCC_INT                      : 16        : power  :                   : 5.0V    :           :                
+GND*                         : 17        :        :                   :         :           :                
+GND*                         : 18        :        :                   :         :           :                
+GND*                         : 19        :        :                   :         :           :                
+GND*                         : 20        :        :                   :         :           :                
+GND*                         : 21        :        :                   :         :           :                
+GND_INT                      : 22        : gnd    :                   :         :           :                
+LED                          : 23        : output : TTL               :         :           : N              
+GND*                         : 24        :        :                   :         :           :                
+GND*                         : 25        :        :                   :         :           :                
+GND*                         : 26        :        :                   :         :           :                
+VCC_INT                      : 27        : power  :                   : 5.0V    :           :                
+GND*                         : 28        :        :                   :         :           :                
+GND*                         : 29        :        :                   :         :           :                
+GND*                         : 30        :        :                   :         :           :                
+GND*                         : 31        :        :                   :         :           :                
+GND_INT                      : 32        : gnd    :                   :         :           :                
+GND*                         : 33        :        :                   :         :           :                
+GND*                         : 34        :        :                   :         :           :                
+GND*                         : 35        :        :                   :         :           :                
+GND*                         : 36        :        :                   :         :           :                
+VCC_INT                      : 37        : power  :                   : 5.0V    :           :                
+GND*                         : 38        :        :                   :         :           :                
+GND*                         : 39        :        :                   :         :           :                
+GND*                         : 40        :        :                   :         :           :                
+GND*                         : 41        :        :                   :         :           :                
+GND_INT                      : 42        : gnd    :                   :         :           :                
+GND*                         : 43        :        :                   :         :           :                
+GND*                         : 44        :        :                   :         :           :                
+GND*                         : 45        :        :                   :         :           :                
+GND*                         : 46        :        :                   :         :           :                
+VCC_INT                      : 47        : power  :                   : 5.0V    :           :                
+GND*                         : 48        :        :                   :         :           :                
+GND*                         : 49        :        :                   :         :           :                
+GND*                         : 50        :        :                   :         :           :                
+GND*                         : 51        :        :                   :         :           :                
+GND_INT                      : 52        : gnd    :                   :         :           :                
+GND*                         : 53        :        :                   :         :           :                
+GND*                         : 54        :        :                   :         :           :                
+GND*                         : 55        :        :                   :         :           :                
+GND*                         : 56        :        :                   :         :           :                
+VCC_INT                      : 57        : power  :                   : 5.0V    :           :                
+TMS                          : 58        : input  :                   :         :           :                
+TRST                         : 59        : input  :                   :         :           :                
+nSTATUS                      : 60        : bidir  :                   :         :           :                
+GND*                         : 61        :        :                   :         :           :                
+GND*                         : 62        :        :                   :         :           :                
+GND*                         : 63        :        :                   :         :           :                
+AD31                         : 64        : bidir  : TTL               :         :           : Y              
+AD30                         : 65        : bidir  : TTL               :         :           : Y              
+AD29                         : 66        : bidir  : TTL               :         :           : Y              
+AD28                         : 67        : bidir  : TTL               :         :           : Y              
+AD27                         : 68        : bidir  : TTL               :         :           : Y              
+GND_INT                      : 69        : gnd    :                   :         :           :                
+AD26                         : 70        : bidir  : TTL               :         :           : Y              
+AD25                         : 71        : bidir  : TTL               :         :           : Y              
+AD24                         : 72        : bidir  : TTL               :         :           : Y              
+nCBE3                        : 73        : bidir  : TTL               :         :           : Y              
+IDSEL                        : 74        : input  : TTL               :         :           : Y              
+AD23                         : 75        : bidir  : TTL               :         :           : Y              
+AD22                         : 76        : bidir  : TTL               :         :           : Y              
+VCC_INT                      : 77        : power  :                   : 5.0V    :           :                
+AD21                         : 78        : bidir  : TTL               :         :           : Y              
+AD20                         : 79        : bidir  : TTL               :         :           : Y              
+AD19                         : 80        : bidir  : TTL               :         :           : Y              
+AD18                         : 81        : bidir  : TTL               :         :           : Y              
+AD17                         : 82        : bidir  : TTL               :         :           : Y              
+AD16                         : 83        : bidir  : TTL               :         :           : Y              
+nCBE2                        : 84        : bidir  : TTL               :         :           : Y              
+GND_INT                      : 85        : gnd    :                   :         :           :                
+nFRAME                       : 86        : bidir  : TTL               :         :           : Y              
+nIRDY                        : 87        : bidir  : TTL               :         :           : Y              
+nTRDY                        : 88        : bidir  : TTL               :         :           : Y              
+VCC_INT                      : 89        : power  :                   : 5.0V    :           :                
+GND+                         : 90        :        :                   :         :           :                
+clk                          : 91        : input  : TTL               :         :           : Y              
+nRST                         : 92        : input  : TTL               :         :           : Y              
+GND_INT                      : 93        : gnd    :                   :         :           :                
+nDEVSEL                      : 94        : bidir  : TTL               :         :           : Y              
+nSTOP                        : 95        : bidir  : TTL               :         :           : Y              
+VCC_INT                      : 96        : power  :                   : 5.0V    :           :                
+GND*                         : 97        :        :                   :         :           :                
+nPERR                        : 98        : bidir  : TTL               :         :           : Y              
+nSERR                        : 99        : bidir  : TTL               :         :           : Y              
+PAR                          : 100       : bidir  : TTL               :         :           : Y              
+nCBE1                        : 101       : bidir  : TTL               :         :           : Y              
+AD15                         : 102       : bidir  : TTL               :         :           : Y              
+AD14                         : 103       : bidir  : TTL               :         :           : Y              
+GND_INT                      : 104       : gnd    :                   :         :           :                
+AD13                         : 105       : bidir  : TTL               :         :           : Y              
+AD12                         : 106       : bidir  : TTL               :         :           : Y              
+AD11                         : 107       : bidir  : TTL               :         :           : Y              
+AD10                         : 108       : bidir  : TTL               :         :           : Y              
+AD9                          : 109       : bidir  : TTL               :         :           : Y              
+AD8                          : 110       : bidir  : TTL               :         :           : Y              
+nCBE0                        : 111       : bidir  : TTL               :         :           : Y              
+VCC_INT                      : 112       : power  :                   : 5.0V    :           :                
+AD7                          : 113       : bidir  : TTL               :         :           : Y              
+AD6                          : 114       : bidir  : TTL               :         :           : Y              
+AD5                          : 115       : bidir  : TTL               :         :           : Y              
+AD4                          : 116       : bidir  : TTL               :         :           : Y              
+AD3                          : 117       : bidir  : TTL               :         :           : Y              
+AD2                          : 118       : bidir  : TTL               :         :           : Y              
+AD1                          : 119       : bidir  : TTL               :         :           : Y              
+AD0                          : 120       : bidir  : TTL               :         :           : Y              
+nCONFIG                      : 121       : input  :                   :         :           :                
+VCC_INT                      : 122       : power  :                   : 5.0V    :           :                
+MSEL1                        : 123       : input  :                   :         :           :                
+MSEL0                        : 124       : input  :                   :         :           :                
+GND_INT                      : 125       : gnd    :                   :         :           :                
+GND*                         : 126       :        :                   :         :           :                
+GND*                         : 127       :        :                   :         :           :                
+GND*                         : 128       :        :                   :         :           :                
+GND*                         : 129       :        :                   :         :           :                
+VCC_INT                      : 130       : power  :                   : 5.0V    :           :                
+GND*                         : 131       :        :                   :         :           :                
+GND*                         : 132       :        :                   :         :           :                
+GND*                         : 133       :        :                   :         :           :                
+GND*                         : 134       :        :                   :         :           :                
+GND_INT                      : 135       : gnd    :                   :         :           :                
+GND*                         : 136       :        :                   :         :           :                
+GND*                         : 137       :        :                   :         :           :                
+GND*                         : 138       :        :                   :         :           :                
+GND*                         : 139       :        :                   :         :           :                
+VCC_INT                      : 140       : power  :                   : 5.0V    :           :                
+GND*                         : 141       :        :                   :         :           :                
+GND*                         : 142       :        :                   :         :           :                
+GND*                         : 143       :        :                   :         :           :                
+GND*                         : 144       :        :                   :         :           :                
+GND_INT                      : 145       : gnd    :                   :         :           :                
+GND*                         : 146       :        :                   :         :           :                
+GND*                         : 147       :        :                   :         :           :                
+GND*                         : 148       :        :                   :         :           :                
+GND*                         : 149       :        :                   :         :           :                
+VCC_INT                      : 150       : power  :                   : 5.0V    :           :                
+GND*                         : 151       :        :                   :         :           :                
+GND*                         : 152       :        :                   :         :           :                
+GND*                         : 153       :        :                   :         :           :                
+GND*                         : 154       :        :                   :         :           :                
+GND_INT                      : 155       : gnd    :                   :         :           :                
+GND*                         : 156       :        :                   :         :           :                
+GND*                         : 157       :        :                   :         :           :                
+GND*                         : 158       :        :                   :         :           :                
+GND*                         : 159       :        :                   :         :           :                
+VCC_INT                      : 160       : power  :                   : 5.0V    :           :                
+GND*                         : 161       :        :                   :         :           :                
+GND*                         : 162       :        :                   :         :           :                
+GND*                         : 163       :        :                   :         :           :                
+GND*                         : 164       :        :                   :         :           :                
+GND_INT                      : 165       : gnd    :                   :         :           :                
+GND*                         : 166       :        :                   :         :           :                
+GND*                         : 167       :        :                   :         :           :                
+GND*                         : 168       :        :                   :         :           :                
+GND*                         : 169       :        :                   :         :           :                
+VCC_INT                      : 170       : power  :                   : 5.0V    :           :                
+GND*                         : 171       :        :                   :         :           :                
+GND*                         : 172       :        :                   :         :           :                
+GND*                         : 173       :        :                   :         :           :                
+GND*                         : 174       :        :                   :         :           :                
+GND*                         : 175       :        :                   :         :           :                
+GND_INT                      : 176       : gnd    :                   :         :           :                
+TDI                          : 177       : input  :                   :         :           :                
+nCE                          : 178       : input  :                   :         :           :                
+DCLK                         : 179       : bidir  :                   :         :           :                
+DATA0                        : 180       : input  :                   :         :           :                
+GND*                         : 181       :        :                   :         :           :                
+GND*                         : 182       :        :                   :         :           :                
+GND*                         : 183       :        :                   :         :           :                
+GND*                         : 184       :        :                   :         :           :                
+GND*                         : 185       :        :                   :         :           :                
+GND*                         : 186       :        :                   :         :           :                
+GND*                         : 187       :        :                   :         :           :                
+GND*                         : 188       :        :                   :         :           :                
+VCC_INT                      : 189       : power  :                   : 5.0V    :           :                
+GND*                         : 190       :        :                   :         :           :                
+GND*                         : 191       :        :                   :         :           :                
+GND*                         : 192       :        :                   :         :           :                
+GND*                         : 193       :        :                   :         :           :                
+GND*                         : 194       :        :                   :         :           :                
+GND*                         : 195       :        :                   :         :           :                
+GND*                         : 196       :        :                   :         :           :                
+GND_INT                      : 197       : gnd    :                   :         :           :                
+GND*                         : 198       :        :                   :         :           :                
+GND*                         : 199       :        :                   :         :           :                
+GND*                         : 200       :        :                   :         :           :                
+GND*                         : 201       :        :                   :         :           :                
+GND*                         : 202       :        :                   :         :           :                
+GND*                         : 203       :        :                   :         :           :                
+GND*                         : 204       :        :                   :         :           :                
+VCC_INT                      : 205       : power  :                   : 5.0V    :           :                
+GND*                         : 206       :        :                   :         :           :                
+GND*                         : 207       :        :                   :         :           :                
+GND*                         : 208       :        :                   :         :           :                
+GND*                         : 209       :        :                   :         :           :                
+GND+                         : 210       :        :                   :         :           :                
+GND+                         : 211       :        :                   :         :           :                
+GND+                         : 212       :        :                   :         :           :                
+GND*                         : 213       :        :                   :         :           :                
+GND*                         : 214       :        :                   :         :           :                
+GND*                         : 215       :        :                   :         :           :                
+GND_INT                      : 216       : gnd    :                   :         :           :                
+GND*                         : 217       :        :                   :         :           :                
+GND*                         : 218       :        :                   :         :           :                
+GND*                         : 219       :        :                   :         :           :                
+GND*                         : 220       :        :                   :         :           :                
+GND*                         : 221       :        :                   :         :           :                
+GND*                         : 222       :        :                   :         :           :                
+GND*                         : 223       :        :                   :         :           :                
+VCC_INT                      : 224       : power  :                   : 5.0V    :           :                
+GND*                         : 225       :        :                   :         :           :                
+GND*                         : 226       :        :                   :         :           :                
+GND*                         : 227       :        :                   :         :           :                
+GND*                         : 228       :        :                   :         :           :                
+GND*                         : 229       :        :                   :         :           :                
+GND*                         : 230       :        :                   :         :           :                
+GND*                         : 231       :        :                   :         :           :                
+GND_INT                      : 232       : gnd    :                   :         :           :                
+GND*                         : 233       :        :                   :         :           :                
+GND*                         : 234       :        :                   :         :           :                
+GND*                         : 235       :        :                   :         :           :                
+GND*                         : 236       :        :                   :         :           :                
+GND*                         : 237       :        :                   :         :           :                
+GND*                         : 238       :        :                   :         :           :                
+GND*                         : 239       :        :                   :         :           :                
+GND*                         : 240       :        :                   :         :           :                
