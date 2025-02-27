@@ -98,7 +98,9 @@ set_location_assignment PIN_95 -to nSTOP
 set_location_assignment PIN_88 -to nTRDY
 set_location_assignment PIN_100 -to PAR
 set_location_assignment PIN_73 -to nCBE3
-set_location_assignment PIN_91 -to clk
+set_location_assignment PIN_211 -to clk
 set_instance_assignment -name FAST_OUTPUT_REGISTER OFF -to AD27
 set_instance_assignment -name FAST_INPUT_REGISTER OFF -to AD27
 set_instance_assignment -name SLOW_SLEW_RATE OFF -to AD27
+set_global_assignment -name MISC_FILE "C:/GitCheckout/GitHub/FPGA_PCI_Card/PCICard.dpf"
+set_location_assignment PIN_91 -to clk_half
