@@ -1,0 +1,148 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 208 288)
+	(text "pci_target" (rect 5 0 43 12)(font "Arial" ))
+	(text "inst" (rect 8 256 20 268)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_i" (rect 0 0 17 12)(font "Arial" ))
+		(text "clk_i" (rect 21 27 38 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "nRST_i" (rect 0 0 31 12)(font "Arial" ))
+		(text "nRST_i" (rect 21 43 52 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 1))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "IDSEL_i" (rect 0 0 35 12)(font "Arial" ))
+		(text "IDSEL_i" (rect 21 59 56 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 1))
+	)
+	(port
+		(pt 192 192)
+		(output)
+		(text "data_o[31..0]" (rect 0 0 50 12)(font "Arial" ))
+		(text "data_o[31..0]" (rect 121 187 171 199)(font "Arial" ))
+		(line (pt 192 192)(pt 176 192)(line_width 3))
+	)
+	(port
+		(pt 192 208)
+		(output)
+		(text "rdy_o" (rect 0 0 24 12)(font "Arial" ))
+		(text "rdy_o" (rect 147 203 171 215)(font "Arial" ))
+		(line (pt 192 208)(pt 176 208)(line_width 1))
+	)
+	(port
+		(pt 192 224)
+		(output)
+		(text "LED_o" (rect 0 0 30 12)(font "Arial" ))
+		(text "LED_o" (rect 141 219 171 231)(font "Arial" ))
+		(line (pt 192 224)(pt 176 224)(line_width 1))
+	)
+	(port
+		(pt 192 32)
+		(bidir)
+		(text "AD_io[31..0]" (rect 0 0 50 12)(font "Arial" ))
+		(text "AD_io[31..0]" (rect 121 27 171 39)(font "Arial" ))
+		(line (pt 192 32)(pt 176 32)(line_width 3))
+	)
+	(port
+		(pt 192 48)
+		(bidir)
+		(text "nCBE_io[3..0]" (rect 0 0 56 12)(font "Arial" ))
+		(text "nCBE_io[3..0]" (rect 115 43 171 55)(font "Arial" ))
+		(line (pt 192 48)(pt 176 48)(line_width 3))
+	)
+	(port
+		(pt 192 64)
+		(bidir)
+		(text "PAR_io" (rect 0 0 34 12)(font "Arial" ))
+		(text "PAR_io" (rect 137 59 171 71)(font "Arial" ))
+		(line (pt 192 64)(pt 176 64)(line_width 1))
+	)
+	(port
+		(pt 192 80)
+		(bidir)
+		(text "nFrame_io" (rect 0 0 43 12)(font "Arial" ))
+		(text "nFrame_io" (rect 128 75 171 87)(font "Arial" ))
+		(line (pt 192 80)(pt 176 80)(line_width 1))
+	)
+	(port
+		(pt 192 96)
+		(bidir)
+		(text "nTRDY_io" (rect 0 0 44 12)(font "Arial" ))
+		(text "nTRDY_io" (rect 127 91 171 103)(font "Arial" ))
+		(line (pt 192 96)(pt 176 96)(line_width 1))
+	)
+	(port
+		(pt 192 112)
+		(bidir)
+		(text "nIRDY_io" (rect 0 0 41 12)(font "Arial" ))
+		(text "nIRDY_io" (rect 130 107 171 119)(font "Arial" ))
+		(line (pt 192 112)(pt 176 112)(line_width 1))
+	)
+	(port
+		(pt 192 128)
+		(bidir)
+		(text "STOPn_io" (rect 0 0 41 12)(font "Arial" ))
+		(text "STOPn_io" (rect 130 123 171 135)(font "Arial" ))
+		(line (pt 192 128)(pt 176 128)(line_width 1))
+	)
+	(port
+		(pt 192 144)
+		(bidir)
+		(text "nDEVSEL_io" (rect 0 0 57 12)(font "Arial" ))
+		(text "nDEVSEL_io" (rect 114 139 171 151)(font "Arial" ))
+		(line (pt 192 144)(pt 176 144)(line_width 1))
+	)
+	(port
+		(pt 192 160)
+		(bidir)
+		(text "nPERR_io" (rect 0 0 46 12)(font "Arial" ))
+		(text "nPERR_io" (rect 125 155 171 167)(font "Arial" ))
+		(line (pt 192 160)(pt 176 160)(line_width 1))
+	)
+	(port
+		(pt 192 176)
+		(bidir)
+		(text "nSERR_io" (rect 0 0 46 12)(font "Arial" ))
+		(text "nSERR_io" (rect 125 171 171 183)(font "Arial" ))
+		(line (pt 192 176)(pt 176 176)(line_width 1))
+	)
+	(parameter
+		"ioport"
+		"8192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 176 256)(line_width 1))
+	)
+	(annotation_block (parameter)(rect 208 -64 308 16))
+)

@@ -298,21 +298,26 @@ begin
 					end if;
 					
 				elsif (s_SM_Transaction = s_iowrite) then
-					-- wait here until nIRDY is asserted (write-data is valid)
-					if (nIRDY_io = '0') then
+					if (nFrame_io = '1') then
 						-- signal "address" can be used to identify the current io-address
 						
-						-- read one (standard-mode) or multiple (burst-mode) 32-bit data
-						data_frame(dataPointer) <= AD_io;
-
-						if (nFrame_io = '1') then
-							-- we reached end of transmission
-							dataPointer <= 0; 	-- reset dataPointer
-							s_SM_Transaction <= s_setOutput;
-						else
+						-- wait here until nIRDY is asserted (write-data is valid)
+						if (nIRDY_io = '0') then
+							-- read one (standard-mode) or multiple (burst-mode) 32-bit data
+							data_frame(dataPointer) <= AD_io;
 							-- during consecutive writing, we are using a linear increment of dataPointer
 							dataPointer <= dataPointer + 1; -- increase dataPointer
 						end if;
+					else
+						-- we reached end of transmission
+						
+						-- read last data if nIRDY is asserted
+						if (nIRDY_io = '0') then
+							data_frame(dataPointer) <= AD_io;
+						end if;
+						
+						dataPointer <= 0; 	-- reset dataPointer
+						s_SM_Transaction <= s_setOutput;
 					end if;
 					
 				elsif (s_SM_Transaction = s_ioreadTurn) then
@@ -322,7 +327,11 @@ begin
 					-- during this phase, AD[31..0] contains a physical 32-bit address
 					-- nCBE indicates the size of the transfer
 					dataPointer <= to_integer(unsigned(address)) - ioport;
-					s_SM_Transaction <= s_ioread;
+					
+					-- wait for nIRDY to be asserted
+					if (nIRDY_io = '0') then
+						s_SM_Transaction <= s_ioread;
+					end if;
 					
 				elsif (s_SM_Transaction = s_ioread) then
 					if (nFRAME_io = '0') then
@@ -336,21 +345,26 @@ begin
 					end if;
 
 				elsif (s_SM_Transaction = s_confwrite) then
-					-- wait here until nIRDY is asserted (write-data is valid)
-					if (nIRDY_io = '0') then
-						-- read one (standard-mode) or multiple (burst-mode) 32-bit data
-						--conf_frame(dataPointer) <= AD_io; -- at the moment we are not supporting writing to config-space
+					if (nFrame_io = '1') then
+						-- wait here until nIRDY is asserted (write-data is valid)
+						if (nIRDY_io = '0') then
+							-- read one (standard-mode) or multiple (burst-mode) 32-bit data
+							--conf_frame(dataPointer) <= AD_io; -- at the moment we are not supporting writing to config-space
 
-						if (nFrame_io = '1') then
-							-- we reached end of transmission
-							dataPointer <= 0; 	-- reset dataPointer
-							s_SM_Transaction <= s_Idle;
-						else
 							-- during consecutive writing, we are using a linear increment of dataPointer
-							dataPointer <= dataPointer + 4; -- increment by 4 bytes as we are reading DWORD-values
+							dataPointer <= dataPointer + 4; -- increment by 4 bytes as we are writing DWORD-values
 						end if;
+					else
+						-- we reached end of transmission
+
+						-- read last data if nIRDY is asserted
+						if (nIRDY_io = '0') then
+							--conf_frame(dataPointer) <= AD_io; -- at the moment we are not supporting writing to config-space
+						end if;
+
+						dataPointer <= 0; 	-- reset dataPointer
+						s_SM_Transaction <= s_Idle;
 					end if;
-					
 				elsif (s_SM_Transaction = s_confreadTurn) then
 					-- wait one clock for the turnaround-cycle
 					
@@ -358,7 +372,11 @@ begin
 					-- during this phase AD[1..0] is 0x00
 					-- AD[7..2] contains address of one of the 64 DWORD registers
 					dataPointer <= to_integer(unsigned(address(7 downto 0))); -- we take an address for a DWORD between 0x00 and 0xFB
-					s_SM_Transaction <= s_confread;
+					
+					-- wait for nIRDY to be asserted
+					if (nIRDY_io = '0') then
+						s_SM_Transaction <= s_confread;
+					end if;
 
 				elsif (s_SM_Transaction = s_confread) then
 					if (nFRAME_io = '0') then
@@ -412,14 +430,14 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 				
 				elsif (s_SM_Transaction = s_ioreadTurn) then
-					-- set outputs
-					nTRDY_io <= '0';	-- assert nTRDY to tell master that we are ready to send
-					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 					
 				elsif (s_SM_Transaction = s_ioread) then
 					-- enable outputs
 					AD_oe <= '1';
+
 					-- set outputs
+					nTRDY_io <= '0';	-- assert nTRDY to tell master that we are ready to send
+					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 					--AD_o <= std_logic_vector(to_unsigned(datapointer, 32)); -- dataPointer points to internal address 0...x and is incremented in risingEdge-process
 					AD_o <= std_logic_vector(to_unsigned(42, 32)); -- output constant value "42"
 					
@@ -429,14 +447,14 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 
 				elsif (s_SM_Transaction = s_confreadTurn) then
-					-- set outputs
-					nTRDY_io <= '0';	-- assert nTRDY to tell master that we are ready to send
-					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 
 				elsif (s_SM_Transaction = s_confread) then
 					-- enable outputs
 					AD_oe <= '1';
+					
 					-- set outputs
+					nTRDY_io <= '0';	-- assert nTRDY to tell master that we are ready to send
+					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 					if (dataPointer <= 60) then
 						-- dataPointer points to internal DWORD-address 0...x of conf-register and is incremented in risingEdge-process
 						AD_o <= conf_frame(dataPointer+3) & conf_frame(dataPointer+2) & conf_frame(dataPointer+1) & conf_frame(dataPointer); -- set data to output as DWORD

@@ -1,0 +1,111 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11e vcom 2023.3 2023.07, Jul 17 2023
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/GitCheckout/GitHub/FPGA_PCI_Card/Simulation/simulation/questa
+T_opt
+!s110 1741083573
+VTcRd;SLgD56;l322SG_a20
+04 13 3 work pci_target_tb bhv 1
+=1-98eecbf7ac63-67c6d3b5-86-1148
+R0
+!s12b OEM100
+!s124 OEM10U2 
+o-quiet -auto_acc_if_foreign -work work -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cyclone10lp -L rtl_work -L work +acc
+tCvgOpt 0
+n@_opt
+OL;O;2023.3;77
+Epci_target
+Z2 w1741083560
+Z3 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
+Z4 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
+Z5 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
+!i122 0
+R1
+Z6 8C:/GitCheckout/GitHub/FPGA_PCI_Card/pci_target.vhd
+Z7 FC:/GitCheckout/GitHub/FPGA_PCI_Card/pci_target.vhd
+l0
+L99 1
+VcGTM7QHnKQHT4RmaBjKmF2
+!s100 UGcdZBlIT:C=BeI^M]EWL0
+Z8 OL;C;2023.3;77
+31
+Z9 !s110 1741083572
+!i10b 1
+Z10 !s108 1741083572.000000
+Z11 !s90 -reportprogress|300|-93|-work|work|C:/GitCheckout/GitHub/FPGA_PCI_Card/pci_target.vhd|
+Z12 !s107 C:/GitCheckout/GitHub/FPGA_PCI_Card/pci_target.vhd|
+!i113 0
+Z13 o-93 -work work
+Z14 tExplicit 1 CvgOpt 0
+Abehavioral
+R3
+R4
+R5
+DEx4 work 10 pci_target 0 22 cGTM7QHnKQHT4RmaBjKmF2
+!i122 0
+l158
+L135 350
+VXSjUYAM:YdXf`1L;[_j9h1
+!s100 VOWYifhmKFP?D=@85ZWo21
+R8
+31
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 0
+R13
+R14
+Epci_target_tb
+Z15 w1741082715
+R3
+R4
+R5
+!i122 1
+R1
+Z16 8C:/GitCheckout/GitHub/FPGA_PCI_Card/Simulation/../pci_target_tb.vhd
+Z17 FC:/GitCheckout/GitHub/FPGA_PCI_Card/Simulation/../pci_target_tb.vhd
+l0
+L7 1
+V^=cT8N1L7@gndYZoBHeAi1
+!s100 6g;G0[YzF=GNea3DTS1o]2
+R8
+31
+R9
+!i10b 1
+R10
+Z18 !s90 -reportprogress|300|-93|-work|work|C:/GitCheckout/GitHub/FPGA_PCI_Card/Simulation/../pci_target_tb.vhd|
+Z19 !s107 C:/GitCheckout/GitHub/FPGA_PCI_Card/Simulation/../pci_target_tb.vhd|
+!i113 0
+R13
+R14
+Abhv
+R3
+R4
+R5
+DEx4 work 13 pci_target_tb 0 22 ^=cT8N1L7@gndYZoBHeAi1
+!i122 1
+l70
+L10 115
+V[m^?4zj_Dhoo`h4IGNb<53
+!s100 TVA4CY85ECkABKN2olO@53
+R8
+31
+R9
+!i10b 1
+R10
+R18
+R19
+!i113 0
+R13
+R14
