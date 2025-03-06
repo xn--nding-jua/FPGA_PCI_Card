@@ -133,7 +133,7 @@ entity pci_target is
 end pci_target;
 
 architecture Behavioral of pci_target is
-	type t_SM_Transaction is (s_Idle, s_iowrite, s_ioreadTurn, s_ioread, s_confwrite, s_confreadTurn, s_confread, s_setOutput, s_End);
+	type t_SM_Transaction is (s_Idle, s_iowrite, s_ioreadTurn, s_ioread, s_confwrite, s_confreadTurn, s_confread, s_setOutput, s_Parity, s_End);
 	signal s_SM_Transaction : t_SM_Transaction := s_Idle;
 	
 	signal AD		 		: std_logic_vector(31 downto 0);
@@ -345,8 +345,8 @@ begin
 							dataPointer <= dataPointer + 1; -- increase dataPointer
 						end if;
 					else
-						-- end of transmission
-						s_SM_Transaction <= s_Idle;
+						-- end of transmission with parity-bit
+						s_SM_Transaction <= s_Parity;
 					end if;
 
 				elsif (s_SM_Transaction = s_confwrite) then
@@ -390,8 +390,8 @@ begin
 							dataPointer <= dataPointer + 4; -- increment by 4 bytes as we are reading DWORD-values
 						end if;
 					else
-						-- end of transmission
-						s_SM_Transaction <= s_Idle;
+						-- end of transmission with parity-bit
+						s_SM_Transaction <= s_Parity;
 					end if;
 					
 				elsif (s_SM_Transaction = s_setOutput) then
@@ -400,7 +400,11 @@ begin
 					LED_o <= data_frame(0)(0);
 					rdy_o <= '1';
 					s_SM_Transaction <= s_End;
-					
+				
+				elsif (s_SM_Transaction = s_Parity) then
+					-- parity will be written in falling-edge. So go to Idle-state now
+					s_SM_Transaction <= s_Idle;
+				
 				elsif (s_SM_Transaction = s_End) then
 					rdy_o <= '0';
 					
@@ -435,6 +439,7 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 				
 				elsif (s_SM_Transaction = s_ioreadTurn) then
+					-- nothing to do here. Wait for next state
 					
 				elsif (s_SM_Transaction = s_ioread) then
 					-- enable outputs
@@ -445,6 +450,20 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 					--AD_o <= std_logic_vector(to_unsigned(datapointer, 32)); -- dataPointer points to internal address 0...x and is incremented in risingEdge-process
 					AD_o <= std_logic_vector(to_unsigned(42, 32)); -- output constant value "42"
+					zBE <= nCBE_io;
+
+					if (PAR_calc = '1') then -- one clock delay
+						-- calculate parity and output it
+						PAR_oe <= '1';
+						
+						-- calculate parity over previous data
+						PAR_o <= (AD_o(0)  xor AD_o(1)  xor AD_o(2)  xor AD_o(3)  xor AD_o(4)  xor AD_o(5)  xor AD_o(6)  xor AD_o(7)  xor
+							AD_o(8)  xor AD_o(9)  xor AD_o(10) xor AD_o(11) xor AD_o(12) xor AD_o(13) xor AD_o(14) xor AD_o(15) xor
+							AD_o(16) xor AD_o(17) xor AD_o(18) xor AD_o(19) xor AD_o(20) xor AD_o(21) xor AD_o(22) xor AD_o(23) xor
+							AD_o(24) xor AD_o(25) xor AD_o(26) xor AD_o(27) xor AD_o(28) xor AD_o(29) xor AD_o(30) xor AD_o(31)) xor
+							(zBE(0) xor zBE(1) xor zBE(2) xor zBE(3));
+					end if;
+					PAR_calc <= '1'; -- enable calculation of parity on next falling clock
 					
 				elsif (s_SM_Transaction = s_confwrite) then
 					-- set outputs
@@ -452,6 +471,7 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 
 				elsif (s_SM_Transaction = s_confreadTurn) then
+					-- nothing to do here. Wait for next state
 
 				elsif (s_SM_Transaction = s_confread) then
 					-- enable outputs
@@ -467,14 +487,13 @@ begin
 							(conf_frame(dataPointer+2) and (7 downto 0 => nCBE_io(2))) &
 							(conf_frame(dataPointer+1) and (7 downto 0 => nCBE_io(1))) &
 							(conf_frame(dataPointer) and (7 downto 0 => nCBE_io(0))); -- set data to output as DWORD using byte-enable-signal
-						zBE <= nCBE_io;
 					else
 						-- write zeros as we have no information in the higher bytes of the configuration-space yet
 						AD_o <= (others => '0');
-						zBE <= nCBE_io;
 					end if;
+					zBE <= nCBE_io;
 
-					if (PAR_calc = '1') then
+					if (PAR_calc = '1') then -- one clock delay
 						-- calculate parity and output it
 						PAR_oe <= '1';
 						
@@ -487,6 +506,25 @@ begin
 					end if;
 					PAR_calc <= '1'; -- enable calculation of parity on next falling clock
 					
+				elsif (s_SM_Transaction = s_Parity) then
+					-- output last Paritybit if in read-mode
+
+					-- calculate parity and output it
+					PAR_oe <= '1';
+					
+					-- calculate parity over previous data
+					PAR_o <= (AD_o(0)  xor AD_o(1)  xor AD_o(2)  xor AD_o(3)  xor AD_o(4)  xor AD_o(5)  xor AD_o(6)  xor AD_o(7)  xor
+						AD_o(8)  xor AD_o(9)  xor AD_o(10) xor AD_o(11) xor AD_o(12) xor AD_o(13) xor AD_o(14) xor AD_o(15) xor
+						AD_o(16) xor AD_o(17) xor AD_o(18) xor AD_o(19) xor AD_o(20) xor AD_o(21) xor AD_o(22) xor AD_o(23) xor
+						AD_o(24) xor AD_o(25) xor AD_o(26) xor AD_o(27) xor AD_o(28) xor AD_o(29) xor AD_o(30) xor AD_o(31)) xor
+						(zBE(0) xor zBE(1) xor zBE(2) xor zBE(3));
+					
+					-- disable all outputs (except parity-bit)
+					AD_oe <= '0';
+					-- set outputs (bi-directional-pins) to High-Z
+					nTRDY_io <= 'Z';
+					nDEVSEL_io <= 'Z';
+					AD_o <= (others => 'Z');
 				else
 					-- this state includes s_setOutput and s_End
 

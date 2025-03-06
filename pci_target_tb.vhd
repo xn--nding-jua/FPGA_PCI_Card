@@ -74,7 +74,7 @@ begin
 	--nFrame_io <= '1', '0' after CLOCK_PERIOD*5, '1' after CLOCK_PERIOD*6; -- start new communication
 	--AD_io <= (others=>'Z'), "00000000000000000000000000001000" after CLOCK_PERIOD*5, (others=>'Z') after CLOCK_PERIOD*6; -- set address to 0000, to read VID and PID, or 1000 to read class-code
 	--IDSEL_i <= '0', '1' after CLOCK_PERIOD*5, '0' after CLOCK_PERIOD*6; -- select this device (ChipSelect)
-	--nCBE_io <= (others=>'Z'), confread after CLOCK_PERIOD*5, (others=>'Z') after CLOCK_PERIOD*6; -- set config-read-command
+	--nCBE_io <= (others=>'Z'), confread after CLOCK_PERIOD*5, (others=>'1') after CLOCK_PERIOD*6, (others=>'Z') after CLOCK_PERIOD*8; -- set config-read-command
 	--nIRDY_io <= 'Z', '0' after CLOCK_PERIOD*6, 'Z' after CLOCK_PERIOD*10; -- tell target, that host is ready
 	
 	-- ============= CONFWRITE =============
@@ -85,11 +85,18 @@ begin
 	--nIRDY_io <= 'Z', '0' after CLOCK_PERIOD*6, 'Z' after CLOCK_PERIOD*10; -- tell target, that host is ready
 
 	-- ============= IOWRITE =============
-	nFrame_io <= '1', '0' after CLOCK_PERIOD*5, '1' after CLOCK_PERIOD*7; -- start new communication
-	AD_io <= (others=>'Z'), "00000000000000000010000000000000" after CLOCK_PERIOD*5, "00000000000000000000000000000001" after CLOCK_PERIOD*6, (others=>'Z') after CLOCK_PERIOD*7; -- set IO-address to 0x2000 and turn on LED
+	--nFrame_io <= '1', '0' after CLOCK_PERIOD*5, '1' after CLOCK_PERIOD*7; -- start new communication
+	--AD_io <= (others=>'Z'), "00000000000000000010000000000000" after CLOCK_PERIOD*5, "00000000000000000000000000000001" after CLOCK_PERIOD*6, (others=>'Z') after CLOCK_PERIOD*7; -- set IO-address to 0x2000 and turn on LED
+	--IDSEL_i <= 'Z'; -- keep IDSEL deasserted
+	--nCBE_io <= (others=>'Z'), iowrite after CLOCK_PERIOD*5, (others=>'Z') after CLOCK_PERIOD*6; -- set io-write-command
+	--nIRDY_io <= 'Z', '0' after CLOCK_PERIOD*6, 'Z' after CLOCK_PERIOD*7; -- tell target, that host is ready
+
+	-- ============= IOREAD =============
+	nFrame_io <= '1', '0' after CLOCK_PERIOD*5, '1' after CLOCK_PERIOD*6; -- start new communication
+	AD_io <= (others=>'Z'), "00000000000000000010000000000000" after CLOCK_PERIOD*5, (others=>'Z') after CLOCK_PERIOD*6; -- set address to 0x2000 to read I/O address of card
 	IDSEL_i <= 'Z'; -- keep IDSEL deasserted
-	nCBE_io <= (others=>'Z'), iowrite after CLOCK_PERIOD*5, (others=>'Z') after CLOCK_PERIOD*6; -- set io-write-command
-	nIRDY_io <= 'Z', '0' after CLOCK_PERIOD*6, 'Z' after CLOCK_PERIOD*7; -- tell target, that host is ready
+	nCBE_io <= (others=>'Z'), ioread after CLOCK_PERIOD*5, (others=>'1') after CLOCK_PERIOD*6, (others=>'Z') after CLOCK_PERIOD*8; -- set io-read-command
+	nIRDY_io <= 'Z', '0' after CLOCK_PERIOD*6, 'Z' after CLOCK_PERIOD*10; -- tell target, that host is ready
 
 	-- test main-process
 	process
