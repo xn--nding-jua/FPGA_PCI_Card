@@ -98,37 +98,37 @@ use ieee.numeric_std.all;
 
 entity pci_target is
 	generic(
-		ioport	: integer := 8192 -- 8192 = 0x2000
+		ioport		: integer := 8192 -- 8192 = 0x2000
 	);
 	port (
 		-- system-pins
-		clk_i		: in std_logic; -- PCI-Clock (33MHz)
+		clk_i			: in std_logic; -- PCI-Clock (33MHz)
 		nRST_i		: in std_logic; -- Reset-signal
 
 		-- address- and data-pins
-		AD_io		: inout std_logic_vector(31 downto 0) := (others => 'Z'); -- driven by master: Address- and Databus
+		AD_io			: inout std_logic_vector(31 downto 0) := (others => 'Z'); -- driven by master: Address- and Databus
 		nCBE_io		: inout std_logic_vector(3 downto 0) := (others => 'Z'); -- driven by master: command during address-phase / byte-enable-signal during data-phase
 		PAR_io		: inout std_logic := 'Z';	-- driven by master: parity bit. Ensures even parity access AD[31..0] and nCBE[3..0]
 
 		-- interface-control-pins
 		nFrame_io	: inout std_logic := 'Z';	-- driven by master: driven low to indicate start and duration of transaction. Deasserted when master is ready to complete final data-phase
-		nTRDY_io	: inout std_logic := 'Z'; 	-- driven by target: Read: driven low signal to indicate valid data / Write: driven low to indicate ready-to-read
-		nIRDY_io	: inout std_logic := 'Z';	-- driven by master: Write: driven low to indicate valid data / Read: driven low to indicate ready-to-read
-		STOPn_io	: inout std_logic := 'Z'; 	-- driven by target: asserted to stop master transaction
+		nTRDY_io		: inout std_logic := 'Z'; 	-- driven by target: Read: driven low signal to indicate valid data / Write: driven low to indicate ready-to-read
+		nIRDY_io		: inout std_logic := 'Z';	-- driven by master: Write: driven low to indicate valid data / Read: driven low to indicate ready-to-read
+		STOPn_io		: inout std_logic := 'Z'; 	-- driven by target: asserted to stop master transaction
 		nDEVSEL_io	: inout std_logic := 'Z'; 	-- asserted by target when it decodes its address (within 6 cycles!)
 		IDSEL_i		: in std_logic; 			-- chip-select during access to configuration-register
 		
 		-- error-reporting-pins
-		nPERR_io	: inout std_logic := 'Z'; 	-- driven by master: asserted on parity-error (address or data)
-		nSERR_io	: inout std_logic := 'Z'; 	-- reports address parity errors and special cycle data parity errors
+		nPERR_io		: inout std_logic := 'Z'; 	-- driven by master: asserted on parity-error (address or data)
+		nSERR_io		: inout std_logic := 'Z'; 	-- reports address parity errors and special cycle data parity errors
 
 		-- arbitration-pins (master only)
 		--nREQ_io	: inout std_logic := 'Z'; 	-- driven by target: requesting dedicated access to bus
-		--nGNT_i	: in std_logic; 			-- driven by arbiter: tells master that it is granted bus control
+		--nGNT_i		: in std_logic; 			-- driven by arbiter: tells master that it is granted bus control
 		
 		data_o		: out std_logic_vector(31 downto 0);
-		rdy_o		: out std_logic;
-		LED_o		: out std_logic
+		rdy_o			: out std_logic;
+		LED_o			: out std_logic
 	);
 end pci_target;
 
@@ -136,12 +136,12 @@ architecture Behavioral of pci_target is
 	type t_SM_Transaction is (s_Idle, s_iowrite, s_ioreadTurn, s_ioread, s_confwrite, s_confreadTurn, s_confread, s_setOutput, s_End);
 	signal s_SM_Transaction : t_SM_Transaction := s_Idle;
 	
-	signal address 		: std_logic_vector(31 downto 0);
-	signal command 		: std_logic_vector(3 downto 0);
+	signal AD		 		: std_logic_vector(31 downto 0);
+	signal command			: std_logic_vector(3 downto 0);
 	
-	constant ioread 	: std_logic_vector(3 downto 0) := "0010";
-	constant iowrite 	: std_logic_vector(3 downto 0) := "0011";
-	constant memread 	: std_logic_vector(3 downto 0) := "0110";
+	constant ioread 		: std_logic_vector(3 downto 0) := "0010";
+	constant iowrite	 	: std_logic_vector(3 downto 0) := "0011";
+	constant memread 		: std_logic_vector(3 downto 0) := "0110";
 	constant memwrite 	: std_logic_vector(3 downto 0) := "0111";
 	constant confread 	: std_logic_vector(3 downto 0) := "1010";
 	constant confwrite 	: std_logic_vector(3 downto 0) := "1011";
@@ -155,6 +155,11 @@ architecture Behavioral of pci_target is
 	
 	signal AD_o			: std_logic_vector(31 downto 0);
 	signal AD_oe		: std_logic := '0';
+	signal PAR_calc	: std_logic := '0';
+	signal zBE			: std_logic_vector(3 downto 0);
+	signal PAR, zPAR	: std_logic := '0';
+	signal PAR_o		: std_logic;
+	signal PAR_oe		: std_logic := '0';
 begin
     process(clk_i)     
     begin
@@ -170,12 +175,12 @@ begin
 					-- stay in Idle until we received a start of bus cycle at nFrame
 					
 					if (nFrame_io = '0') then -- start of bus cycle is detected
-						address <= AD_io;		-- read address
-						command <= nCBE_io;		-- read command
+						AD <= AD_io;		-- read address
+						command <= nCBE_io;		-- read command (only valid during deasserting nFRAME)
 					
 						if (nCBE_io = iowrite) then
 							-- master wants to write some data -> check if this is our address							
-							if (AD_io = std_logic_vector(to_unsigned(ioport, address'length))) then
+							if (AD_io = std_logic_vector(to_unsigned(ioport, AD_io'length))) then
 								-- calculate memory-offset based on given ioport
 								-- during this phase, AD[31..0] contains a physical 32-bit address
 								-- nCBE indicates the size of the transfer
@@ -185,7 +190,7 @@ begin
 							
 						elsif (nCBE_io = ioread) then
 							-- master wants to read some data -> check if this is our address							
-							if (AD_io = std_logic_vector(to_unsigned(ioport, address'length))) then
+							if (AD_io = std_logic_vector(to_unsigned(ioport, AD_io'length))) then
 								-- dataPointer will be set in turnaround-cycle-step
 								s_SM_Transaction <= s_ioreadTurn;
 							end if;
@@ -299,7 +304,7 @@ begin
 					
 				elsif (s_SM_Transaction = s_iowrite) then
 					if (nFrame_io = '1') then
-						-- signal "address" can be used to identify the current io-address
+						-- signal "AD" can be used to identify the current io-address
 						
 						-- wait here until nIRDY is asserted (write-data is valid)
 						if (nIRDY_io = '0') then
@@ -325,8 +330,8 @@ begin
 					
 					-- calculate memory-offset based on given ioport
 					-- during this phase, AD[31..0] contains a physical 32-bit address
-					-- nCBE indicates the size of the transfer
-					dataPointer <= to_integer(unsigned(address)) - ioport;
+					-- byteEnable indicates the size of the transfer
+					dataPointer <= to_integer(unsigned(AD)) - ioport;
 					
 					-- wait for nIRDY to be asserted
 					if (nIRDY_io = '0') then
@@ -367,11 +372,11 @@ begin
 					end if;
 				elsif (s_SM_Transaction = s_confreadTurn) then
 					-- wait one clock for the turnaround-cycle
-					
+
 					-- take the absolute address of the configuration-space:
 					-- during this phase AD[1..0] is 0x00
 					-- AD[7..2] contains address of one of the 64 DWORD registers
-					dataPointer <= to_integer(unsigned(address(7 downto 0))); -- we take an address for a DWORD between 0x00 and 0xFB
+					dataPointer <= to_integer(unsigned(AD(7 downto 0))); -- we take an address for a DWORD between 0x00 and 0xFB
 					
 					-- wait for nIRDY to be asserted
 					if (nIRDY_io = '0') then
@@ -457,17 +462,38 @@ begin
 					nDEVSEL_io <= '0';	-- assert nDEVSEL to tell master that we are at this address
 					if (dataPointer <= 60) then
 						-- dataPointer points to internal DWORD-address 0...x of conf-register and is incremented in risingEdge-process
-						AD_o <= conf_frame(dataPointer+3) & conf_frame(dataPointer+2) & conf_frame(dataPointer+1) & conf_frame(dataPointer); -- set data to output as DWORD
+						--AD_o <= conf_frame(dataPointer+3) & conf_frame(dataPointer+2) & conf_frame(dataPointer+1) & conf_frame(dataPointer); -- set data to output as DWORD
+						AD_o <= (conf_frame(dataPointer+3) and (7 downto 0 => nCBE_io(3))) &
+							(conf_frame(dataPointer+2) and (7 downto 0 => nCBE_io(2))) &
+							(conf_frame(dataPointer+1) and (7 downto 0 => nCBE_io(1))) &
+							(conf_frame(dataPointer) and (7 downto 0 => nCBE_io(0))); -- set data to output as DWORD using byte-enable-signal
+						zBE <= nCBE_io;
 					else
 						-- write zeros as we have no information in the higher bytes of the configuration-space yet
 						AD_o <= (others => '0');
+						zBE <= nCBE_io;
 					end if;
+
+					if (PAR_calc = '1') then
+						-- calculate parity and output it
+						PAR_oe <= '1';
+						
+						-- calculate parity over previous data
+						PAR_o <= (AD_o(0)  xor AD_o(1)  xor AD_o(2)  xor AD_o(3)  xor AD_o(4)  xor AD_o(5)  xor AD_o(6)  xor AD_o(7)  xor
+							AD_o(8)  xor AD_o(9)  xor AD_o(10) xor AD_o(11) xor AD_o(12) xor AD_o(13) xor AD_o(14) xor AD_o(15) xor
+							AD_o(16) xor AD_o(17) xor AD_o(18) xor AD_o(19) xor AD_o(20) xor AD_o(21) xor AD_o(22) xor AD_o(23) xor
+							AD_o(24) xor AD_o(25) xor AD_o(26) xor AD_o(27) xor AD_o(28) xor AD_o(29) xor AD_o(30) xor AD_o(31)) xor
+							(zBE(0) xor zBE(1) xor zBE(2) xor zBE(3));
+					end if;
+					PAR_calc <= '1'; -- enable calculation of parity on next falling clock
 					
 				else
 					-- this state includes s_setOutput and s_End
 
 					-- disable all outputs
 					AD_oe <= '0';
+					PAR_oe <= '0';
+					PAR_calc <= '0';
 					-- set outputs (bi-directional-pins) to High-Z
 					nTRDY_io <= 'Z';
 					nDEVSEL_io <= 'Z';
@@ -481,4 +507,5 @@ begin
 	
 	-- only output to bidirectional pin if we want to write valid data. Otherwise High-Z-mode
 	AD_io <= AD_o when AD_oe = '1' else (others => 'Z');
+	PAR_io <= PAR_o when PAR_oe = '1' else 'Z';
 end;
