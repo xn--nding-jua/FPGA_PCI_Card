@@ -987,8 +987,8 @@ applicable agreement for further details.
 	(port
 		(pt 160 128)
 		(bidir)
-		(text "STOPn_io" (rect 0 0 48 12)(font "Arial" ))
-		(text "STOPn_io" (rect 91 123 139 135)(font "Arial" ))
+		(text "nSTOP_io" (rect 0 0 48 12)(font "Arial" ))
+		(text "nSTOP_io" (rect 91 123 139 135)(font "Arial" ))
 		(line (pt 160 128)(pt 144 128)(line_width 1))
 	)
 	(port

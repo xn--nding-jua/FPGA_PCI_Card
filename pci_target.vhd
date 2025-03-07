@@ -102,33 +102,33 @@ entity pci_target is
 	);
 	port (
 		-- system-pins
-		clk_i			: in std_logic; -- PCI-Clock (33MHz)
+		clk_i		: in std_logic; -- PCI-Clock (33MHz)
 		nRST_i		: in std_logic; -- Reset-signal
 
 		-- address- and data-pins
-		AD_io			: inout std_logic_vector(31 downto 0) := (others => 'Z'); -- driven by master: Address- and Databus
+		AD_io		: inout std_logic_vector(31 downto 0) := (others => 'Z'); -- driven by master: Address- and Databus
 		nCBE_io		: inout std_logic_vector(3 downto 0) := (others => 'Z'); -- driven by master: command during address-phase / byte-enable-signal during data-phase
 		PAR_io		: inout std_logic := 'Z';	-- driven by master: parity bit. Ensures even parity access AD[31..0] and nCBE[3..0]
 
 		-- interface-control-pins
 		nFrame_io	: inout std_logic := 'Z';	-- driven by master: driven low to indicate start and duration of transaction. Deasserted when master is ready to complete final data-phase
-		nTRDY_io		: inout std_logic := 'Z'; 	-- driven by target: Read: driven low signal to indicate valid data / Write: driven low to indicate ready-to-read
-		nIRDY_io		: inout std_logic := 'Z';	-- driven by master: Write: driven low to indicate valid data / Read: driven low to indicate ready-to-read
-		STOPn_io		: inout std_logic := 'Z'; 	-- driven by target: asserted to stop master transaction
+		nTRDY_io	: inout std_logic := 'Z'; 	-- driven by target: Read: driven low signal to indicate valid data / Write: driven low to indicate ready-to-read
+		nIRDY_io	: inout std_logic := 'Z';	-- driven by master: Write: driven low to indicate valid data / Read: driven low to indicate ready-to-read
+		nSTOP_io	: inout std_logic := 'Z'; 	-- driven by target: asserted to stop master transaction
 		nDEVSEL_io	: inout std_logic := 'Z'; 	-- asserted by target when it decodes its address (within 6 cycles!)
 		IDSEL_i		: in std_logic; 			-- chip-select during access to configuration-register
 		
 		-- error-reporting-pins
-		nPERR_io		: inout std_logic := 'Z'; 	-- driven by master: asserted on parity-error (address or data)
-		nSERR_io		: inout std_logic := 'Z'; 	-- reports address parity errors and special cycle data parity errors
+		nPERR_io	: inout std_logic := 'Z'; 	-- driven by master: asserted on parity-error (address or data)
+		nSERR_io	: inout std_logic := 'Z'; 	-- reports address parity errors and special cycle data parity errors
 
 		-- arbitration-pins (master only)
 		--nREQ_io	: inout std_logic := 'Z'; 	-- driven by target: requesting dedicated access to bus
-		--nGNT_i		: in std_logic; 			-- driven by arbiter: tells master that it is granted bus control
+		--nGNT_i	: in std_logic; 			-- driven by arbiter: tells master that it is granted bus control
 		
 		data_o		: out std_logic_vector(31 downto 0);
-		rdy_o			: out std_logic;
-		LED_o			: out std_logic
+		rdy_o		: out std_logic;
+		LED_o		: out std_logic := 'Z'
 	);
 end pci_target;
 
@@ -426,11 +426,11 @@ begin
 			if nRST_i = '0' then
 				-- disable all outputs
 				AD_oe <= '0';
+				PAR_oe <= '0';
+				PAR_calc <= '0';
 				-- set outputs (bi-directional-pins) to High-Z
 				nTRDY_io <= 'Z';
 				nDEVSEL_io <= 'Z';
-				AD_o <= (others => 'Z');
-				PAR_io <= 'Z';
 			else
 				-- regular operation
 				if (s_SM_Transaction = s_iowrite) then
@@ -524,7 +524,6 @@ begin
 					-- set outputs (bi-directional-pins) to High-Z
 					nTRDY_io <= 'Z';
 					nDEVSEL_io <= 'Z';
-					AD_o <= (others => 'Z');
 				else
 					-- this state includes s_setOutput and s_End
 
@@ -535,8 +534,6 @@ begin
 					-- set outputs (bi-directional-pins) to High-Z
 					nTRDY_io <= 'Z';
 					nDEVSEL_io <= 'Z';
-					AD_o <= (others => 'Z');
-					PAR_io <= 'Z';
 				
 				end if;
 			end if;
@@ -546,4 +543,12 @@ begin
 	-- only output to bidirectional pin if we want to write valid data. Otherwise High-Z-mode
 	AD_io <= AD_o when AD_oe = '1' else (others => 'Z');
 	PAR_io <= PAR_o when PAR_oe = '1' else 'Z';
+	
+	-- set unused IO-pins to High-Z
+	nCBE_io <= (others => 'Z');
+	nFRAME_io <= 'Z';
+	nIRDY_io <= 'Z';
+	nSTOP_io <= 'Z';
+	nPERR_io <= 'Z';
+	nSERR_io <= 'Z';
 end;

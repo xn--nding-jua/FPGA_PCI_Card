@@ -36,7 +36,7 @@
  ------------------------------------------------------------------------------
 
 
-File Generation Date & Time: Thu Feb 27 09:00:18 2025
+File Generation Date & Time: Fri Mar 07 16:17:37 2025
 Quartus II Version 9.0 Build 132 02/25/2009 SJ Web Edition
 CHIP  "PCICard"  ASSIGNED TO AN: EPF10K50RC240-3
 
@@ -189,10 +189,10 @@ GND*                         : 144       :        :                   :         
 GND_INT                      : 145       : gnd    :                   :         :           :                
 GND*                         : 146       :        :                   :         :           :                
 GND*                         : 147       :        :                   :         :           :                
-GND*                         : 148       :        :                   :         :           :                
+LED                          : 148       : output : TTL               :         :           : N              
 GND*                         : 149       :        :                   :         :           :                
 VCC_INT                      : 150       : power  :                   : 5.0V    :           :                
-LED                          : 151       : output : TTL               :         :           : N              
+GND*                         : 151       :        :                   :         :           :                
 GND*                         : 152       :        :                   :         :           :                
 GND*                         : 153       :        :                   :         :           :                
 GND*                         : 154       :        :                   :         :           :                
