@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 208 288)
+	(rect 16 16 208 352)
 	(text "pci_target" (rect 5 0 43 12)(font "Arial" ))
-	(text "inst" (rect 8 256 20 268)(font "Arial" ))
+	(text "inst" (rect 8 320 20 332)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -46,25 +46,53 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 64)(pt 16 64)(line_width 1))
 	)
 	(port
+		(pt 0 80)
+		(input)
+		(text "nGNT_i" (rect 0 0 31 12)(font "Arial" ))
+		(text "nGNT_i" (rect 21 75 52 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 1))
+	)
+	(port
 		(pt 192 192)
 		(output)
-		(text "data_o[31..0]" (rect 0 0 50 12)(font "Arial" ))
-		(text "data_o[31..0]" (rect 121 187 171 199)(font "Arial" ))
-		(line (pt 192 192)(pt 176 192)(line_width 3))
+		(text "nREQ_o" (rect 0 0 37 12)(font "Arial" ))
+		(text "nREQ_o" (rect 134 187 171 199)(font "Arial" ))
+		(line (pt 192 192)(pt 176 192)(line_width 1))
 	)
 	(port
 		(pt 192 208)
 		(output)
-		(text "rdy_o" (rect 0 0 24 12)(font "Arial" ))
-		(text "rdy_o" (rect 147 203 171 215)(font "Arial" ))
+		(text "nIRQA" (rect 0 0 30 12)(font "Arial" ))
+		(text "nIRQA" (rect 141 203 171 215)(font "Arial" ))
 		(line (pt 192 208)(pt 176 208)(line_width 1))
 	)
 	(port
-		(pt 192 224)
+		(pt 192 240)
+		(output)
+		(text "data_o[31..0]" (rect 0 0 50 12)(font "Arial" ))
+		(text "data_o[31..0]" (rect 121 235 171 247)(font "Arial" ))
+		(line (pt 192 240)(pt 176 240)(line_width 3))
+	)
+	(port
+		(pt 192 256)
+		(output)
+		(text "rdy_o" (rect 0 0 24 12)(font "Arial" ))
+		(text "rdy_o" (rect 147 251 171 263)(font "Arial" ))
+		(line (pt 192 256)(pt 176 256)(line_width 1))
+	)
+	(port
+		(pt 192 272)
 		(output)
 		(text "LED_o" (rect 0 0 30 12)(font "Arial" ))
-		(text "LED_o" (rect 141 219 171 231)(font "Arial" ))
-		(line (pt 192 224)(pt 176 224)(line_width 1))
+		(text "LED_o" (rect 141 267 171 279)(font "Arial" ))
+		(line (pt 192 272)(pt 176 272)(line_width 1))
+	)
+	(port
+		(pt 192 288)
+		(output)
+		(text "debug[15..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "debug[15..0]" (rect 124 283 171 295)(font "Arial" ))
+		(line (pt 192 288)(pt 176 288)(line_width 3))
 	)
 	(port
 		(pt 192 32)
@@ -111,8 +139,8 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 192 128)
 		(bidir)
-		(text "STOPn_io" (rect 0 0 41 12)(font "Arial" ))
-		(text "STOPn_io" (rect 130 123 171 135)(font "Arial" ))
+		(text "nSTOP_io" (rect 0 0 41 12)(font "Arial" ))
+		(text "nSTOP_io" (rect 130 123 171 135)(font "Arial" ))
 		(line (pt 192 128)(pt 176 128)(line_width 1))
 	)
 	(port
@@ -136,13 +164,20 @@ https://fpgasoftware.intel.com/eula.
 		(text "nSERR_io" (rect 125 171 171 183)(font "Arial" ))
 		(line (pt 192 176)(pt 176 176)(line_width 1))
 	)
+	(port
+		(pt 192 224)
+		(bidir)
+		(text "nLOCK" (rect 0 0 31 12)(font "Arial" ))
+		(text "nLOCK" (rect 140 219 171 231)(font "Arial" ))
+		(line (pt 192 224)(pt 176 224)(line_width 1))
+	)
 	(parameter
 		"ioport"
 		"8192"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 176 256)(line_width 1))
+		(rectangle (rect 16 16 176 320)(line_width 1))
 	)
 	(annotation_block (parameter)(rect 208 -64 308 16))
 )

@@ -33,12 +33,13 @@
  -- GND*       : Unused  I/O  pin.   This pin can either be left unconnected or
  --              connected to GND.  Connecting this pin to GND will improve the
  --              device's immunity to noise.
+ -- RESERVED_INPUT : Pin is tri-stated and should be connected to the board.
  ------------------------------------------------------------------------------
 
 
-File Generation Date & Time: Fri Mar 07 16:17:37 2025
+File Generation Date & Time: Wed Apr 02 02:28:52 2025
 Quartus II Version 9.0 Build 132 02/25/2009 SJ Web Edition
-CHIP  "PCICard"  ASSIGNED TO AN: EPF10K50RC240-3
+CHIP  "PCICard"  ASSIGNED TO AN: EPF10K30RC240-3
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
 -------------------------------------------------------------------------------------------------------------
@@ -47,238 +48,238 @@ CONF_DONE                    : 2         : bidir  :                   :         
 nCEO                         : 3         : output :                   :         :           :                
 TDO                          : 4         : output :                   :         :           :                
 VCC_INT                      : 5         : power  :                   : 5.0V    :           :                
-GND*                         : 6         :        :                   :         :           :                
-GND*                         : 7         :        :                   :         :           :                
-GND*                         : 8         :        :                   :         :           :                
-GND*                         : 9         :        :                   :         :           :                
+RESERVED_INPUT               : 6         :        :                   :         :           :                
+RESERVED_INPUT               : 7         :        :                   :         :           :                
+RESERVED_INPUT               : 8         :        :                   :         :           :                
+RESERVED_INPUT               : 9         :        :                   :         :           :                
 GND_INT                      : 10        : gnd    :                   :         :           :                
-GND*                         : 11        :        :                   :         :           :                
-GND*                         : 12        :        :                   :         :           :                
-GND*                         : 13        :        :                   :         :           :                
-GND*                         : 14        :        :                   :         :           :                
-GND*                         : 15        :        :                   :         :           :                
+RESERVED_INPUT               : 11        :        :                   :         :           :                
+RESERVED_INPUT               : 12        :        :                   :         :           :                
+RESERVED_INPUT               : 13        :        :                   :         :           :                
+RESERVED_INPUT               : 14        :        :                   :         :           :                
+RESERVED_INPUT               : 15        :        :                   :         :           :                
 VCC_INT                      : 16        : power  :                   : 5.0V    :           :                
-GND*                         : 17        :        :                   :         :           :                
-GND*                         : 18        :        :                   :         :           :                
-GND*                         : 19        :        :                   :         :           :                
-GND*                         : 20        :        :                   :         :           :                
-GND*                         : 21        :        :                   :         :           :                
+RESERVED_INPUT               : 17        :        :                   :         :           :                
+RESERVED_INPUT               : 18        :        :                   :         :           :                
+RESERVED_INPUT               : 19        :        :                   :         :           :                
+RESERVED_INPUT               : 20        :        :                   :         :           :                
+RESERVED_INPUT               : 21        :        :                   :         :           :                
 GND_INT                      : 22        : gnd    :                   :         :           :                
-GND*                         : 23        :        :                   :         :           :                
-GND*                         : 24        :        :                   :         :           :                
-GND*                         : 25        :        :                   :         :           :                
-GND*                         : 26        :        :                   :         :           :                
+RESERVED_INPUT               : 23        :        :                   :         :           :                
+RESERVED_INPUT               : 24        :        :                   :         :           :                
+RESERVED_INPUT               : 25        :        :                   :         :           :                
+RESERVED_INPUT               : 26        :        :                   :         :           :                
 VCC_INT                      : 27        : power  :                   : 5.0V    :           :                
-GND*                         : 28        :        :                   :         :           :                
-GND*                         : 29        :        :                   :         :           :                
-GND*                         : 30        :        :                   :         :           :                
-GND*                         : 31        :        :                   :         :           :                
+RESERVED_INPUT               : 28        :        :                   :         :           :                
+RESERVED_INPUT               : 29        :        :                   :         :           :                
+RESERVED_INPUT               : 30        :        :                   :         :           :                
+RESERVED_INPUT               : 31        :        :                   :         :           :                
 GND_INT                      : 32        : gnd    :                   :         :           :                
-GND*                         : 33        :        :                   :         :           :                
-GND*                         : 34        :        :                   :         :           :                
-GND*                         : 35        :        :                   :         :           :                
-GND*                         : 36        :        :                   :         :           :                
+LED                          : 33        : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 34        :        :                   :         :           :                
+RESERVED_INPUT               : 35        :        :                   :         :           :                
+RESERVED_INPUT               : 36        :        :                   :         :           :                
 VCC_INT                      : 37        : power  :                   : 5.0V    :           :                
-GND*                         : 38        :        :                   :         :           :                
-GND*                         : 39        :        :                   :         :           :                
-GND*                         : 40        :        :                   :         :           :                
-GND*                         : 41        :        :                   :         :           :                
+RESERVED_INPUT               : 38        :        :                   :         :           :                
+RESERVED_INPUT               : 39        :        :                   :         :           :                
+RESERVED_INPUT               : 40        :        :                   :         :           :                
+RESERVED_INPUT               : 41        :        :                   :         :           :                
 GND_INT                      : 42        : gnd    :                   :         :           :                
-GND*                         : 43        :        :                   :         :           :                
-GND*                         : 44        :        :                   :         :           :                
-GND*                         : 45        :        :                   :         :           :                
-GND*                         : 46        :        :                   :         :           :                
+RESERVED_INPUT               : 43        :        :                   :         :           :                
+RESERVED_INPUT               : 44        :        :                   :         :           :                
+RESERVED_INPUT               : 45        :        :                   :         :           :                
+RESERVED_INPUT               : 46        :        :                   :         :           :                
 VCC_INT                      : 47        : power  :                   : 5.0V    :           :                
-GND*                         : 48        :        :                   :         :           :                
-GND*                         : 49        :        :                   :         :           :                
-GND*                         : 50        :        :                   :         :           :                
-GND*                         : 51        :        :                   :         :           :                
+RESERVED_INPUT               : 48        :        :                   :         :           :                
+RESERVED_INPUT               : 49        :        :                   :         :           :                
+RESERVED_INPUT               : 50        :        :                   :         :           :                
+RESERVED_INPUT               : 51        :        :                   :         :           :                
 GND_INT                      : 52        : gnd    :                   :         :           :                
-GND*                         : 53        :        :                   :         :           :                
-GND*                         : 54        :        :                   :         :           :                
-GND*                         : 55        :        :                   :         :           :                
-GND*                         : 56        :        :                   :         :           :                
+RESERVED_INPUT               : 53        :        :                   :         :           :                
+nIRQA                        : 54        : output : TTL               :         :           : Y              
+nGNT                         : 55        : input  : TTL               :         :           : Y              
+nREQ                         : 56        : output : TTL               :         :           : Y              
 VCC_INT                      : 57        : power  :                   : 5.0V    :           :                
 TMS                          : 58        : input  :                   :         :           :                
 TRST                         : 59        : input  :                   :         :           :                
 nSTATUS                      : 60        : bidir  :                   :         :           :                
-GND*                         : 61        :        :                   :         :           :                
-GND*                         : 62        :        :                   :         :           :                
-GND*                         : 63        :        :                   :         :           :                
-AD31                         : 64        : bidir  : TTL               :         :           : Y              
-AD30                         : 65        : bidir  : TTL               :         :           : Y              
-AD29                         : 66        : bidir  : TTL               :         :           : Y              
-AD28                         : 67        : bidir  : TTL               :         :           : Y              
-AD27                         : 68        : bidir  : TTL               :         :           : Y              
+RESERVED_INPUT               : 61        :        :                   :         :           :                
+RESERVED_INPUT               : 62        :        :                   :         :           :                
+RESERVED_INPUT               : 63        :        :                   :         :           :                
+IDSEL                        : 64        : input  : TTL               :         :           : Y              
+nCBE[3]                      : 65        : bidir  : TTL               :         :           : Y              
+nCBE[2]                      : 66        : bidir  : TTL               :         :           : Y              
+AD[31]                       : 67        : bidir  : TTL               :         :           : Y              
+AD[30]                       : 68        : bidir  : TTL               :         :           : Y              
 GND_INT                      : 69        : gnd    :                   :         :           :                
-AD26                         : 70        : bidir  : TTL               :         :           : Y              
-AD25                         : 71        : bidir  : TTL               :         :           : Y              
-AD24                         : 72        : bidir  : TTL               :         :           : Y              
-nCBE3                        : 73        : bidir  : TTL               :         :           : Y              
-IDSEL                        : 74        : input  : TTL               :         :           : Y              
-AD23                         : 75        : bidir  : TTL               :         :           : Y              
-AD22                         : 76        : bidir  : TTL               :         :           : Y              
+AD[29]                       : 70        : bidir  : TTL               :         :           : Y              
+AD[28]                       : 71        : bidir  : TTL               :         :           : Y              
+AD[27]                       : 72        : bidir  : TTL               :         :           : Y              
+nFRAME                       : 73        : bidir  : TTL               :         :           : Y              
+nIRDY                        : 74        : bidir  : TTL               :         :           : Y              
+nTRDY                        : 75        : bidir  : TTL               :         :           : Y              
+AD[26]                       : 76        : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 77        : power  :                   : 5.0V    :           :                
-AD21                         : 78        : bidir  : TTL               :         :           : Y              
-AD20                         : 79        : bidir  : TTL               :         :           : Y              
-AD19                         : 80        : bidir  : TTL               :         :           : Y              
-AD18                         : 81        : bidir  : TTL               :         :           : Y              
-AD17                         : 82        : bidir  : TTL               :         :           : Y              
-AD16                         : 83        : bidir  : TTL               :         :           : Y              
-nCBE2                        : 84        : bidir  : TTL               :         :           : Y              
+AD[25]                       : 78        : bidir  : TTL               :         :           : Y              
+AD[24]                       : 79        : bidir  : TTL               :         :           : Y              
+nDEVSEL                      : 80        : bidir  : TTL               :         :           : Y              
+nSTOP                        : 81        : bidir  : TTL               :         :           : Y              
+AD[23]                       : 82        : bidir  : TTL               :         :           : Y              
+AD[22]                       : 83        : bidir  : TTL               :         :           : Y              
+AD[21]                       : 84        : bidir  : TTL               :         :           : Y              
 GND_INT                      : 85        : gnd    :                   :         :           :                
-nFRAME                       : 86        : bidir  : TTL               :         :           : Y              
-nIRDY                        : 87        : bidir  : TTL               :         :           : Y              
-nTRDY                        : 88        : bidir  : TTL               :         :           : Y              
+AD[20]                       : 86        : bidir  : TTL               :         :           : Y              
+AD[19]                       : 87        : bidir  : TTL               :         :           : Y              
+AD[18]                       : 88        : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 89        : power  :                   : 5.0V    :           :                
 GND+                         : 90        :        :                   :         :           :                
-clk_half                     : 91        : input  : TTL               :         :           : Y              
-nRST                         : 92        : input  : TTL               :         :           : Y              
+GND+                         : 91        :        :                   :         :           :                
+GND+                         : 92        :        :                   :         :           :                
 GND_INT                      : 93        : gnd    :                   :         :           :                
-nDEVSEL                      : 94        : bidir  : TTL               :         :           : Y              
-nSTOP                        : 95        : bidir  : TTL               :         :           : Y              
+nLOCK                        : 94        : bidir  : TTL               :         :           : Y              
+nPERR                        : 95        : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 96        : power  :                   : 5.0V    :           :                
-GND*                         : 97        :        :                   :         :           :                
-nPERR                        : 98        : bidir  : TTL               :         :           : Y              
-nSERR                        : 99        : bidir  : TTL               :         :           : Y              
-PAR                          : 100       : bidir  : TTL               :         :           : Y              
-nCBE1                        : 101       : bidir  : TTL               :         :           : Y              
-AD15                         : 102       : bidir  : TTL               :         :           : Y              
-AD14                         : 103       : bidir  : TTL               :         :           : Y              
+nSERR                        : 97        : bidir  : TTL               :         :           : Y              
+PAR                          : 98        : bidir  : TTL               :         :           : Y              
+AD[17]                       : 99        : bidir  : TTL               :         :           : Y              
+AD[16]                       : 100       : bidir  : TTL               :         :           : Y              
+AD[15]                       : 101       : bidir  : TTL               :         :           : Y              
+AD[14]                       : 102       : bidir  : TTL               :         :           : Y              
+AD[13]                       : 103       : bidir  : TTL               :         :           : Y              
 GND_INT                      : 104       : gnd    :                   :         :           :                
-AD13                         : 105       : bidir  : TTL               :         :           : Y              
-AD12                         : 106       : bidir  : TTL               :         :           : Y              
-AD11                         : 107       : bidir  : TTL               :         :           : Y              
-AD10                         : 108       : bidir  : TTL               :         :           : Y              
-AD9                          : 109       : bidir  : TTL               :         :           : Y              
-AD8                          : 110       : bidir  : TTL               :         :           : Y              
-nCBE0                        : 111       : bidir  : TTL               :         :           : Y              
+AD[12]                       : 105       : bidir  : TTL               :         :           : Y              
+AD[11]                       : 106       : bidir  : TTL               :         :           : Y              
+AD[10]                       : 107       : bidir  : TTL               :         :           : Y              
+AD[9]                        : 108       : bidir  : TTL               :         :           : Y              
+AD[8]                        : 109       : bidir  : TTL               :         :           : Y              
+AD[7]                        : 110       : bidir  : TTL               :         :           : Y              
+AD[6]                        : 111       : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 112       : power  :                   : 5.0V    :           :                
-AD7                          : 113       : bidir  : TTL               :         :           : Y              
-AD6                          : 114       : bidir  : TTL               :         :           : Y              
-AD5                          : 115       : bidir  : TTL               :         :           : Y              
-AD4                          : 116       : bidir  : TTL               :         :           : Y              
-AD3                          : 117       : bidir  : TTL               :         :           : Y              
-AD2                          : 118       : bidir  : TTL               :         :           : Y              
-AD1                          : 119       : bidir  : TTL               :         :           : Y              
-AD0                          : 120       : bidir  : TTL               :         :           : Y              
+AD[5]                        : 113       : bidir  : TTL               :         :           : Y              
+AD[4]                        : 114       : bidir  : TTL               :         :           : Y              
+AD[3]                        : 115       : bidir  : TTL               :         :           : Y              
+nCBE[1]                      : 116       : bidir  : TTL               :         :           : Y              
+nCBE[0]                      : 117       : bidir  : TTL               :         :           : Y              
+AD[2]                        : 118       : bidir  : TTL               :         :           : Y              
+AD[1]                        : 119       : bidir  : TTL               :         :           : Y              
+AD[0]                        : 120       : bidir  : TTL               :         :           : Y              
 nCONFIG                      : 121       : input  :                   :         :           :                
 VCC_INT                      : 122       : power  :                   : 5.0V    :           :                
 MSEL1                        : 123       : input  :                   :         :           :                
 MSEL0                        : 124       : input  :                   :         :           :                
 GND_INT                      : 125       : gnd    :                   :         :           :                
-GND*                         : 126       :        :                   :         :           :                
-GND*                         : 127       :        :                   :         :           :                
-GND*                         : 128       :        :                   :         :           :                
-GND*                         : 129       :        :                   :         :           :                
+RESERVED_INPUT               : 126       :        :                   :         :           :                
+RESERVED_INPUT               : 127       :        :                   :         :           :                
+RESERVED_INPUT               : 128       :        :                   :         :           :                
+RESERVED_INPUT               : 129       :        :                   :         :           :                
 VCC_INT                      : 130       : power  :                   : 5.0V    :           :                
-GND*                         : 131       :        :                   :         :           :                
-GND*                         : 132       :        :                   :         :           :                
-GND*                         : 133       :        :                   :         :           :                
-GND*                         : 134       :        :                   :         :           :                
+RESERVED_INPUT               : 131       :        :                   :         :           :                
+dbg_7                        : 132       : output : TTL               :         :           : Y              
+dbg_15                       : 133       : output : TTL               :         :           : Y              
+dbg_6                        : 134       : output : TTL               :         :           : Y              
 GND_INT                      : 135       : gnd    :                   :         :           :                
-GND*                         : 136       :        :                   :         :           :                
-GND*                         : 137       :        :                   :         :           :                
-GND*                         : 138       :        :                   :         :           :                
-GND*                         : 139       :        :                   :         :           :                
+dbg_14                       : 136       : output : TTL               :         :           : Y              
+dbg_5                        : 137       : output : TTL               :         :           : Y              
+dbg_13                       : 138       : output : TTL               :         :           : Y              
+dbg_4                        : 139       : output : TTL               :         :           : Y              
 VCC_INT                      : 140       : power  :                   : 5.0V    :           :                
-GND*                         : 141       :        :                   :         :           :                
-GND*                         : 142       :        :                   :         :           :                
-GND*                         : 143       :        :                   :         :           :                
-GND*                         : 144       :        :                   :         :           :                
+dbg_12                       : 141       : output : TTL               :         :           : Y              
+dbg_3                        : 142       : output : TTL               :         :           : Y              
+dbg_11                       : 143       : output : TTL               :         :           : Y              
+dbg_2                        : 144       : output : TTL               :         :           : Y              
 GND_INT                      : 145       : gnd    :                   :         :           :                
-GND*                         : 146       :        :                   :         :           :                
-GND*                         : 147       :        :                   :         :           :                
-LED                          : 148       : output : TTL               :         :           : N              
-GND*                         : 149       :        :                   :         :           :                
+dbg_10                       : 146       : output : TTL               :         :           : Y              
+dbg_1                        : 147       : output : TTL               :         :           : Y              
+dbg_9                        : 148       : output : TTL               :         :           : Y              
+dbg_0                        : 149       : output : TTL               :         :           : Y              
 VCC_INT                      : 150       : power  :                   : 5.0V    :           :                
-GND*                         : 151       :        :                   :         :           :                
-GND*                         : 152       :        :                   :         :           :                
-GND*                         : 153       :        :                   :         :           :                
-GND*                         : 154       :        :                   :         :           :                
+dbg_8                        : 151       : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 152       :        :                   :         :           :                
+RESERVED_INPUT               : 153       :        :                   :         :           :                
+RESERVED_INPUT               : 154       :        :                   :         :           :                
 GND_INT                      : 155       : gnd    :                   :         :           :                
-GND*                         : 156       :        :                   :         :           :                
-GND*                         : 157       :        :                   :         :           :                
-GND*                         : 158       :        :                   :         :           :                
-GND*                         : 159       :        :                   :         :           :                
+RESERVED_INPUT               : 156       :        :                   :         :           :                
+RESERVED_INPUT               : 157       :        :                   :         :           :                
+RESERVED_INPUT               : 158       :        :                   :         :           :                
+RESERVED_INPUT               : 159       :        :                   :         :           :                
 VCC_INT                      : 160       : power  :                   : 5.0V    :           :                
-GND*                         : 161       :        :                   :         :           :                
-GND*                         : 162       :        :                   :         :           :                
-GND*                         : 163       :        :                   :         :           :                
-GND*                         : 164       :        :                   :         :           :                
+RESERVED_INPUT               : 161       :        :                   :         :           :                
+RESERVED_INPUT               : 162       :        :                   :         :           :                
+RESERVED_INPUT               : 163       :        :                   :         :           :                
+RESERVED_INPUT               : 164       :        :                   :         :           :                
 GND_INT                      : 165       : gnd    :                   :         :           :                
-GND*                         : 166       :        :                   :         :           :                
-GND*                         : 167       :        :                   :         :           :                
-GND*                         : 168       :        :                   :         :           :                
-GND*                         : 169       :        :                   :         :           :                
+RESERVED_INPUT               : 166       :        :                   :         :           :                
+RESERVED_INPUT               : 167       :        :                   :         :           :                
+RESERVED_INPUT               : 168       :        :                   :         :           :                
+RESERVED_INPUT               : 169       :        :                   :         :           :                
 VCC_INT                      : 170       : power  :                   : 5.0V    :           :                
-GND*                         : 171       :        :                   :         :           :                
-GND*                         : 172       :        :                   :         :           :                
-GND*                         : 173       :        :                   :         :           :                
-GND*                         : 174       :        :                   :         :           :                
-GND*                         : 175       :        :                   :         :           :                
+RESERVED_INPUT               : 171       :        :                   :         :           :                
+RESERVED_INPUT               : 172       :        :                   :         :           :                
+RESERVED_INPUT               : 173       :        :                   :         :           :                
+RESERVED_INPUT               : 174       :        :                   :         :           :                
+RESERVED_INPUT               : 175       :        :                   :         :           :                
 GND_INT                      : 176       : gnd    :                   :         :           :                
 TDI                          : 177       : input  :                   :         :           :                
 nCE                          : 178       : input  :                   :         :           :                
 DCLK                         : 179       : bidir  :                   :         :           :                
 DATA0                        : 180       : input  :                   :         :           :                
-GND*                         : 181       :        :                   :         :           :                
-GND*                         : 182       :        :                   :         :           :                
-GND*                         : 183       :        :                   :         :           :                
-GND*                         : 184       :        :                   :         :           :                
-GND*                         : 185       :        :                   :         :           :                
-GND*                         : 186       :        :                   :         :           :                
-GND*                         : 187       :        :                   :         :           :                
-GND*                         : 188       :        :                   :         :           :                
+RESERVED_INPUT               : 181       :        :                   :         :           :                
+RESERVED_INPUT               : 182       :        :                   :         :           :                
+RESERVED_INPUT               : 183       :        :                   :         :           :                
+RESERVED_INPUT               : 184       :        :                   :         :           :                
+RESERVED_INPUT               : 185       :        :                   :         :           :                
+RESERVED_INPUT               : 186       :        :                   :         :           :                
+RESERVED_INPUT               : 187       :        :                   :         :           :                
+RESERVED_INPUT               : 188       :        :                   :         :           :                
 VCC_INT                      : 189       : power  :                   : 5.0V    :           :                
-GND*                         : 190       :        :                   :         :           :                
-GND*                         : 191       :        :                   :         :           :                
-GND*                         : 192       :        :                   :         :           :                
-GND*                         : 193       :        :                   :         :           :                
-GND*                         : 194       :        :                   :         :           :                
-GND*                         : 195       :        :                   :         :           :                
-GND*                         : 196       :        :                   :         :           :                
+RESERVED_INPUT               : 190       :        :                   :         :           :                
+RESERVED_INPUT               : 191       :        :                   :         :           :                
+RESERVED_INPUT               : 192       :        :                   :         :           :                
+RESERVED_INPUT               : 193       :        :                   :         :           :                
+RESERVED_INPUT               : 194       :        :                   :         :           :                
+RESERVED_INPUT               : 195       :        :                   :         :           :                
+RESERVED_INPUT               : 196       :        :                   :         :           :                
 GND_INT                      : 197       : gnd    :                   :         :           :                
-GND*                         : 198       :        :                   :         :           :                
-GND*                         : 199       :        :                   :         :           :                
-GND*                         : 200       :        :                   :         :           :                
-GND*                         : 201       :        :                   :         :           :                
-GND*                         : 202       :        :                   :         :           :                
-GND*                         : 203       :        :                   :         :           :                
-GND*                         : 204       :        :                   :         :           :                
+RESERVED_INPUT               : 198       :        :                   :         :           :                
+RESERVED_INPUT               : 199       :        :                   :         :           :                
+RESERVED_INPUT               : 200       :        :                   :         :           :                
+RESERVED_INPUT               : 201       :        :                   :         :           :                
+RESERVED_INPUT               : 202       :        :                   :         :           :                
+RESERVED_INPUT               : 203       :        :                   :         :           :                
+RESERVED_INPUT               : 204       :        :                   :         :           :                
 VCC_INT                      : 205       : power  :                   : 5.0V    :           :                
-GND*                         : 206       :        :                   :         :           :                
-GND*                         : 207       :        :                   :         :           :                
-GND*                         : 208       :        :                   :         :           :                
-GND*                         : 209       :        :                   :         :           :                
-GND+                         : 210       :        :                   :         :           :                
+RESERVED_INPUT               : 206       :        :                   :         :           :                
+RESERVED_INPUT               : 207       :        :                   :         :           :                
+RESERVED_INPUT               : 208       :        :                   :         :           :                
+RESERVED_INPUT               : 209       :        :                   :         :           :                
+nRST                         : 210       : input  : TTL               :         :           : Y              
 clk                          : 211       : input  : TTL               :         :           : Y              
 GND+                         : 212       :        :                   :         :           :                
-GND*                         : 213       :        :                   :         :           :                
-GND*                         : 214       :        :                   :         :           :                
-GND*                         : 215       :        :                   :         :           :                
+RESERVED_INPUT               : 213       :        :                   :         :           :                
+RESERVED_INPUT               : 214       :        :                   :         :           :                
+RESERVED_INPUT               : 215       :        :                   :         :           :                
 GND_INT                      : 216       : gnd    :                   :         :           :                
-GND*                         : 217       :        :                   :         :           :                
-GND*                         : 218       :        :                   :         :           :                
-GND*                         : 219       :        :                   :         :           :                
-GND*                         : 220       :        :                   :         :           :                
-GND*                         : 221       :        :                   :         :           :                
-GND*                         : 222       :        :                   :         :           :                
-GND*                         : 223       :        :                   :         :           :                
+RESERVED_INPUT               : 217       :        :                   :         :           :                
+RESERVED_INPUT               : 218       :        :                   :         :           :                
+RESERVED_INPUT               : 219       :        :                   :         :           :                
+RESERVED_INPUT               : 220       :        :                   :         :           :                
+RESERVED_INPUT               : 221       :        :                   :         :           :                
+RESERVED_INPUT               : 222       :        :                   :         :           :                
+RESERVED_INPUT               : 223       :        :                   :         :           :                
 VCC_INT                      : 224       : power  :                   : 5.0V    :           :                
-GND*                         : 225       :        :                   :         :           :                
-GND*                         : 226       :        :                   :         :           :                
-GND*                         : 227       :        :                   :         :           :                
-GND*                         : 228       :        :                   :         :           :                
-GND*                         : 229       :        :                   :         :           :                
-GND*                         : 230       :        :                   :         :           :                
-GND*                         : 231       :        :                   :         :           :                
+RESERVED_INPUT               : 225       :        :                   :         :           :                
+RESERVED_INPUT               : 226       :        :                   :         :           :                
+RESERVED_INPUT               : 227       :        :                   :         :           :                
+RESERVED_INPUT               : 228       :        :                   :         :           :                
+RESERVED_INPUT               : 229       :        :                   :         :           :                
+RESERVED_INPUT               : 230       :        :                   :         :           :                
+RESERVED_INPUT               : 231       :        :                   :         :           :                
 GND_INT                      : 232       : gnd    :                   :         :           :                
-GND*                         : 233       :        :                   :         :           :                
-GND*                         : 234       :        :                   :         :           :                
-GND*                         : 235       :        :                   :         :           :                
-GND*                         : 236       :        :                   :         :           :                
-GND*                         : 237       :        :                   :         :           :                
-GND*                         : 238       :        :                   :         :           :                
-GND*                         : 239       :        :                   :         :           :                
-GND*                         : 240       :        :                   :         :           :                
+RESERVED_INPUT               : 233       :        :                   :         :           :                
+RESERVED_INPUT               : 234       :        :                   :         :           :                
+RESERVED_INPUT               : 235       :        :                   :         :           :                
+RESERVED_INPUT               : 236       :        :                   :         :           :                
+RESERVED_INPUT               : 237       :        :                   :         :           :                
+RESERVED_INPUT               : 238       :        :                   :         :           :                
+RESERVED_INPUT               : 239       :        :                   :         :           :                
+RESERVED_INPUT               : 240       :        :                   :         :           :                

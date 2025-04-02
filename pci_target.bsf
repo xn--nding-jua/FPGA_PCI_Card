@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 176 272)
+	(rect 16 16 176 336)
 	(text "pci_target" (rect 5 0 53 12)(font "Arial" ))
-	(text "inst" (rect 8 240 25 252)(font "Arial" ))
+	(text "inst" (rect 8 304 25 316)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -45,25 +45,53 @@ applicable agreement for further details.
 		(line (pt 0 64)(pt 16 64)(line_width 1))
 	)
 	(port
+		(pt 0 80)
+		(input)
+		(text "nGNT_i" (rect 0 0 36 12)(font "Arial" ))
+		(text "nGNT_i" (rect 21 75 57 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 1))
+	)
+	(port
 		(pt 160 192)
 		(output)
-		(text "data_o[31..0]" (rect 0 0 64 12)(font "Arial" ))
-		(text "data_o[31..0]" (rect 75 187 139 199)(font "Arial" ))
-		(line (pt 160 192)(pt 144 192)(line_width 3))
+		(text "nREQ_o" (rect 0 0 41 12)(font "Arial" ))
+		(text "nREQ_o" (rect 98 187 139 199)(font "Arial" ))
+		(line (pt 160 192)(pt 144 192)(line_width 1))
 	)
 	(port
 		(pt 160 208)
 		(output)
-		(text "rdy_o" (rect 0 0 28 12)(font "Arial" ))
-		(text "rdy_o" (rect 111 203 139 215)(font "Arial" ))
+		(text "nIRQA" (rect 0 0 33 12)(font "Arial" ))
+		(text "nIRQA" (rect 106 203 139 215)(font "Arial" ))
 		(line (pt 160 208)(pt 144 208)(line_width 1))
 	)
 	(port
-		(pt 160 224)
+		(pt 160 240)
+		(output)
+		(text "data_o[31..0]" (rect 0 0 64 12)(font "Arial" ))
+		(text "data_o[31..0]" (rect 75 235 139 247)(font "Arial" ))
+		(line (pt 160 240)(pt 144 240)(line_width 3))
+	)
+	(port
+		(pt 160 256)
+		(output)
+		(text "rdy_o" (rect 0 0 28 12)(font "Arial" ))
+		(text "rdy_o" (rect 111 251 139 263)(font "Arial" ))
+		(line (pt 160 256)(pt 144 256)(line_width 1))
+	)
+	(port
+		(pt 160 272)
 		(output)
 		(text "LED_o" (rect 0 0 33 12)(font "Arial" ))
-		(text "LED_o" (rect 106 219 139 231)(font "Arial" ))
-		(line (pt 160 224)(pt 144 224)(line_width 1))
+		(text "LED_o" (rect 106 267 139 279)(font "Arial" ))
+		(line (pt 160 272)(pt 144 272)(line_width 1))
+	)
+	(port
+		(pt 160 288)
+		(output)
+		(text "debug[15..0]" (rect 0 0 61 12)(font "Arial" ))
+		(text "debug[15..0]" (rect 78 283 139 295)(font "Arial" ))
+		(line (pt 160 288)(pt 144 288)(line_width 3))
 	)
 	(port
 		(pt 160 32)
@@ -135,13 +163,25 @@ applicable agreement for further details.
 		(text "nSERR_io" (rect 89 171 139 183)(font "Arial" ))
 		(line (pt 160 176)(pt 144 176)(line_width 1))
 	)
+	(port
+		(pt 160 224)
+		(bidir)
+		(text "nLOCK" (rect 0 0 35 12)(font "Arial" ))
+		(text "nLOCK" (rect 104 219 139 231)(font "Arial" ))
+		(line (pt 160 224)(pt 144 224)(line_width 1))
+	)
 	(parameter
 		"ioport"
 		"8192"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"iorange"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 144 240)(line_width 1))
+		(rectangle (rect 16 16 144 304)(line_width 1))
 	)
 	(annotation_block (parameter)(rect 176 -64 276 16))
 )

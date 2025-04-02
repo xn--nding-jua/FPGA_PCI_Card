@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------- #
 #
-# Copyright (C) 1991-2014 Altera Corporation
+# Copyright (C) 1991-2009 Altera Corporation
 # Your use of Altera Corporation's design tools, logic functions 
 # and other software and tools, and its AMPP partner logic 
 # functions, and any output files from any of the foregoing 
@@ -16,9 +16,9 @@
 #
 # -------------------------------------------------------------------------- #
 #
-# Quartus II 64-Bit
-# Version 13.1.4 Build 182 03/12/2014 SJ Full Version
-# Date created = 11:29:09  February 19, 2025
+# Quartus II
+# Version 9.0 Build 132 02/25/2009 SJ Web Edition
+# Date created = 11:17:53  March 08, 2025
 #
 # -------------------------------------------------------------------------- #
 #
@@ -37,70 +37,89 @@
 
 
 set_global_assignment -name FAMILY FLEX10K
-set_global_assignment -name DEVICE "EPF10K50RC240-3"
+set_global_assignment -name DEVICE "EPF10K30RC240-3"
 set_global_assignment -name TOP_LEVEL_ENTITY PCICard
-set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.1
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:29:09  FEBRUARY 19, 2025"
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 9.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:17:53  MARCH 08, 2025"
 set_global_assignment -name LAST_QUARTUS_VERSION 9.0
-set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
-set_global_assignment -name VHDL_FILE pci_target.vhd
-set_global_assignment -name BDF_FILE PCICard.bdf
-set_global_assignment -name MISC_FILE "C:/Cloud/Programmieren/Quartus/PCI_FLEX_CARD/FPGA/PCICard.dpf"
-set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name MISC_FILE "C:/Temp/PCICard/PCICard.dpf"
 set_global_assignment -name FLEX10K_DEVICE_IO_STANDARD TTL
-set_location_assignment PIN_120 -to AD0
-set_location_assignment PIN_119 -to AD1
-set_location_assignment PIN_118 -to AD2
-set_location_assignment PIN_117 -to AD3
-set_location_assignment PIN_116 -to AD4
-set_location_assignment PIN_115 -to AD5
-set_location_assignment PIN_114 -to AD6
-set_location_assignment PIN_113 -to AD7
-set_location_assignment PIN_111 -to nCBE0
-set_location_assignment PIN_110 -to AD8
-set_location_assignment PIN_109 -to AD9
-set_location_assignment PIN_108 -to AD10
-set_location_assignment PIN_107 -to AD11
-set_location_assignment PIN_106 -to AD12
-set_location_assignment PIN_105 -to AD13
-set_location_assignment PIN_103 -to AD14
-set_location_assignment PIN_102 -to AD15
-set_location_assignment PIN_101 -to nCBE1
-set_location_assignment PIN_83 -to AD16
-set_location_assignment PIN_82 -to AD17
-set_location_assignment PIN_81 -to AD18
-set_location_assignment PIN_80 -to AD19
-set_location_assignment PIN_79 -to AD20
-set_location_assignment PIN_78 -to AD21
-set_location_assignment PIN_76 -to AD22
-set_location_assignment PIN_75 -to AD23
-set_location_assignment PIN_72 -to AD24
-set_location_assignment PIN_71 -to AD25
-set_location_assignment PIN_70 -to AD26
-set_location_assignment PIN_68 -to AD27
-set_location_assignment PIN_67 -to AD28
-set_location_assignment PIN_66 -to AD29
-set_location_assignment PIN_65 -to AD30
-set_location_assignment PIN_64 -to AD31
-set_location_assignment PIN_74 -to IDSEL
-set_location_assignment PIN_84 -to nCBE2
-set_location_assignment PIN_94 -to nDEVSEL
-set_location_assignment PIN_86 -to nFRAME
-set_location_assignment PIN_87 -to nIRDY
-set_location_assignment PIN_98 -to nPERR
-set_location_assignment PIN_92 -to nRST
-set_location_assignment PIN_99 -to nSERR
-set_location_assignment PIN_95 -to nSTOP
-set_location_assignment PIN_88 -to nTRDY
-set_location_assignment PIN_100 -to PAR
-set_location_assignment PIN_73 -to nCBE3
 set_location_assignment PIN_211 -to clk
-set_instance_assignment -name FAST_OUTPUT_REGISTER OFF -to AD27
-set_instance_assignment -name FAST_INPUT_REGISTER OFF -to AD27
-set_instance_assignment -name SLOW_SLEW_RATE OFF -to AD27
-set_global_assignment -name MISC_FILE "C:/GitCheckout/GitHub/FPGA_PCI_Card/PCICard.dpf"
-set_location_assignment PIN_91 -to clk_half
+set_location_assignment PIN_80 -to nDEVSEL
+set_location_assignment PIN_64 -to IDSEL
+set_location_assignment PIN_74 -to nIRDY
+set_location_assignment PIN_98 -to PAR
+set_location_assignment PIN_95 -to nPERR
+set_location_assignment PIN_210 -to nRST
+set_location_assignment PIN_97 -to nSERR
+set_location_assignment PIN_81 -to nSTOP
+set_location_assignment PIN_75 -to nTRDY
+set_location_assignment PIN_73 -to nFRAME
+set_location_assignment PIN_55 -to nGNT
+set_location_assignment PIN_56 -to nREQ
+set_location_assignment PIN_54 -to nIRQA
+set_location_assignment PIN_94 -to nLOCK
+set_location_assignment PIN_33 -to LED
+set_location_assignment PIN_149 -to dbg_0
+set_location_assignment PIN_147 -to dbg_1
+set_location_assignment PIN_144 -to dbg_2
+set_location_assignment PIN_142 -to dbg_3
+set_location_assignment PIN_139 -to dbg_4
+set_location_assignment PIN_137 -to dbg_5
+set_location_assignment PIN_134 -to dbg_6
+set_location_assignment PIN_132 -to dbg_7
+set_location_assignment PIN_151 -to dbg_8
+set_location_assignment PIN_148 -to dbg_9
+set_location_assignment PIN_146 -to dbg_10
+set_location_assignment PIN_143 -to dbg_11
+set_location_assignment PIN_141 -to dbg_12
+set_location_assignment PIN_138 -to dbg_13
+set_location_assignment PIN_136 -to dbg_14
+set_location_assignment PIN_133 -to dbg_15
+set_location_assignment PIN_67 -to AD[31]
+set_location_assignment PIN_68 -to AD[30]
+set_location_assignment PIN_70 -to AD[29]
+set_location_assignment PIN_71 -to AD[28]
+set_location_assignment PIN_72 -to AD[27]
+set_location_assignment PIN_76 -to AD[26]
+set_location_assignment PIN_78 -to AD[25]
+set_location_assignment PIN_79 -to AD[24]
+set_location_assignment PIN_82 -to AD[23]
+set_location_assignment PIN_83 -to AD[22]
+set_location_assignment PIN_84 -to AD[21]
+set_location_assignment PIN_86 -to AD[20]
+set_location_assignment PIN_87 -to AD[19]
+set_location_assignment PIN_88 -to AD[18]
+set_location_assignment PIN_99 -to AD[17]
+set_location_assignment PIN_100 -to AD[16]
+set_location_assignment PIN_101 -to AD[15]
+set_location_assignment PIN_102 -to AD[14]
+set_location_assignment PIN_103 -to AD[13]
+set_location_assignment PIN_105 -to AD[12]
+set_location_assignment PIN_106 -to AD[11]
+set_location_assignment PIN_107 -to AD[10]
+set_location_assignment PIN_108 -to AD[9]
+set_location_assignment PIN_109 -to AD[8]
+set_location_assignment PIN_110 -to AD[7]
+set_location_assignment PIN_111 -to AD[6]
+set_location_assignment PIN_113 -to AD[5]
+set_location_assignment PIN_114 -to AD[4]
+set_location_assignment PIN_115 -to AD[3]
+set_location_assignment PIN_118 -to AD[2]
+set_location_assignment PIN_119 -to AD[1]
+set_location_assignment PIN_120 -to AD[0]
+set_location_assignment PIN_65 -to nCBE[3]
+set_location_assignment PIN_66 -to nCBE[2]
+set_location_assignment PIN_116 -to nCBE[1]
+set_location_assignment PIN_117 -to nCBE[0]
+set_global_assignment -name BDF_FILE PCICard.bdf
+set_global_assignment -name VHDL_FILE pci_target.vhd
+set_global_assignment -name VHDL_FILE clk_by_x.vhd
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS OUTPUT DRIVING AN UNSPECIFIED SIGNAL"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
