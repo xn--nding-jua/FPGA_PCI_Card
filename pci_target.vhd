@@ -119,7 +119,10 @@ entity pci_target is
 		nIRQA		: out std_logic := 'Z';
 		nLOCK		: inout std_logic := 'Z';
 		
-		data_o		: out std_logic_vector(31 downto 0);
+		data0_o		: out std_logic_vector(31 downto 0);
+		data1_o		: out std_logic_vector(31 downto 0);
+		data2_o		: out std_logic_vector(31 downto 0);
+		data3_o		: out std_logic_vector(31 downto 0);
 		rdy_o		: out std_logic;
 		LED_o		: out std_logic := 'Z';
 		
@@ -620,7 +623,7 @@ begin
 						-- copy full DWORD to output
 						if (dataPointer = ioport) then
 							-- we are receiving four bytes here
-							data_o <= AD_io; -- copy all 32 bit
+							data0_o <= AD_io; -- copy all 32 bit
 							
 							-- set LED
 							LED_o <= AD_io(0); -- bit 0 of byte 0
@@ -628,11 +631,14 @@ begin
 							--LED_o <= AD_io(16); -- bit 0 of byte 2
 							--LED_o <= AD_io(25); -- bit 0 of byte 3
 						elsif (dataPointer = (ioport + 4)) then
-							-- do nothing
+							-- we are receiving four bytes here
+							data1_o <= AD_io; -- copy all 32 bit
 						elsif (dataPointer = (ioport + 8)) then
-							-- do nothing
+							-- we are receiving four bytes here
+							data2_o <= AD_io; -- copy all 32 bit
 						elsif (dataPointer = (ioport + 12)) then
-							-- do nothing
+							-- we are receiving four bytes here
+							data3_o <= AD_io; -- copy all 32 bit
 						else
 							-- do nothing
 						end if;
