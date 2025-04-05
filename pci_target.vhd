@@ -129,7 +129,7 @@ entity pci_target is
 end pci_target;
 
 architecture Behavioral of pci_target is
-	type t_SM_Transaction is (s_Idle, s_confreadTurn, s_confread, s_ioreadTurn, s_confwrite, s_confwriteEnd, s_ioread, s_iowrite, s_iowriteEnd, s_Parity);
+	type t_SM_Transaction is (s_Idle, s_confreadTurn, s_confread, s_confwrite, s_confwriteEnd, s_ioreadTurn, s_ioread, s_iowrite, s_iowriteEnd, s_Parity);
 	signal s_SM_Transaction : t_SM_Transaction := s_Idle;
 	
 	signal AD		 	: std_logic_vector(31 downto 0);
@@ -200,9 +200,9 @@ begin
 				conf_frame(2) <= x"24";  -- PID = 0x2524
 				conf_frame(3) <= x"25";
 				
-				conf_frame(4) <= x"01";  -- command = 0x0001 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
+				conf_frame(4) <= x"01";  -- command = 0x01 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
 				conf_frame(5) <= x"00"; -- 0x04 for no interrupts
-				conf_frame(6) <= x"00";  -- status = 0x0000 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
+				conf_frame(6) <= x"00";  -- status = 0x00 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
 				conf_frame(7) <= x"00";
 				
 				conf_frame(8) <= x"B2";  -- revision ID = 0xB2
@@ -234,7 +234,7 @@ begin
 				conf_frame(18) <= x"00"; -- BAR0 (Base Address Register)
 				conf_frame(19) <= x"00"; -- BAR0 (Base Address Register)
 
-				-- register 64 bytes I/O memory with 0xFFFFFFC1
+				-- register 1MB bytes in memory-space with 0xFFF00000
 				conf_frame(20) <= x"00"; -- BAR1 (Base Address Register)
 				conf_frame(21) <= x"00"; -- BAR1 (Base Address Register)
 				conf_frame(22) <= x"00"; -- BAR1 (Base Address Register)
@@ -492,6 +492,18 @@ begin
 								--ioport <= to_integer(unsigned(AD_io(31 downto 0))); -- receive the Start-IO-Addres
 							end if;
 						end if;
+--						if (dataPointer = 20) then -- DWORD-address = 5
+--							-- write to Base Address Register 1 to receive the Address from BIOS
+--							if (nCBE_io(3 downto 0) = "0000") then
+--								-- request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
+--								conf_frame(20) <= "0000" & "1000"; -- BAR1, 32-bit prefetchable Memory-Space
+--								conf_frame(21) <= "00000000"; -- BAR1
+--								conf_frame(22) <= AD_io(23 downto 20) & "0000"; -- BAR1
+--								conf_frame(23) <= AD_io(31 downto 24); -- BAR1
+--								
+--								--ioport <= to_integer(unsigned(AD_io(31 downto 0))); -- receive the Start-IO-Addres
+--							end if;
+--						end if;
 --						if (dataPointer = 60) then
 --							if (nCBE_io(0) = '0') then
 --								conf_frame(60) <= AD_io(7 downto 0); -- INTLINE
@@ -521,6 +533,11 @@ begin
 					nDEVSEL_io <= '1'; -- High, not High-Z!
 					nSTOP_io <= '1';
 					s_SM_Transaction <= s_Idle;
+				
+				
+				
+				
+				
 				
 				elsif (s_SM_Transaction = s_ioreadTurn) then
 					-- wait one clock for the turnaround-cycle
@@ -642,7 +659,10 @@ begin
 
 					rdy_o <= '1';
 					s_SM_Transaction <= s_Idle;
-					
+
+
+
+
 				elsif (s_SM_Transaction = s_Parity) then
 					-- output last Paritybit if in read-mode (both confread and ioread)
 
