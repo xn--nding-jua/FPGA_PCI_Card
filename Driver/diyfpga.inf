@@ -1,0 +1,64 @@
+; Windows9x Driver for the DIY FPGA PCI Card
+; (c) 2025 Chris Noeding
+; More information under https://github/xn--nding-jua/FPGA_PCI_Card
+
+[version]
+Signature="$CHICAGO$"
+Class=MEDIA
+Provider=%String0%
+
+[Manufacturer]
+%String1%=SECTION_0
+
+[SECTION_0]
+%String2%=dev.install,PCI\VEN_1172&DEV_2524
+
+[ClassInstall]
+AddReg=dev.class.install
+
+[dev.class.install]
+HKR,,,0,%String4%
+HKR,,Icon,0,"-1"
+;HKR,,Installer,0,mmci.dll
+
+;[DestinationDirs]
+;dev.copy=11
+;DestGrp=10,
+;DestGrp1=10,desktop
+
+;[dev.install]
+;CopyFiles=dev.copy,DestGrp,DestGrp1
+;AddReg=dev.registry
+
+;[dev.copy]
+,driver.vxd
+;driver.drv
+
+;[DestGrp]
+;FPGA.ico,,,4
+
+;[DestGrp1]
+;Info.txt,,,4
+
+;[dev.registry]
+
+[SourceDisksName]
+1=%String3%,,
+
+[SourceDisksFiles]
+;driver.vxd=1
+;driver.drv=1
+;FPGA.ico=1
+;Info.txt=1
+
+[strings]
+; Provider
+String0="Noeding"
+; Manufacturer
+String1="Noeding"
+; PCI-Device-Name
+String2="DIY FPGA PCI Card Rev1"
+; Source-Disk-Name
+String3="DIY FPGA PCI Card Driver Disc"
+; DeviceClass
+String4="Audio-, Video- und Game-Controller"

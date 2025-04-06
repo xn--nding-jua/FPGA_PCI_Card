@@ -2,6 +2,7 @@
 *.bak
 *.bin
 *.~*
+*.exe
 
 # Quartus-files
 undo_redo.txt
