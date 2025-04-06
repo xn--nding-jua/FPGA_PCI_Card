@@ -128,3 +128,7 @@ set_location_assignment PIN_34 -to AudioOut0
 set_location_assignment PIN_35 -to AudioOut1
 set_location_assignment PIN_36 -to AudioOut2
 set_location_assignment PIN_38 -to AudioOut3
+set_global_assignment -name VHDL_FILE pciclk_2_audioclk.vhd
+set_global_assignment -name VHDL_FILE toggle.vhd
+set_global_assignment -name VHDL_FILE ringbufram.vhd
+set_global_assignment -name QIP_FILE lpm_constant0.qip

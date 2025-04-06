@@ -119,11 +119,23 @@ entity pci_target is
 		nIRQA		: out std_logic := 'Z';
 		nLOCK		: inout std_logic := 'Z';
 		
+		
+		
+		-- interface to outside
+		data0_i		: in std_logic_vector(31 downto 0);
+		data1_i		: in std_logic_vector(31 downto 0);
+		data2_i		: in std_logic_vector(31 downto 0);
+		data3_i		: in std_logic_vector(31 downto 0);
+
 		data0_o		: out std_logic_vector(31 downto 0);
 		data1_o		: out std_logic_vector(31 downto 0);
 		data2_o		: out std_logic_vector(31 downto 0);
 		data3_o		: out std_logic_vector(31 downto 0);
-		rdy_o		: out std_logic;
+		rdy0_o		: out std_logic;
+		rdy1_o		: out std_logic;
+		rdy2_o		: out std_logic;
+		rdy3_o		: out std_logic;
+		
 		LED_o		: out std_logic := 'Z';
 		
 		-- some debug outputs
@@ -149,7 +161,7 @@ architecture Behavioral of pci_target is
 
 	type t_conf_frame is array (0 to 63) of std_logic_vector(7 downto 0); -- 64 bytes seems to be minimum for correct PnP-enumeration
 	signal conf_frame	: t_conf_frame;
-	--signal ioport		: integer range 0 to 65535 := 0; -- 16-bit start-address for io-port
+	--signal ioport_bar	: integer range 0 to 65535 := 0; -- 16-bit start-address for io-port from BAR0
 	
 	signal AD_o			: std_logic_vector(31 downto 0);
 	signal AD_oe		: std_logic := '0';
@@ -203,7 +215,8 @@ begin
 				conf_frame(2) <= x"24";  -- PID = 0x2524
 				conf_frame(3) <= x"25";
 				
-				conf_frame(4) <= x"01";  -- command = 0x01 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
+				--conf_frame(4) <= x"01";  -- command = 0x01 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
+				conf_frame(4) <= x"03";  -- command = 0x03 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
 				conf_frame(5) <= x"00"; -- 0x04 for no interrupts
 				conf_frame(6) <= x"00";  -- status = 0x00 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
 				conf_frame(7) <= x"00";
@@ -295,7 +308,10 @@ begin
 				conf_frame(63) <= x"00"; -- Max_Lat
 
 				s_SM_Transaction <= s_Idle;
-				rdy_o <= '0';
+				rdy0_o <= '0';
+				rdy1_o <= '0';
+				rdy2_o <= '0';
+				rdy3_o <= '0';
 			else
 				-- regular operation
 				if (s_SM_Transaction = s_Idle) then
@@ -308,7 +324,10 @@ begin
 					nTRDY_io <= 'Z'; -- set outputs (bi-directional-pins) to High-Z
 					nDEVSEL_io <= 'Z'; -- set outputs (bi-directional-pins) to High-Z
 					nSTOP_io <= 'Z';
-					rdy_o <= '0';
+					rdy0_o <= '0';
+					rdy1_o <= '0';
+					rdy2_o <= '0';
+					rdy3_o <= '0';
 
 					if (nFrame_io = '0') then -- start of bus cycle is detected
 						AD <= AD_io;		-- read address
@@ -333,8 +352,8 @@ begin
 
 						elsif (nCBE_io = ioread) then
 							-- master wants to read some data -> check if this is our address							
-							--if (AD_io = std_logic_vector(to_unsigned(ioport, AD_io'length))) then
 							if ((unsigned(AD_io) >= to_unsigned(ioport, AD_io'length)) and (unsigned(AD_io) < (to_unsigned(ioport + iorange, AD_io'length)))) then
+							--if ((ioport_bar > 0) and (unsigned(AD_io) >= to_unsigned(ioport_bar, AD_io'length)) and (unsigned(AD_io) < (to_unsigned(ioport_bar + iorange, AD_io'length)))) then
 								-- calculate memory-offset based on given ioport
 								-- during this phase, AD[31..0] contains a physical 32-bit address
 								-- byteEnable indicates the size of the transfer
@@ -344,8 +363,8 @@ begin
 							
 						elsif (nCBE_io = iowrite) then
 							-- master wants to write some data -> check if this is our address							
-							--if (AD_io = std_logic_vector(to_unsigned(ioport, AD_io'length))) then
 							if ((unsigned(AD_io) >= to_unsigned(ioport, AD_io'length)) and (unsigned(AD_io) < (to_unsigned(ioport + iorange, AD_io'length)))) then
+							--if ((ioport_bar > 0) and (unsigned(AD_io) >= to_unsigned(ioport_bar, AD_io'length)) and (unsigned(AD_io) < (to_unsigned(ioport_bar + iorange, AD_io'length)))) then
 								-- calculate memory-offset based on given ioport
 								-- during this phase, AD[31..0] contains a physical 32-bit address
 								-- nCBE indicates the size of the transfer
@@ -375,6 +394,12 @@ begin
 --							
 						end if;
 					end if;
+					
+					
+				-- ===============================================================================
+				-- Configuration-Space-Functions
+				-- ===============================================================================
+					
 					
 				elsif (s_SM_Transaction = s_confreadTurn) then
 					-- wait one clock for the turnaround-cycle
@@ -492,21 +517,19 @@ begin
 								conf_frame(18) <= AD_io(23 downto 16); -- BAR0
 								conf_frame(19) <= AD_io(31 downto 24); -- BAR0
 								
-								--ioport <= to_integer(unsigned(AD_io(31 downto 0))); -- receive the Start-IO-Addres
+								--ioport_bar <= to_integer(shift_left(resize(unsigned(AD_io(31 downto 4)), AD_io'length), 4)); -- receive the Start-IO-Address
 							end if;
 						end if;
---						if (dataPointer = 20) then -- DWORD-address = 5
---							-- write to Base Address Register 1 to receive the Address from BIOS
---							if (nCBE_io(3 downto 0) = "0000") then
---								-- request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
---								conf_frame(20) <= "0000" & "1000"; -- BAR1, 32-bit prefetchable Memory-Space
---								conf_frame(21) <= "00000000"; -- BAR1
---								conf_frame(22) <= AD_io(23 downto 20) & "0000"; -- BAR1
---								conf_frame(23) <= AD_io(31 downto 24); -- BAR1
---								
---								--ioport <= to_integer(unsigned(AD_io(31 downto 0))); -- receive the Start-IO-Addres
---							end if;
---						end if;
+						if (dataPointer = 20) then -- DWORD-address = 5
+							-- write to Base Address Register 1 to receive the Address from BIOS
+							if (nCBE_io(3 downto 0) = "0000") then
+								-- request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
+								conf_frame(20) <= "0000" & "1000"; -- BAR1, 32-bit prefetchable Memory-Space
+								conf_frame(21) <= "00000000"; -- BAR1
+								conf_frame(22) <= AD_io(23 downto 20) & "0000"; -- BAR1
+								conf_frame(23) <= AD_io(31 downto 24); -- BAR1
+							end if;
+						end if;
 --						if (dataPointer = 60) then
 --							if (nCBE_io(0) = '0') then
 --								conf_frame(60) <= AD_io(7 downto 0); -- INTLINE
@@ -537,8 +560,11 @@ begin
 					nSTOP_io <= '1';
 					s_SM_Transaction <= s_Idle;
 				
+
 				
-				
+				-- ===============================================================================
+				-- IO-Space Functions
+				-- ===============================================================================
 				
 				
 				
@@ -567,15 +593,19 @@ begin
 					nSTOP_io <= '1';
 
 					if ((dataPointer >= ioport) and (dataPointer <= (ioport + 3))) then
-						AD_o <= std_logic_vector(to_unsigned(42, 32)); -- output constant value "42"
+						--AD_o <= std_logic_vector(to_unsigned(42, 32)); -- output constant value "42"
+						AD_o <= data0_i;
 					elsif ((dataPointer >= (ioport + 4)) and (dataPointer <= (ioport + 7))) then
-						AD_o <= std_logic_vector(to_unsigned(43, 32)); -- output constant value "43"
+						--AD_o <= std_logic_vector(to_unsigned(43, 32)); -- output constant value "43"
+						AD_o <= data1_i;
 					elsif ((dataPointer >= (ioport + 8)) and (dataPointer <= (ioport + 11))) then
 						AD_o <= conf_frame(19) & conf_frame(18) & conf_frame(17) & conf_frame(16);
+						--AD_o <= data2_i;
 					elsif ((dataPointer >= (ioport + 12)) and (dataPointer <= (ioport + 15))) then
-						AD_o <= "11000000" & "00110000" & "00001100" & "00000011";
+						AD_o <= conf_frame(23) & conf_frame(22) & conf_frame(21) & conf_frame(20);
+						--AD_o <= data3_i;
 					else
-						AD_o <= std_logic_vector(to_unsigned(dataPointer - ioport, 32)); -- return the address
+						AD_o <= (others => '0');
 					end if;
 					zBE <= nCBE_io;
 					
@@ -624,6 +654,7 @@ begin
 						if (dataPointer = ioport) then
 							-- we are receiving four bytes here
 							data0_o <= AD_io; -- copy all 32 bit
+							rdy0_o <= '1';
 							
 							-- set LED
 							LED_o <= AD_io(0); -- bit 0 of byte 0
@@ -633,12 +664,15 @@ begin
 						elsif (dataPointer = (ioport + 4)) then
 							-- we are receiving four bytes here
 							data1_o <= AD_io; -- copy all 32 bit
+							rdy1_o <= '1';
 						elsif (dataPointer = (ioport + 8)) then
 							-- we are receiving four bytes here
 							data2_o <= AD_io; -- copy all 32 bit
+							rdy2_o <= '1';
 						elsif (dataPointer = (ioport + 12)) then
 							-- we are receiving four bytes here
 							data3_o <= AD_io; -- copy all 32 bit
+							rdy3_o <= '1';
 						else
 							-- do nothing
 						end if;
@@ -663,10 +697,17 @@ begin
 					nDEVSEL_io <= '1'; -- High, not High-Z!
 					nSTOP_io <= '1';
 
-					rdy_o <= '1';
+					rdy0_o <= '0';
+					rdy1_o <= '0';
+					rdy2_o <= '0';
+					rdy3_o <= '0';
 					s_SM_Transaction <= s_Idle;
 
 
+
+				-- ===============================================================================
+				-- Special-Functions
+				-- ===============================================================================
 
 
 				elsif (s_SM_Transaction = s_Parity) then
