@@ -1,23 +1,30 @@
-; Windows9x Driver for the DIY FPGA PCI Card
-; (c) 2025 Chris Noeding
-; More information under https://github/xn--nding-jua/FPGA_PCI_Card
+; Description : Windows9x Driver for the DIY FPGA PCI Card
+; InfVersion  : 1.0
+; Comment     : More information under https://github/xn--nding-jua/FPGA_PCI_Card
+; Language    : German/English
+; OS          : Windows 95/98
+; Copyright   : © 2025 by Chris Noeding, Germany
+;----------------------------------------------------------------------
 
 [version]
 Signature="$CHICAGO$"
 Class=MEDIA
-Provider=%String0%
+Provider=%NDNG%
+LayoutFile=layout.inf
+DriverVer=04/06/2025,1.0.1000.00001
+;DriverVer=mm/dd/yyyy
 
 [Manufacturer]
-%String1%=SECTION_0
+%VENDOR%=Vendor
 
-[SECTION_0]
-%String2%=dev.install,PCI\VEN_1172&DEV_2524
+[Vendor]
+%FPGA01.DeviceDesc%=dev.install,PCI\VEN_1172&DEV_2524
 
 [ClassInstall]
 AddReg=dev.class.install
 
 [dev.class.install]
-HKR,,,0,%String4%
+HKR,,,0,%ClassString%
 HKR,,Icon,0,"-1"
 ;HKR,,Installer,0,mmci.dll
 
@@ -26,12 +33,12 @@ HKR,,Icon,0,"-1"
 ;DestGrp=10,
 ;DestGrp1=10,desktop
 
-;[dev.install]
+[dev.install]
 ;CopyFiles=dev.copy,DestGrp,DestGrp1
 ;AddReg=dev.registry
 
 ;[dev.copy]
-,driver.vxd
+;driver.vxd
 ;driver.drv
 
 ;[DestGrp]
@@ -42,8 +49,15 @@ HKR,,Icon,0,"-1"
 
 ;[dev.registry]
 
+;[DefaultUninstall]
+;DelFiles=DestGrp
+;DelReg=FPGA.DelReg
+
+;[FPGA.DelReg]
+;HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\DIY_FPGA
+
 [SourceDisksName]
-1=%String3%,,
+1=%DiscDesc%,,
 
 [SourceDisksFiles]
 ;driver.vxd=1
@@ -53,12 +67,14 @@ HKR,,Icon,0,"-1"
 
 [strings]
 ; Provider
-String0="Noeding"
+NDNG="Noeding"
 ; Manufacturer
-String1="Noeding"
+VENDOR="Noeding"
 ; PCI-Device-Name
-String2="DIY FPGA PCI Card Rev1"
+FPGA01.DeviceDesc="DIY FPGA PCI Card Rev1"
 ; Source-Disk-Name
-String3="DIY FPGA PCI Card Driver Disc"
+DiscDesc="DIY FPGA PCI Card Driver Disc"
 ; DeviceClass
-String4="Audio-, Video- und Game-Controller"
+ClassString="Audio-, Video- und Game-Controller"
+
+;-----------------------------------------------------------------------
