@@ -120,7 +120,8 @@ begin
 				tail <= 0;
 
 				-- reset outputs to RAM
-				ram_data <= (others => 'Z');
+				ram_data_l <= (others => 'Z');
+				ram_data_r <= (others => 'Z');
 				ram_nADSP <= '1';
 				ram_nADSC <= '1';
 				ram_nWH <= '1';
@@ -166,7 +167,8 @@ begin
 						s_SM_Ringbuffer <= s_ReadPrepare;
 					else
 						-- no read or write, so nothing to do -> turnoff outputs and set all values to default
-						ram_data <= (others => 'Z');
+						ram_data_l <= (others => 'Z');
+						ram_data_r <= (others => 'Z');
 						ram_nCS <= '1';
 						ram_nADSC <= '1';
 						ram_nWH <= '1';

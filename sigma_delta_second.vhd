@@ -33,7 +33,7 @@ entity sigma_delta_second is
 	);
 	Port (
 		clk   		: in  STD_LOGIC;
-		sample_in	: in  STD_LOGIC_VECTOR (23 downto 0);
+		sample_in	: in  STD_LOGIC_VECTOR (bit_width - 1 downto 0);
 		output		: out STD_LOGIC
 	);
 end sigma_delta_second;

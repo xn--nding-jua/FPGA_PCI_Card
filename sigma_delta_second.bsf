@@ -20,7 +20,7 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 184 112)
+	(rect 16 16 224 112)
 	(text "sigma_delta_second" (rect 5 0 105 12)(font "Arial" ))
 	(text "inst" (rect 8 80 25 92)(font "Arial" ))
 	(port
@@ -33,16 +33,16 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "sample_in[23..0]" (rect 0 0 81 12)(font "Arial" ))
-		(text "sample_in[23..0]" (rect 21 43 102 55)(font "Arial" ))
+		(text "sample_in[bit_width-1..0]" (rect 0 0 121 12)(font "Arial" ))
+		(text "sample_in[bit_width-1..0]" (rect 21 43 142 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
-		(pt 168 32)
+		(pt 208 32)
 		(output)
 		(text "output" (rect 0 0 30 12)(font "Arial" ))
-		(text "output" (rect 117 27 147 39)(font "Arial" ))
-		(line (pt 168 32)(pt 152 32)(line_width 1))
+		(text "output" (rect 157 27 187 39)(font "Arial" ))
+		(line (pt 208 32)(pt 192 32)(line_width 1))
 	)
 	(parameter
 		"bit_width"
@@ -50,7 +50,7 @@ applicable agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 152 80)(line_width 1))
+		(rectangle (rect 16 16 192 80)(line_width 1))
 	)
-	(annotation_block (parameter)(rect 184 -64 284 16))
+	(annotation_block (parameter)(rect 224 -64 324 16))
 )

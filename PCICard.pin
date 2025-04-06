@@ -37,7 +37,7 @@
  ------------------------------------------------------------------------------
 
 
-File Generation Date & Time: Sun Apr 06 14:44:01 2025
+File Generation Date & Time: Sun Apr 06 19:43:47 2025
 Quartus II Version 9.0 Build 132 02/25/2009 SJ Web Edition
 CHIP  "PCICard"  ASSIGNED TO AN: EPF10K30RC240-3
 
@@ -57,10 +57,10 @@ RESERVED_INPUT               : 11        :        :                   :         
 RESERVED_INPUT               : 12        :        :                   :         :           :                
 RESERVED_INPUT               : 13        :        :                   :         :           :                
 RESERVED_INPUT               : 14        :        :                   :         :           :                
-RESERVED_INPUT               : 15        :        :                   :         :           :                
+VGA_B                        : 15        : output : TTL               :         :           : Y              
 VCC_INT                      : 16        : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 17        :        :                   :         :           :                
-RESERVED_INPUT               : 18        :        :                   :         :           :                
+VGA_G                        : 17        : output : TTL               :         :           : Y              
+VGA_R                        : 18        : output : TTL               :         :           : Y              
 RESERVED_INPUT               : 19        :        :                   :         :           :                
 RESERVED_INPUT               : 20        :        :                   :         :           :                
 RESERVED_INPUT               : 21        :        :                   :         :           :                
@@ -78,19 +78,19 @@ GND_INT                      : 32        : gnd    :                   :         
 LED                          : 33        : output : TTL               :         :           : Y              
 AudioOut0                    : 34        : output : TTL               :         :           : Y              
 AudioOut1                    : 35        : output : TTL               :         :           : Y              
-AudioOut2                    : 36        : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 36        :        :                   :         :           :                
 VCC_INT                      : 37        : power  :                   : 5.0V    :           :                
-AudioOut3                    : 38        : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 38        :        :                   :         :           :                
 RESERVED_INPUT               : 39        :        :                   :         :           :                
 RESERVED_INPUT               : 40        :        :                   :         :           :                
-RESERVED_INPUT               : 41        :        :                   :         :           :                
+ram_PAR_L[1]                 : 41        : bidir  : TTL               :         :           : N              
 GND_INT                      : 42        : gnd    :                   :         :           :                
 RESERVED_INPUT               : 43        :        :                   :         :           :                
 RESERVED_INPUT               : 44        :        :                   :         :           :                
 RESERVED_INPUT               : 45        :        :                   :         :           :                
 RESERVED_INPUT               : 46        :        :                   :         :           :                
 VCC_INT                      : 47        : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 48        :        :                   :         :           :                
+ram_PAR_R[0]                 : 48        : bidir  : TTL               :         :           : N              
 RESERVED_INPUT               : 49        :        :                   :         :           :                
 RESERVED_INPUT               : 50        :        :                   :         :           :                
 RESERVED_INPUT               : 51        :        :                   :         :           :                
@@ -169,79 +169,79 @@ MSEL1                        : 123       : input  :                   :         
 MSEL0                        : 124       : input  :                   :         :           :                
 GND_INT                      : 125       : gnd    :                   :         :           :                
 RESERVED_INPUT               : 126       :        :                   :         :           :                
-RESERVED_INPUT               : 127       :        :                   :         :           :                
-RESERVED_INPUT               : 128       :        :                   :         :           :                
-RESERVED_INPUT               : 129       :        :                   :         :           :                
+ram_clk                      : 127       : output : TTL               :         :           : Y              
+ram_nOE                      : 128       : output : TTL               :         :           : Y              
+ram_nCS                      : 129       : output : TTL               :         :           : Y              
 VCC_INT                      : 130       : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 131       :        :                   :         :           :                
-dbg_7                        : 132       : output : TTL               :         :           : Y              
-dbg_15                       : 133       : output : TTL               :         :           : Y              
-dbg_6                        : 134       : output : TTL               :         :           : Y              
+ram_nADSC                    : 131       : output : TTL               :         :           : Y              
+ram_nADSP                    : 132       : output : TTL               :         :           : Y              
+ram_nADV                     : 133       : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 134       :        :                   :         :           :                
 GND_INT                      : 135       : gnd    :                   :         :           :                
-dbg_14                       : 136       : output : TTL               :         :           : Y              
-dbg_5                        : 137       : output : TTL               :         :           : Y              
-dbg_13                       : 138       : output : TTL               :         :           : Y              
-dbg_4                        : 139       : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 136       :        :                   :         :           :                
+ram_nWL                      : 137       : output : TTL               :         :           : Y              
+ram_nWH                      : 138       : output : TTL               :         :           : Y              
+ram_DQ_R[0]                  : 139       : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 140       : power  :                   : 5.0V    :           :                
-dbg_12                       : 141       : output : TTL               :         :           : Y              
-dbg_3                        : 142       : output : TTL               :         :           : Y              
-dbg_11                       : 143       : output : TTL               :         :           : Y              
-dbg_2                        : 144       : output : TTL               :         :           : Y              
+ram_DQ_R[1]                  : 141       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[2]                  : 142       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[3]                  : 143       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[4]                  : 144       : bidir  : TTL               :         :           : Y              
 GND_INT                      : 145       : gnd    :                   :         :           :                
-dbg_10                       : 146       : output : TTL               :         :           : Y              
-dbg_1                        : 147       : output : TTL               :         :           : Y              
-dbg_9                        : 148       : output : TTL               :         :           : Y              
-dbg_0                        : 149       : output : TTL               :         :           : Y              
+ram_DQ_R[5]                  : 146       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[6]                  : 147       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[7]                  : 148       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[8]                  : 149       : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 150       : power  :                   : 5.0V    :           :                
-dbg_8                        : 151       : output : TTL               :         :           : Y              
-RESERVED_INPUT               : 152       :        :                   :         :           :                
-RESERVED_INPUT               : 153       :        :                   :         :           :                
-RESERVED_INPUT               : 154       :        :                   :         :           :                
+ram_DQ_R[9]                  : 151       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[10]                 : 152       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[11]                 : 153       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[12]                 : 154       : bidir  : TTL               :         :           : Y              
 GND_INT                      : 155       : gnd    :                   :         :           :                
-RESERVED_INPUT               : 156       :        :                   :         :           :                
-RESERVED_INPUT               : 157       :        :                   :         :           :                
-RESERVED_INPUT               : 158       :        :                   :         :           :                
-RESERVED_INPUT               : 159       :        :                   :         :           :                
+ram_DQ_R[13]                 : 156       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[14]                 : 157       : bidir  : TTL               :         :           : Y              
+ram_DQ_R[15]                 : 158       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[0]                  : 159       : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 160       : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 161       :        :                   :         :           :                
-RESERVED_INPUT               : 162       :        :                   :         :           :                
-RESERVED_INPUT               : 163       :        :                   :         :           :                
-RESERVED_INPUT               : 164       :        :                   :         :           :                
+ram_DQ_L[1]                  : 161       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[2]                  : 162       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[3]                  : 163       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[4]                  : 164       : bidir  : TTL               :         :           : Y              
 GND_INT                      : 165       : gnd    :                   :         :           :                
-RESERVED_INPUT               : 166       :        :                   :         :           :                
-RESERVED_INPUT               : 167       :        :                   :         :           :                
-RESERVED_INPUT               : 168       :        :                   :         :           :                
-RESERVED_INPUT               : 169       :        :                   :         :           :                
+ram_DQ_L[5]                  : 166       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[6]                  : 167       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[7]                  : 168       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[8]                  : 169       : bidir  : TTL               :         :           : Y              
 VCC_INT                      : 170       : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 171       :        :                   :         :           :                
-RESERVED_INPUT               : 172       :        :                   :         :           :                
-RESERVED_INPUT               : 173       :        :                   :         :           :                
-RESERVED_INPUT               : 174       :        :                   :         :           :                
-RESERVED_INPUT               : 175       :        :                   :         :           :                
+ram_DQ_L[9]                  : 171       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[10]                 : 172       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[11]                 : 173       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[12]                 : 174       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[13]                 : 175       : bidir  : TTL               :         :           : Y              
 GND_INT                      : 176       : gnd    :                   :         :           :                
 TDI                          : 177       : input  :                   :         :           :                
 nCE                          : 178       : input  :                   :         :           :                
 DCLK                         : 179       : bidir  :                   :         :           :                
 DATA0                        : 180       : input  :                   :         :           :                
-RESERVED_INPUT               : 181       :        :                   :         :           :                
-RESERVED_INPUT               : 182       :        :                   :         :           :                
-RESERVED_INPUT               : 183       :        :                   :         :           :                
-RESERVED_INPUT               : 184       :        :                   :         :           :                
-RESERVED_INPUT               : 185       :        :                   :         :           :                
-RESERVED_INPUT               : 186       :        :                   :         :           :                
-RESERVED_INPUT               : 187       :        :                   :         :           :                
-RESERVED_INPUT               : 188       :        :                   :         :           :                
+ram_DQ_L[14]                 : 181       : bidir  : TTL               :         :           : Y              
+ram_DQ_L[15]                 : 182       : bidir  : TTL               :         :           : Y              
+ram_AD[0]                    : 183       : output : TTL               :         :           : Y              
+ram_AD[1]                    : 184       : output : TTL               :         :           : Y              
+ram_AD[2]                    : 185       : output : TTL               :         :           : Y              
+ram_AD[3]                    : 186       : output : TTL               :         :           : Y              
+ram_AD[4]                    : 187       : output : TTL               :         :           : Y              
+ram_AD[5]                    : 188       : output : TTL               :         :           : Y              
 VCC_INT                      : 189       : power  :                   : 5.0V    :           :                
-RESERVED_INPUT               : 190       :        :                   :         :           :                
-RESERVED_INPUT               : 191       :        :                   :         :           :                
-RESERVED_INPUT               : 192       :        :                   :         :           :                
-RESERVED_INPUT               : 193       :        :                   :         :           :                
-RESERVED_INPUT               : 194       :        :                   :         :           :                
-RESERVED_INPUT               : 195       :        :                   :         :           :                
-RESERVED_INPUT               : 196       :        :                   :         :           :                
+ram_AD[6]                    : 190       : output : TTL               :         :           : Y              
+ram_AD[7]                    : 191       : output : TTL               :         :           : Y              
+ram_AD[8]                    : 192       : output : TTL               :         :           : Y              
+ram_AD[9]                    : 193       : output : TTL               :         :           : Y              
+ram_AD[10]                   : 194       : output : TTL               :         :           : Y              
+ram_AD[11]                   : 195       : output : TTL               :         :           : Y              
+ram_AD[12]                   : 196       : output : TTL               :         :           : Y              
 GND_INT                      : 197       : gnd    :                   :         :           :                
-RESERVED_INPUT               : 198       :        :                   :         :           :                
-RESERVED_INPUT               : 199       :        :                   :         :           :                
+ram_AD[13]                   : 198       : output : TTL               :         :           : Y              
+ram_AD[14]                   : 199       : output : TTL               :         :           : Y              
 RESERVED_INPUT               : 200       :        :                   :         :           :                
 RESERVED_INPUT               : 201       :        :                   :         :           :                
 RESERVED_INPUT               : 202       :        :                   :         :           :                
@@ -260,7 +260,7 @@ RESERVED_INPUT               : 214       :        :                   :         
 RESERVED_INPUT               : 215       :        :                   :         :           :                
 GND_INT                      : 216       : gnd    :                   :         :           :                
 RESERVED_INPUT               : 217       :        :                   :         :           :                
-RESERVED_INPUT               : 218       :        :                   :         :           :                
+ram_PAR_L[0]                 : 218       : bidir  : TTL               :         :           : N              
 RESERVED_INPUT               : 219       :        :                   :         :           :                
 RESERVED_INPUT               : 220       :        :                   :         :           :                
 RESERVED_INPUT               : 221       :        :                   :         :           :                
@@ -280,6 +280,6 @@ RESERVED_INPUT               : 234       :        :                   :         
 RESERVED_INPUT               : 235       :        :                   :         :           :                
 RESERVED_INPUT               : 236       :        :                   :         :           :                
 RESERVED_INPUT               : 237       :        :                   :         :           :                
-RESERVED_INPUT               : 238       :        :                   :         :           :                
+ram_PAR_R[1]                 : 238       : bidir  : TTL               :         :           : N              
 RESERVED_INPUT               : 239       :        :                   :         :           :                
 RESERVED_INPUT               : 240       :        :                   :         :           :                

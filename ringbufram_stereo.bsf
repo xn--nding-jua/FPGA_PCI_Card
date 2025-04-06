@@ -1,0 +1,222 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2009 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 328 400)
+	(text "ringbufram_stereo" (rect 5 0 94 12)(font "Arial" ))
+	(text "inst" (rect 8 368 25 380)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "rst" (rect 0 0 12 12)(font "Arial" ))
+		(text "rst" (rect 21 43 33 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 1))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "wr_en" (rect 0 0 28 12)(font "Arial" ))
+		(text "wr_en" (rect 21 59 49 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 1))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "wr_data_l[ram_width-1..0]" (rect 0 0 125 12)(font "Arial" ))
+		(text "wr_data_l[ram_width-1..0]" (rect 21 75 146 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "wr_data_r[ram_width-1..0]" (rect 0 0 126 12)(font "Arial" ))
+		(text "wr_data_r[ram_width-1..0]" (rect 21 91 147 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "rd_en" (rect 0 0 27 12)(font "Arial" ))
+		(text "rd_en" (rect 21 107 48 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 1))
+	)
+	(port
+		(pt 312 32)
+		(output)
+		(text "rd_valid" (rect 0 0 38 12)(font "Arial" ))
+		(text "rd_valid" (rect 253 27 291 39)(font "Arial" ))
+		(line (pt 312 32)(pt 296 32)(line_width 1))
+	)
+	(port
+		(pt 312 48)
+		(output)
+		(text "rd_data_l[ram_width-1..0]" (rect 0 0 123 12)(font "Arial" ))
+		(text "rd_data_l[ram_width-1..0]" (rect 168 43 291 55)(font "Arial" ))
+		(line (pt 312 48)(pt 296 48)(line_width 3))
+	)
+	(port
+		(pt 312 64)
+		(output)
+		(text "rd_data_r[ram_width-1..0]" (rect 0 0 125 12)(font "Arial" ))
+		(text "rd_data_r[ram_width-1..0]" (rect 166 59 291 71)(font "Arial" ))
+		(line (pt 312 64)(pt 296 64)(line_width 3))
+	)
+	(port
+		(pt 312 80)
+		(output)
+		(text "empty" (rect 0 0 31 12)(font "Arial" ))
+		(text "empty" (rect 260 75 291 87)(font "Arial" ))
+		(line (pt 312 80)(pt 296 80)(line_width 1))
+	)
+	(port
+		(pt 312 96)
+		(output)
+		(text "empty_next" (rect 0 0 59 12)(font "Arial" ))
+		(text "empty_next" (rect 232 91 291 103)(font "Arial" ))
+		(line (pt 312 96)(pt 296 96)(line_width 1))
+	)
+	(port
+		(pt 312 112)
+		(output)
+		(text "full" (rect 0 0 15 12)(font "Arial" ))
+		(text "full" (rect 276 107 291 119)(font "Arial" ))
+		(line (pt 312 112)(pt 296 112)(line_width 1))
+	)
+	(port
+		(pt 312 128)
+		(output)
+		(text "full_next" (rect 0 0 42 12)(font "Arial" ))
+		(text "full_next" (rect 249 123 291 135)(font "Arial" ))
+		(line (pt 312 128)(pt 296 128)(line_width 1))
+	)
+	(port
+		(pt 312 144)
+		(output)
+		(text "fill_count[ram_size-1..0]" (rect 0 0 118 12)(font "Arial" ))
+		(text "fill_count[ram_size-1..0]" (rect 173 139 291 151)(font "Arial" ))
+		(line (pt 312 144)(pt 296 144)(line_width 3))
+	)
+	(port
+		(pt 312 160)
+		(output)
+		(text "ram_ad[ram_size-1..0]" (rect 0 0 109 12)(font "Arial" ))
+		(text "ram_ad[ram_size-1..0]" (rect 182 155 291 167)(font "Arial" ))
+		(line (pt 312 160)(pt 296 160)(line_width 3))
+	)
+	(port
+		(pt 312 240)
+		(output)
+		(text "ram_nADSP" (rect 0 0 60 12)(font "Arial" ))
+		(text "ram_nADSP" (rect 231 235 291 247)(font "Arial" ))
+		(line (pt 312 240)(pt 296 240)(line_width 1))
+	)
+	(port
+		(pt 312 256)
+		(output)
+		(text "ram_nADSC" (rect 0 0 61 12)(font "Arial" ))
+		(text "ram_nADSC" (rect 230 251 291 263)(font "Arial" ))
+		(line (pt 312 256)(pt 296 256)(line_width 1))
+	)
+	(port
+		(pt 312 272)
+		(output)
+		(text "ram_nWH" (rect 0 0 49 12)(font "Arial" ))
+		(text "ram_nWH" (rect 242 267 291 279)(font "Arial" ))
+		(line (pt 312 272)(pt 296 272)(line_width 1))
+	)
+	(port
+		(pt 312 288)
+		(output)
+		(text "ram_nWL" (rect 0 0 47 12)(font "Arial" ))
+		(text "ram_nWL" (rect 244 283 291 295)(font "Arial" ))
+		(line (pt 312 288)(pt 296 288)(line_width 1))
+	)
+	(port
+		(pt 312 304)
+		(output)
+		(text "ram_nADV" (rect 0 0 53 12)(font "Arial" ))
+		(text "ram_nADV" (rect 238 299 291 311)(font "Arial" ))
+		(line (pt 312 304)(pt 296 304)(line_width 1))
+	)
+	(port
+		(pt 312 320)
+		(output)
+		(text "ram_nOE" (rect 0 0 46 12)(font "Arial" ))
+		(text "ram_nOE" (rect 245 315 291 327)(font "Arial" ))
+		(line (pt 312 320)(pt 296 320)(line_width 1))
+	)
+	(port
+		(pt 312 336)
+		(output)
+		(text "ram_nCS" (rect 0 0 46 12)(font "Arial" ))
+		(text "ram_nCS" (rect 245 331 291 343)(font "Arial" ))
+		(line (pt 312 336)(pt 296 336)(line_width 1))
+	)
+	(port
+		(pt 312 176)
+		(bidir)
+		(text "ram_data_l[ram_width-1..0]" (rect 0 0 133 12)(font "Arial" ))
+		(text "ram_data_l[ram_width-1..0]" (rect 158 171 291 183)(font "Arial" ))
+		(line (pt 312 176)(pt 296 176)(line_width 3))
+	)
+	(port
+		(pt 312 192)
+		(bidir)
+		(text "ram_data_r[ram_width-1..0]" (rect 0 0 134 12)(font "Arial" ))
+		(text "ram_data_r[ram_width-1..0]" (rect 157 187 291 199)(font "Arial" ))
+		(line (pt 312 192)(pt 296 192)(line_width 3))
+	)
+	(port
+		(pt 312 208)
+		(bidir)
+		(text "ram_par_l[1..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "ram_par_l[1..0]" (rect 217 203 291 215)(font "Arial" ))
+		(line (pt 312 208)(pt 296 208)(line_width 3))
+	)
+	(port
+		(pt 312 224)
+		(bidir)
+		(text "ram_par_r[1..0]" (rect 0 0 75 12)(font "Arial" ))
+		(text "ram_par_r[1..0]" (rect 216 219 291 231)(font "Arial" ))
+		(line (pt 312 224)(pt 296 224)(line_width 3))
+	)
+	(parameter
+		"RAM_SIZE"
+		"15"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"RAM_WIDTH"
+		"16"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 296 368)(line_width 1))
+	)
+	(annotation_block (parameter)(rect 328 -64 428 16))
+)
