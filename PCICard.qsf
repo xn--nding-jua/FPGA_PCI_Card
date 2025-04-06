@@ -172,3 +172,4 @@ set_location_assignment PIN_158 -to ram_DQ_R[15]
 set_location_assignment PIN_18 -to VGA_R
 set_location_assignment PIN_17 -to VGA_G
 set_location_assignment PIN_15 -to VGA_B
+set_location_assignment PIN_36 -to SpdifOut

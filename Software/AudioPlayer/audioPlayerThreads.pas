@@ -39,17 +39,21 @@ type
     function readAudioFormat(AStream: TStream):boolean;
     function readAudioHeader(AStream: TStream):boolean;
     function seekAudioData(AStream: TStream):Integer; // returns number of samples
-    function readAudioSample(AStream: TStream; var sample: integer):boolean;
+    function readAudioSample(AStream: TStream; var sample: SmallInt):boolean;
   protected
     _ioaddress: DWORD;
     _audiofile: String;
+    _volume: byte;
+    bufferSizeSamples: Word;
     audioPosition, audioSize: integer;
     audioStream: TStream;
 
     procedure Execute; override;
   public
-    constructor create(ioaddress: DWORD; audiofile: String);
+    constructor create(ioaddress: DWORD; bufferSizeMillis: Word; audiofile: String);
     function getPosition:single;
+    function getBufferSize:integer;
+    procedure setVolume(volume: byte);
   end;
 
 implementation
@@ -193,13 +197,11 @@ begin
   Result := data.DataSize;
 end;
 
-function TAudioThread.readAudioSample(AStream: TStream; var sample: integer):boolean;
+function TAudioThread.readAudioSample(AStream: TStream; var sample: SmallInt):boolean;
 var
   buffer8: ShortInt;
   buffer16: SmallInt;
 begin
-  Result := false;
-
   // read sample
   case audioHeader.BitsPerSample of
     8:
@@ -207,7 +209,7 @@ begin
       if AStream.Read(buffer8, SizeOf(buffer8)) = SizeOf(buffer8) then
       begin
         // everything OK: copy 8-bit-data to 32-bit-sample-variable
-        sample := buffer8;
+        sample := SmallInt(buffer8) shl 8; // convert to 16-bit
       end else
       begin
         MessageBox(0, PChar('Sample could not be read completely. Aborting.'), PChar('Fehler'), MB_OK);
@@ -218,7 +220,7 @@ begin
       if Astream.Read(buffer16, SizeOf(buffer16)) = SizeOf(buffer16) then
       begin
         // everything OK: copy 16-bit-data to 32-bit-sample-variable
-        sample := buffer16;
+        sample := buffer16; // keep as 16-bit SmallInt
       end else
       begin
         MessageBox(0, PChar('Sample could not be read completely. Aborting.'), PChar('Fehler'), MB_OK);
@@ -238,7 +240,7 @@ begin
   Result := true;
 end;
 
-constructor TAudioThread.Create(ioaddress: DWORD; audiofile: String);
+constructor TAudioThread.Create(ioaddress: DWORD; bufferSizeMillis: Word; audiofile: String);
 begin
   inherited create(false);
   Priority := tpNormal;
@@ -247,14 +249,26 @@ begin
   // copy variables
   _ioaddress := ioaddress;
   _audiofile := audiofile;
+  _volume := 100;
+  bufferSizeSamples := round(bufferSizeMillis * 48000/1000);
 end;
 
 function TAudioThread.getPosition:single;
 begin
-  if (audioStream <> nil) then
+  if ((audioStream <> nil) and (numSamples > 0)) then
     Result := (sampleCounter / numSamples) * 100
   else
     Result := 0;
+end;
+
+function TAudioThread.getBufferSize:integer;
+begin
+  Result := ReadIOAddress(_ioaddress, 4);
+end;
+
+procedure TAudioThread.setVolume(volume: byte);
+begin
+  _volume := volume;
 end;
 
 procedure PerformanceDelay(delay: byte);
@@ -274,10 +288,11 @@ end;
 procedure TAudioThread.Execute;
 var
   dataSize: Integer;
-  sample: Integer;
+  sampleL, sampleR: SmallInt;
+  data:array[0..3] of byte;
+  c:Cardinal;
   fifostate : integer;
-
-  ch, i:integer;
+  i:integer;
 begin
   inherited;
 
@@ -311,29 +326,66 @@ begin
       // at 48kHz we need at least 48 samples per 1ms and channel
       // if samples in FIFO is below 50 samples, transmit data for 2ms
       fifostate := ReadIOAddress(_ioaddress, 4);
-      if (fifostate < 50) then
+      if (fifostate < (bufferSizeSamples div 2)) then
       begin
-        // transmit data for at least 2ms
-        for i:=0 to 100 do
+        // transmit data
+        for i:=0 to (bufferSizeSamples div 2) do
         begin
           // read all channels
-          for ch:=0 to audioHeader.NumChannels-1 do
+          if (audioHeader.NumChannels = 1) then
           begin
-            // read next audiosample until end
-            if readAudioSample(audioStream, sample) then
+            // just Mono
+            if readAudioSample(audioStream, sampleL) then
             begin
-              // write Audio-Samples for all channels to PCI Card
-              WriteIOAddress(_ioaddress + (ch*4), sample, 4);
+              // write sample for left channel to both channels to PCI Card
+              sampleL := round(sampleL * _volume/100);
+              move(sampleL, data[0], 2);
+              move(sampleL, data[2], 2);
+              move(data[0], c, 4);
+              WriteIOAddress(_ioaddress, c, 4);
             end else
             begin
               // something is wrong -> abort
-              MessageBox(0, PChar('An Error on reading the data occured!'), PChar('Error'), MB_OK);
+              MessageBox(0, PChar('An Error on reading the data occurred!'), PChar('Error'), MB_OK);
               sampleCounter := numSamples + 1; // let the thread exit
+            end;
+            // exit for-loop on EOF
+            if (sampleCounter >= numSamples) then
+              break;
+          end else if (audioHeader.NumChannels = 2) then
+          begin
+            // Stereo
+            if not readAudioSample(audioStream, sampleL) then
+            begin
+              // something is wrong -> abort
+              MessageBox(0, PChar('An Error on reading the data occurred!'), PChar('Error'), MB_OK);
+              sampleCounter := numSamples + 1; // let the thread exit
+            end else
+            begin
+              // reading sample for left was successful. Now read right-channel
+              if readAudioSample(audioStream, sampleR) then
+              begin
+                // write Audio-Samples for both channels to PCI Card
+                sampleL := round(sampleL * _volume/100);
+                sampleR := round(sampleR * _volume/100);
+                move(sampleL, data[0], 2);
+                move(sampleR, data[2], 2);
+                move(data[0], c, 4);
+                WriteIOAddress(_ioaddress, c, 4);
+              end else
+              begin
+                // something is wrong -> abort
+                MessageBox(0, PChar('An Error on reading the data occurred!'), PChar('Error'), MB_OK);
+                sampleCounter := numSamples + 1; // let the thread exit
+              end;
             end;
 
             // exit for-loop on EOF
             if (sampleCounter >= numSamples) then
               break;
+          end else
+          begin
+            // unsupported channel-number
           end;
 
           // increase sample counter and exit when last sample has been read
@@ -346,8 +398,9 @@ begin
       end;
 
       // wait 20.83 microseconds
-      //PerformanceDelay(208); // will produce 100% CPU Load
+      //PerformanceDelay(75); // will produce 100% CPU Load
 
+      // sleep thread to keep CPU-load low
       sleep(1); // minimum time for Windows
     until (mainform.killthreads or (sampleCounter >= numSamples));
 

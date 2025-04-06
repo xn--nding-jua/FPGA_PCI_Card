@@ -20,30 +20,38 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 136 112)
-	(text "pciclk_2_audioclk" (rect 5 0 91 12)(font "Arial" ))
+	(rect 16 16 192 112)
+	(text "spdif_transmitter" (rect 5 0 88 12)(font "Arial" ))
 	(text "inst" (rect 8 80 25 92)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "clk_in" (rect 0 0 28 12)(font "Arial" ))
-		(text "clk_in" (rect 21 27 49 39)(font "Arial" ))
+		(text "bit_clock" (rect 0 0 43 12)(font "Arial" ))
+		(text "bit_clock" (rect 21 27 64 39)(font "Arial" ))
 		(line (pt 0 32)(pt 16 32)(line_width 1))
 	)
 	(port
-		(pt 120 32)
+		(pt 0 48)
+		(input)
+		(text "sample_l[23..0]" (rect 0 0 75 12)(font "Arial" ))
+		(text "sample_l[23..0]" (rect 21 43 96 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "sample_r[23..0]" (rect 0 0 76 12)(font "Arial" ))
+		(text "sample_r[23..0]" (rect 21 59 97 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 176 32)
 		(output)
-		(text "clk_out" (rect 0 0 35 12)(font "Arial" ))
-		(text "clk_out" (rect 64 27 99 39)(font "Arial" ))
-		(line (pt 120 32)(pt 104 32)(line_width 1))
+		(text "spdif_out" (rect 0 0 46 12)(font "Arial" ))
+		(text "spdif_out" (rect 109 27 155 39)(font "Arial" ))
+		(line (pt 176 32)(pt 160 32)(line_width 1))
 	)
-	(parameter
-		"samplerate"
-		"44100"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 104 80)(line_width 1))
+		(rectangle (rect 16 16 160 80)(line_width 1))
 	)
-	(annotation_block (parameter)(rect 136 -64 236 16))
 )
