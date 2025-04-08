@@ -1,9 +1,9 @@
 -- PCI-Target - A PCI 2.3 compliance target
--- v0.3, 02.04.2025
+-- v0.4, 08.04.2025
 -- (c) 2025 Chris Noeding (christian@noeding-online.de)
 -- https://www.github.com/xn--nding-jua/pci_card
 -- 
--- This file implements a PCI Target device 
+-- This file implements a PCI Target device
 -- 
 -- 
 -- 
@@ -159,7 +159,7 @@ architecture Behavioral of pci_target is
 
 	signal dataPointer 	: integer range 0 to 65535 := 0; -- 16-bit pointer
 
-	type t_conf_frame is array (0 to 63) of std_logic_vector(7 downto 0); -- 64 bytes seems to be minimum for correct PnP-enumeration
+	type t_conf_frame is array (0 to 15) of std_logic_vector(31 downto 0); -- 64 bytes seems to be minimum for correct PnP-enumeration
 	signal conf_frame	: t_conf_frame;
 	--signal ioport_bar	: integer range 0 to 65535 := 0; -- 16-bit start-address for io-port from BAR0
 	
@@ -210,102 +210,38 @@ begin
 				-- 38          Reserved
 				-- 3C          MaxLat|MnGNT   | INT-pin | INT-line
 				-- 40-FF       available for PCI unit
-				conf_frame(0) <= x"72";  -- VID = 0x1172 = Altera
-				conf_frame(1) <= x"11";
-				conf_frame(2) <= x"24";  -- PID = 0x2524
-				conf_frame(3) <= x"25";
 				
-				--conf_frame(4) <= x"01";  -- command = 0x01 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
-				conf_frame(4) <= x"03";  -- command = 0x03 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
-				conf_frame(5) <= x"00"; -- 0x04 for no interrupts
-				conf_frame(6) <= x"00";  -- status = 0x00 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
-				conf_frame(7) <= x"00";
+				conf_frame(0) <= x"25241172"; -- PID = 0x2524 | VID = 0x1172 = Altera
 				
-				conf_frame(8) <= x"B2";  -- revision ID = 0xB2
-				conf_frame(9) <= x"00";  -- Class Code: register class code
-				conf_frame(10) <= x"80"; -- Class Code: sub class code (0x80 = other device, 0x00 .. 0x?? for specific devices of base-class)
-				conf_frame(11) <= x"04"; -- Class Code: base class code (0x00 = unknown, 0x02 network, 0x04 = multimedia, 0x07 simple communication controller, 0x09 = input device, 0xff unspecified)
+				-- command = 0x03 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
+				-- status = 0x00 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
+				conf_frame(1) <= x"00000003";  -- status and command
 				
-				conf_frame(12) <= x"00"; -- Cache Line Size (CLS)
-				conf_frame(13) <= x"00"; -- Latency Timer
-				conf_frame(14) <= x"00"; -- Header type (0x00 = Standard Header type and device has single function)
-				conf_frame(15) <= x"00"; -- BIST
-				
-				-- all remaining bytes of the 256 bytes are not used for now and can be set to zero
-				-- register 1MB memory with 0xFFF00000
-				-- if Memory: b3: prefetchable | b2..b1: 00=locate anywhere in 32-bit, 10=locate anywhere in 64-bit | b0: set to 0 for MemorySpace
-				-- if IO: b1: reserved | b0: set to 1 for IO-Space
-				
-				-- in this code we are using IO-Space, so b0 is set to 1, b1 to 0
-				-- b5..2 are set to 0 to request 4 bytes of IO-space
-				
-				-- BAR0 will contain the IO-Address:
-				-- for example: 0x6300 ... 0x630F will show up like this:
-				-- conf_frame(16) = 00000001 <- bit0 is set, so use IO-Address-Space
-				-- conf_frame(17) = 01100011 = 0x63
-				-- conf_frame(18) = 00000000 = 0x00
-				-- conf_frame(19) = 00000000 = 0x00
-				conf_frame(16) <= x"00"; -- BAR0 (Base Address Register)
-				conf_frame(17) <= x"00"; -- BAR0 (Base Address Register)
-				conf_frame(18) <= x"00"; -- BAR0 (Base Address Register)
-				conf_frame(19) <= x"00"; -- BAR0 (Base Address Register)
+				-- ClassCode = BaseClass, SubClass, RegisterClass
+				-- BaseClass = 0x00 = unknown, 0x02 network, 0x04 = multimedia, 0x07 simple communication controller, 0x09 = input device, 0xff unspecified
+				-- SubClass = 0x80 = other device, 0x00 .. 0x?? for specific devices of base-class
+				conf_frame(2) <= x"048000B2";  -- ClassCode | revision ID = 0xB2
 
-				-- register 1MB bytes in memory-space with 0xFFF00000
-				conf_frame(20) <= x"00"; -- BAR1 (Base Address Register)
-				conf_frame(21) <= x"00"; -- BAR1 (Base Address Register)
-				conf_frame(22) <= x"00"; -- BAR1 (Base Address Register)
-				conf_frame(23) <= x"00"; -- BAR1 (Base Address Register)
-				
-				-- reserve no further memory
-				conf_frame(24) <= x"00"; -- BAR2 (Base Address Register)
-				conf_frame(25) <= x"00"; -- BAR2 (Base Address Register)
-				conf_frame(26) <= x"00"; -- BAR2 (Base Address Register)
-				conf_frame(27) <= x"00"; -- BAR2 (Base Address Register)
-				
-				conf_frame(28) <= x"00"; -- BAR3 (Base Address Register)
-				conf_frame(29) <= x"00"; -- BAR3 (Base Address Register)
-				conf_frame(30) <= x"00"; -- BAR3 (Base Address Register)
-				conf_frame(31) <= x"00"; -- BAR3 (Base Address Register)
-				
-				conf_frame(32) <= x"00"; -- BAR4 (Base Address Register)
-				conf_frame(33) <= x"00"; -- BAR4 (Base Address Register)
-				conf_frame(34) <= x"00"; -- BAR4 (Base Address Register)
-				conf_frame(35) <= x"00"; -- BAR4 (Base Address Register)
-				
-				conf_frame(36) <= x"00"; -- BAR5 (Base Address Register)
-				conf_frame(37) <= x"00"; -- BAR5 (Base Address Register)
-				conf_frame(38) <= x"00"; -- BAR5 (Base Address Register)
-				conf_frame(39) <= x"00"; -- BAR5 (Base Address Register)
-				
-				conf_frame(40) <= x"00"; -- CardBus CIS Pointer
-				conf_frame(41) <= x"00"; -- 
-				conf_frame(42) <= x"00"; -- 
-				conf_frame(43) <= x"00"; -- 
-				
-				conf_frame(44) <= x"72"; -- System Vendor ID (0x1172)
-				conf_frame(45) <= x"11"; -- 
-				conf_frame(46) <= x"00"; -- Subsystem ID (0x0000)
-				conf_frame(47) <= x"00"; -- 
-				
-				conf_frame(48) <= x"00"; -- Expansion ROM Base Address
-				conf_frame(49) <= x"00"; -- 
-				conf_frame(50) <= x"00"; -- 
-				conf_frame(51) <= x"00"; -- 
-				
-				conf_frame(52) <= x"00"; -- Capabilities Pointer
-				conf_frame(53) <= x"00"; -- Reserved
-				conf_frame(54) <= x"00"; -- 
-				conf_frame(55) <= x"00"; -- 
-				
-				conf_frame(56) <= x"00"; -- 
-				conf_frame(57) <= x"00"; -- 
-				conf_frame(58) <= x"00"; -- 
-				conf_frame(59) <= x"00"; -- 
-				
-				conf_frame(60) <= x"00"; -- Interrupt Line
-				conf_frame(61) <= x"02"; -- Interrupt Pin
-				conf_frame(62) <= x"00"; -- Min_Gnt
-				conf_frame(63) <= x"00"; -- Max_Lat
+				-- BIST | HeaderType | LatencyTimer | Cache Line Size (CLS)
+				conf_frame(3) <= x"00000000"; -- Cache Line Size (CLS)
+
+				-- Base Address Register (BAR) is used to configure IO- and memory-space
+				-- bit b0 selects either memory-space (b0 = 0) or IO-space (b0 = 1)
+				-- if Memory: b3: prefetchable | b2..b1: 00=locate anywhere in 32-bit, 10=locate anywhere in 64-bit
+				-- if IO: b1: reserved
+				conf_frame(4) <= x"00000000"; -- BAR0 (we will register 16 bytes in IO-space)
+				conf_frame(5) <= x"00000000"; -- BAR1 (we will register 1MB bytes in memory-space)
+				conf_frame(6) <= x"00000000"; -- BAR2 (unused)
+				conf_frame(7) <= x"00000000"; -- BAR3 (unused)
+				conf_frame(8) <= x"00000000"; -- BAR4 (unused)
+				conf_frame(9) <= x"00000000"; -- BAR5 (unused)
+				conf_frame(10) <= x"00000000"; -- CardBus CIS Pointer
+				conf_frame(11) <= x"00001172"; -- SubSystemID (0x0000) | System Vendor ID (0x1172)
+				conf_frame(12) <= x"00000000"; -- Expansion ROM Base Address
+				conf_frame(13) <= x"00000000"; -- Reserved | Capabilities Pointer
+				conf_frame(14) <= x"00000000"; -- Reserved
+				conf_frame(15) <= x"00000200"; -- MaxLat | MinGnt | Interupt Pin | Interrupt Line
+				-- all remaining bytes of the 256 bytes are not used for now and can be set to zero
 
 				s_SM_Transaction <= s_Idle;
 				rdy0_o <= '0';
@@ -337,7 +273,7 @@ begin
 							-- take the absolute address of the configuration-space:
 							-- during this phase AD[1..0] is 0x00
 							-- AD[7..2] contains address of one of the 64 DWORD registers
-							dataPointer <= to_integer(unsigned(AD_io(7 downto 0))); -- we take an address for a DWORD between 0x00 and 0xFB
+							dataPointer <= to_integer(unsigned(AD_io(7 downto 2))); -- take the DWORD-Address by ignoring the first two bits
 							s_SM_Transaction <= s_confreadTurn;
 							
 						elsif (nCBE_io = confwrite and IDSEL_i = '1' and AD_io(1 downto 0) = "00") then
@@ -347,7 +283,7 @@ begin
 							-- take the absolute address of the configuration-space:
 							-- during this phase AD[1..0] is 0x00
 							-- AD[7..2] contains address of one of the 64 DWORD registers
-							dataPointer <= to_integer(unsigned(AD_io(7 downto 0))); -- we take an address for a DWORD between 0x00 and 0xFB
+							dataPointer <= to_integer(unsigned(AD_io(7 downto 2))); -- take the DWORD-Address by ignoring the first two bits
 							s_SM_Transaction <= s_confwrite;
 
 						elsif (nCBE_io = ioread) then
@@ -426,13 +362,16 @@ begin
 					nSTOP_io <= '1';
 
 					-- next lines are working partially. Only the first DWORD is transmitted
-					if (dataPointer <= 60) then
+					if (dataPointer <= 15) then
 						-- dataPointer points to internal DWORD-address 0...x of conf-register and is incremented in risingEdge-process
-						--AD_o <= conf_frame(dataPointer+3) & conf_frame(dataPointer+2) & conf_frame(dataPointer+1) & conf_frame(dataPointer); -- set data to output as DWORD ignoring byte-enable-signal
-						AD_o <= (conf_frame(dataPointer+3) and (7 downto 0 => (not nCBE_io(3)))) &
-							(conf_frame(dataPointer+2) and (7 downto 0 => (not nCBE_io(2)))) &
-							(conf_frame(dataPointer+1) and (7 downto 0 => (not nCBE_io(1)))) &
-							(conf_frame(dataPointer) and (7 downto 0 => (not nCBE_io(0)))); -- set data to output as DWORD using byte-enable-signal
+						--AD_o <= conf_frame(dataPointer); -- set data to output as DWORD ignoring byte-enable-signal
+						
+						-- output individual bytes using the byte-enabled-signal
+						AD_o <= (conf_frame(dataPointer)(31 downto 24) and (7 downto 0 => (not nCBE_io(3)))) &
+							(conf_frame(dataPointer)(23 downto 16) and (7 downto 0 => (not nCBE_io(2)))) &
+							(conf_frame(dataPointer)(15 downto 8) and (7 downto 0 => (not nCBE_io(1)))) &
+							(conf_frame(dataPointer)(7 downto 0) and (7 downto 0 => (not nCBE_io(0))));
+						
 					else
 						-- write zeros as we have no information in the higher bytes of the configuration-space yet
 						AD_o <= (others => '0');
@@ -457,7 +396,7 @@ begin
 					if (nIRDY_io = '0' and nTRDY_io = '0') then
 						if (nFRAME_io = '0') then
 							-- during consecutive reading, we are using a linear DWORD-increment of dataPointer
-							dataPointer <= dataPointer + 4; -- increase dataPointer by four bytes
+							dataPointer <= dataPointer + 1; -- increase dataPointer by one DWORD
 							s_SM_Transaction <= s_confread; -- stay in confread on next clock
 						else
 							-- end of transmission with parity-bit
@@ -480,68 +419,18 @@ begin
 					if (nIRDY_io = '0') then
 						-- write one (standard-mode) or multiple (burst-mode) 32-bit data
 
---						if (dataPointer = 4) then -- DWORD-address = 1
---							if (nCBE_io(1 downto 0) = "00") then
---								conf_frame(4) <= AD_io(7 downto 0); -- command LSB
---								conf_frame(5) <= AD_io(15 downto 8); -- command MSB
---							end if;
---							if (nCBE_io(3 downto 2) = "00") then
---								conf_frame(6) <= AD_io(23 downto 16); -- status LSB
---								conf_frame(7) <= AD_io(31 downto 24); -- status MSB
---							end if;
---						end if;
---						if (dataPointer = 8) then -- DWORD-address = 2
---							if (nCBE_io(3 downto 0) = "0000") then
---								conf_frame(8) <= AD_io(7 downto 0); -- revision ID
---								conf_frame(9) <= AD_io(15 downto 8); -- Class Code: register class code
---								conf_frame(10) <= AD_io(23 downto 16); -- Class Code: sub class code
---								conf_frame(11) <= AD_io(31 downto 24); -- Class Code: base class code
---							end if;
---						end if;
---						if (dataPointer = 12) then -- DWORD-address = 3
---							if (nCBE_io(3 downto 0) = "0000") then
---								conf_frame(12) <= AD_io(7 downto 0); -- Cache Line Size (CLS)
---								conf_frame(13) <= AD_io(15 downto 8); -- Latency Timer
---								conf_frame(14) <= AD_io(23 downto 16); -- Header type
---								conf_frame(15) <= AD_io(31 downto 24); -- BIST
---							end if;
---						end if;
-						if (dataPointer = 16) then -- DWORD-address = 4
-							-- write to Base Address Register 0 to receive the Address from BIOS
+						-- allow writing to BAR0 and BAR1
+						if ((dataPointer = 4) or (dataPointer = 5)) then
 							if (nCBE_io(3 downto 0) = "0000") then
-								-- request 64 bytes IO-Space by setting 4 bits to 0
-								-- request 16 bytes IO-Space by setting 2 bits to 0
-								-- request 8 bytes IO-Space by setting 1 bit to 0
-								conf_frame(16) <= AD_io(7 downto 4) & "00" & "01"; -- BAR0
-								conf_frame(17) <= AD_io(15 downto 8); -- BAR0
-								conf_frame(18) <= AD_io(23 downto 16); -- BAR0
-								conf_frame(19) <= AD_io(31 downto 24); -- BAR0
-								
-								--ioport_bar <= to_integer(shift_left(resize(unsigned(AD_io(31 downto 4)), AD_io'length), 4)); -- receive the Start-IO-Address
+								conf_frame(dataPointer) <= AD_io(31 downto 0);
 							end if;
 						end if;
-						if (dataPointer = 20) then -- DWORD-address = 5
-							-- write to Base Address Register 1 to receive the Address from BIOS
-							if (nCBE_io(3 downto 0) = "0000") then
-								-- request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
-								conf_frame(20) <= "0000" & "1000"; -- BAR1, 32-bit prefetchable Memory-Space
-								conf_frame(21) <= "00000000"; -- BAR1
-								conf_frame(22) <= AD_io(23 downto 20) & "0000"; -- BAR1
-								conf_frame(23) <= AD_io(31 downto 24); -- BAR1
-							end if;
-						end if;
---						if (dataPointer = 60) then
---							if (nCBE_io(0) = '0') then
---								conf_frame(60) <= AD_io(7 downto 0); -- INTLINE
---							end if;
---							if (nCBE_io(1) = '0') then
---								conf_frame(61) <= AD_io(15 downto 8); -- INTPIN
---							end if;
---						end if;
-
+						conf_frame(4)(3 downto 0) <= "00" & "01"; -- BAR0: request 16 bytes IO-Space by setting 2 bits to 0
+						conf_frame(5)(19 downto 0) <= "0000000000000000" & "1000"; -- BAR1: request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
+						
 						if (nFRAME_io = '0') then
 							-- during consecutive writing, we are using a linear DWORD-increment of dataPointer
-							dataPointer <= dataPointer + 4; -- increae dataPointer by four byte
+							dataPointer <= dataPointer + 1; -- increae dataPointer by one DWORD
 							s_SM_Transaction <= s_confwrite; -- stay in confwrite with next clock
 						else
 							-- we reached end of transmission
@@ -559,8 +448,11 @@ begin
 					nDEVSEL_io <= '1'; -- High, not High-Z!
 					nSTOP_io <= '1';
 					s_SM_Transaction <= s_Idle;
-				
 
+					-- take new IO-address
+--					if (dataPointer = 4) then
+--						ioport_bar <= to_integer(shift_left(resize(unsigned(conf_frame(4)(31 downto 4)), conf_frame(4)'length), 4));
+--					end if;
 				
 				-- ===============================================================================
 				-- IO-Space Functions
@@ -599,10 +491,10 @@ begin
 						--AD_o <= std_logic_vector(to_unsigned(43, 32)); -- output constant value "43"
 						AD_o <= data1_i;
 					elsif ((dataPointer >= (ioport + 8)) and (dataPointer <= (ioport + 11))) then
-						AD_o <= conf_frame(19) & conf_frame(18) & conf_frame(17) & conf_frame(16);
+						AD_o <= conf_frame(4); -- send content of BAR0
 						--AD_o <= data2_i;
 					elsif ((dataPointer >= (ioport + 12)) and (dataPointer <= (ioport + 15))) then
-						AD_o <= conf_frame(23) & conf_frame(22) & conf_frame(21) & conf_frame(20);
+						AD_o <= conf_frame(5); -- send content of BAR1
 						--AD_o <= data3_i;
 					else
 						AD_o <= (others => '0');
@@ -627,7 +519,7 @@ begin
 					if (nIRDY_io = '0' and nTRDY_io = '0') then
 						if (nFRAME_io = '0') then
 							-- during consecutive reading, we are using a linear DWORD-increment of dataPointer
-							dataPointer <= dataPointer + 4; -- increase dataPointer by one DWORD
+							dataPointer <= dataPointer + 4; -- increase dataPointer by four bytes
 							s_SM_Transaction <= s_ioread; -- stay in confread on next clock
 						else
 							-- end of transmission with parity-bit
@@ -679,7 +571,7 @@ begin
 
 						if (nFRAME_io = '0') then
 							-- during consecutive writing, we are using a linear DWORD-increment of dataPointer
-							dataPointer <= dataPointer + 4; -- increae dataPointer by one DWORD
+							dataPointer <= dataPointer + 4; -- increae dataPointer by four bytes
 							s_SM_Transaction <= s_iowrite; -- stay in iowrite with next clock
 						else
 							-- we reached end of transmission
