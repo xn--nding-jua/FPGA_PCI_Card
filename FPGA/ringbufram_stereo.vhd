@@ -152,7 +152,7 @@ begin
 						ram_nOE <= '1';
 						incr(head);
 
-						-- as write takes precidence over read, we queue any read-request
+						-- queue any read-request
 						if (rd_en = '1') then
 							rd_queued <= '1';
 						end if;
@@ -195,6 +195,12 @@ begin
 						ram_nWL_L <= 'Z';
 						ram_nWH_R <= '0'; -- write data to second SRAM
 						ram_nWL_R <= '0';
+
+						-- queue any read-request
+						if (rd_en = '1') then
+							rd_queued <= '1';
+						end if;
+
 						s_SM_Ringbuffer <= s_Idle;
 
 				elsif (s_SM_Ringbuffer = s_ReadPrepare) then

@@ -137,7 +137,7 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12)(line_width 1))
 		(line (pt 78 12)(pt 82 8)(line_width 1))
 	)
-	(annotation_block (location)(rect 1144 512 1192 528))
+	(annotation_block (location)(rect 1144 512 1200 528))
 )
 (pin
 	(output)
@@ -1386,10 +1386,6 @@ applicable agreement for further details.
 	(pt 968 360)
 )
 (connector
-	(pt 936 520)
-	(pt 968 520)
-)
-(connector
 	(pt 936 184)
 	(pt 968 184)
 	(bus)
@@ -1678,6 +1674,10 @@ applicable agreement for further details.
 (connector
 	(pt 2736 328)
 	(pt 2744 328)
+)
+(connector
+	(pt 936 520)
+	(pt 968 520)
 )
 (text "0x6300 = 25344" (rect 792 72 884 86)(font "Arial" (font_size 8)))
 (text "Clocking" (rect 0 64 103 88)(font "Arial" (color 255 0 0)(font_size 16)(bold)))

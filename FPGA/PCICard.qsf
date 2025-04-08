@@ -62,7 +62,7 @@ set_location_assignment PIN_55 -to nGNT
 set_location_assignment PIN_56 -to nREQ
 set_location_assignment PIN_54 -to nIRQA
 set_location_assignment PIN_94 -to nLOCK
-set_location_assignment PIN_33 -to LED
+set_location_assignment PIN_45 -to LED
 set_location_assignment PIN_67 -to AD[31]
 set_location_assignment PIN_68 -to AD[30]
 set_location_assignment PIN_70 -to AD[29]

@@ -171,6 +171,7 @@ architecture Behavioral of pci_target is
 	signal PAR_o		: std_logic;
 	signal PAR_oe		: std_logic := '0';
 	
+	signal LED			: std_logic;
 	signal stateCounter	: integer range 0 to 10 := 0;
 begin
     process(clk_i)
@@ -549,10 +550,11 @@ begin
 							rdy0_o <= '1';
 							
 							-- set LED
-							LED_o <= AD_io(0); -- bit 0 of byte 0
-							--LED_o <= AD_io(8); -- bit 0 of byte 1
-							--LED_o <= AD_io(16); -- bit 0 of byte 2
-							--LED_o <= AD_io(25); -- bit 0 of byte 3
+							LED <= not LED; -- toggle LED
+							--LED <= AD_io(0); -- bit 0 of byte 0
+							--LED <= AD_io(8); -- bit 0 of byte 1
+							--LED <= AD_io(16); -- bit 0 of byte 2
+							--LED <= AD_io(25); -- bit 0 of byte 3
 						elsif (dataPointer = (ioport + 4)) then
 							-- we are receiving four bytes here
 							data1_o <= AD_io; -- copy all 32 bit
@@ -643,6 +645,8 @@ begin
 	nREQ_o <= 'Z';
 	nIRQA <= 'Z';
 	nLOCK <= 'Z';
+	
+	LED_o <= LED;
 	
 	-- output some debug information
 	debug(0) <= nFRAME_io;

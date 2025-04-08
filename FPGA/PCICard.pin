@@ -37,7 +37,7 @@
  ------------------------------------------------------------------------------
 
 
-File Generation Date & Time: Wed Apr 09 00:12:50 2025
+File Generation Date & Time: Wed Apr 09 00:35:17 2025
 Quartus II Version 9.0 Build 132 02/25/2009 SJ Web Edition
 CHIP  "PCICard"  ASSIGNED TO AN: EPF10K30RC240-3
 
@@ -71,11 +71,11 @@ RESERVED_INPUT               : 25        :        :                   :         
 RESERVED_INPUT               : 26        :        :                   :         :           :                
 VCC_INT                      : 27        : power  :                   : 5.0V    :           :                
 RESERVED_INPUT               : 28        :        :                   :         :           :                
-ram_PAR_L[0]                 : 29        : bidir  : TTL               :         :           : N              
+RESERVED_INPUT               : 29        :        :                   :         :           :                
 RESERVED_INPUT               : 30        :        :                   :         :           :                
 RESERVED_INPUT               : 31        :        :                   :         :           :                
 GND_INT                      : 32        : gnd    :                   :         :           :                
-LED                          : 33        : output : TTL               :         :           : Y              
+RESERVED_INPUT               : 33        :        :                   :         :           :                
 AudioOut0                    : 34        : output : TTL               :         :           : Y              
 AudioOut1                    : 35        : output : TTL               :         :           : Y              
 SpdifOut                     : 36        : output : TTL               :         :           : Y              
@@ -87,15 +87,15 @@ RESERVED_INPUT               : 41        :        :                   :         
 GND_INT                      : 42        : gnd    :                   :         :           :                
 RESERVED_INPUT               : 43        :        :                   :         :           :                
 RESERVED_INPUT               : 44        :        :                   :         :           :                
-RESERVED_INPUT               : 45        :        :                   :         :           :                
+LED                          : 45        : output : TTL               :         :           : Y              
 RESERVED_INPUT               : 46        :        :                   :         :           :                
 VCC_INT                      : 47        : power  :                   : 5.0V    :           :                
 RESERVED_INPUT               : 48        :        :                   :         :           :                
 RESERVED_INPUT               : 49        :        :                   :         :           :                
 RESERVED_INPUT               : 50        :        :                   :         :           :                
-RESERVED_INPUT               : 51        :        :                   :         :           :                
+ram_PAR_L[0]                 : 51        : bidir  : TTL               :         :           : N              
 GND_INT                      : 52        : gnd    :                   :         :           :                
-RESERVED_INPUT               : 53        :        :                   :         :           :                
+ram_PAR_R[0]                 : 53        : bidir  : TTL               :         :           : N              
 nIRQA                        : 54        : output : TTL               :         :           : Y              
 nGNT                         : 55        : input  : TTL               :         :           : Y              
 nREQ                         : 56        : output : TTL               :         :           : Y              
@@ -168,7 +168,7 @@ VCC_INT                      : 122       : power  :                   : 5.0V    
 MSEL1                        : 123       : input  :                   :         :           :                
 MSEL0                        : 124       : input  :                   :         :           :                
 GND_INT                      : 125       : gnd    :                   :         :           :                
-RESERVED_INPUT               : 126       :        :                   :         :           :                
+ram_PAR_R[1]                 : 126       : bidir  : TTL               :         :           : N              
 ram_clk                      : 127       : output : TTL               :         :           : Y              
 ram_nOE                      : 128       : output : TTL               :         :           : Y              
 ram_nCS                      : 129       : output : TTL               :         :           : Y              
@@ -249,7 +249,7 @@ RESERVED_INPUT               : 203       :        :                   :         
 RESERVED_INPUT               : 204       :        :                   :         :           :                
 VCC_INT                      : 205       : power  :                   : 5.0V    :           :                
 RESERVED_INPUT               : 206       :        :                   :         :           :                
-ram_PAR_R[0]                 : 207       : bidir  : TTL               :         :           : N              
+RESERVED_INPUT               : 207       :        :                   :         :           :                
 RESERVED_INPUT               : 208       :        :                   :         :           :                
 RESERVED_INPUT               : 209       :        :                   :         :           :                
 nRST                         : 210       : input  : TTL               :         :           : Y              
@@ -261,7 +261,7 @@ RESERVED_INPUT               : 215       :        :                   :         
 GND_INT                      : 216       : gnd    :                   :         :           :                
 RESERVED_INPUT               : 217       :        :                   :         :           :                
 RESERVED_INPUT               : 218       :        :                   :         :           :                
-ram_PAR_R[1]                 : 219       : bidir  : TTL               :         :           : N              
+RESERVED_INPUT               : 219       :        :                   :         :           :                
 RESERVED_INPUT               : 220       :        :                   :         :           :                
 RESERVED_INPUT               : 221       :        :                   :         :           :                
 RESERVED_INPUT               : 222       :        :                   :         :           :                
