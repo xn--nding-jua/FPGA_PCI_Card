@@ -19,7 +19,7 @@ begin
     begin
         if (rising_edge(clk_in)) then
             count <= count + 1;
-            if (count = divider - 1) then
+            if (count = divider - 2) then
                 b <= not b;
                 count <= 0;
             end if;

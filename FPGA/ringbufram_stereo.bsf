@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 328 400)
+	(rect 16 16 328 432)
 	(text "ringbufram_stereo" (rect 5 0 94 12)(font "Arial" ))
-	(text "inst" (rect 8 368 25 380)(font "Arial" ))
+	(text "inst" (rect 8 400 25 412)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -145,37 +145,51 @@ applicable agreement for further details.
 	(port
 		(pt 312 272)
 		(output)
-		(text "ram_nWH" (rect 0 0 49 12)(font "Arial" ))
-		(text "ram_nWH" (rect 242 267 291 279)(font "Arial" ))
+		(text "ram_nWH_L" (rect 0 0 61 12)(font "Arial" ))
+		(text "ram_nWH_L" (rect 230 267 291 279)(font "Arial" ))
 		(line (pt 312 272)(pt 296 272)(line_width 1))
 	)
 	(port
 		(pt 312 288)
 		(output)
-		(text "ram_nWL" (rect 0 0 47 12)(font "Arial" ))
-		(text "ram_nWL" (rect 244 283 291 295)(font "Arial" ))
+		(text "ram_nWL_L" (rect 0 0 59 12)(font "Arial" ))
+		(text "ram_nWL_L" (rect 232 283 291 295)(font "Arial" ))
 		(line (pt 312 288)(pt 296 288)(line_width 1))
 	)
 	(port
 		(pt 312 304)
 		(output)
-		(text "ram_nADV" (rect 0 0 53 12)(font "Arial" ))
-		(text "ram_nADV" (rect 238 299 291 311)(font "Arial" ))
+		(text "ram_nWH_R" (rect 0 0 63 12)(font "Arial" ))
+		(text "ram_nWH_R" (rect 228 299 291 311)(font "Arial" ))
 		(line (pt 312 304)(pt 296 304)(line_width 1))
 	)
 	(port
 		(pt 312 320)
 		(output)
-		(text "ram_nOE" (rect 0 0 46 12)(font "Arial" ))
-		(text "ram_nOE" (rect 245 315 291 327)(font "Arial" ))
+		(text "ram_nWL_R" (rect 0 0 61 12)(font "Arial" ))
+		(text "ram_nWL_R" (rect 230 315 291 327)(font "Arial" ))
 		(line (pt 312 320)(pt 296 320)(line_width 1))
 	)
 	(port
 		(pt 312 336)
 		(output)
-		(text "ram_nCS" (rect 0 0 46 12)(font "Arial" ))
-		(text "ram_nCS" (rect 245 331 291 343)(font "Arial" ))
+		(text "ram_nADV" (rect 0 0 53 12)(font "Arial" ))
+		(text "ram_nADV" (rect 238 331 291 343)(font "Arial" ))
 		(line (pt 312 336)(pt 296 336)(line_width 1))
+	)
+	(port
+		(pt 312 352)
+		(output)
+		(text "ram_nOE" (rect 0 0 46 12)(font "Arial" ))
+		(text "ram_nOE" (rect 245 347 291 359)(font "Arial" ))
+		(line (pt 312 352)(pt 296 352)(line_width 1))
+	)
+	(port
+		(pt 312 368)
+		(output)
+		(text "ram_nCS" (rect 0 0 46 12)(font "Arial" ))
+		(text "ram_nCS" (rect 245 363 291 375)(font "Arial" ))
+		(line (pt 312 368)(pt 296 368)(line_width 1))
 	)
 	(port
 		(pt 312 176)
@@ -216,7 +230,7 @@ applicable agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 296 368)(line_width 1))
+		(rectangle (rect 16 16 296 400)(line_width 1))
 	)
 	(annotation_block (parameter)(rect 328 -64 428 16))
 )

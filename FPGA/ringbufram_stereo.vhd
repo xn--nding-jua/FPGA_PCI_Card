@@ -47,8 +47,10 @@ entity ringbufram_stereo is
 		ram_par_r	: inout std_logic_vector(1 downto 0); -- parity. Not used here
 		ram_nADSP	: out std_logic; --
 		ram_nADSC	: out std_logic; --
-		ram_nWH		: out std_logic; -- WriteEnable High-Byte
-		ram_nWL		: out std_logic; -- WriteEnable Low-Byte
+		ram_nWH_L	: out std_logic; -- WriteEnable High-Byte
+		ram_nWL_L	: out std_logic; -- WriteEnable Low-Byte
+		ram_nWH_R	: out std_logic; -- WriteEnable High-Byte
+		ram_nWL_R	: out std_logic; -- WriteEnable Low-Byte
 		ram_nADV	: out std_logic; -- automatic address incrementation. Not used here
 		ram_nOE		: out std_logic; -- output enable
 		ram_nCS		: out std_logic -- ChipSelect
@@ -56,7 +58,7 @@ entity ringbufram_stereo is
 end ringbufram_stereo;
 
 architecture rtl of ringbufram_stereo is
-	type t_SM_Ringbuffer is (s_Idle, s_ReadPrepare, s_Read);
+	type t_SM_Ringbuffer is (s_Idle, s_Write2, s_ReadPrepare, s_Read);
 	signal s_SM_Ringbuffer : t_SM_Ringbuffer := s_Idle;
 
 	subtype index_type is integer range 0 to (2**RAM_SIZE - 1);
@@ -67,7 +69,7 @@ architecture rtl of ringbufram_stereo is
 	signal full_i	: std_logic;
 	signal fill_count_i	: integer range 0 to (2**RAM_SIZE - 1);
 
-	signal rd_queued			: std_logic;
+	signal rd_queued	: std_logic;
 	
 	-- Increment and wrap
 	procedure incr(signal index : inout index_type) is
@@ -98,17 +100,16 @@ begin
 				-- reset outputs
 				rd_valid <= '0';
 			else
-				if (s_SM_Ringbuffer = s_Idle) then
-					-- nothing to do here
-					rd_valid <= '0';
-				elsif (s_SM_Ringbuffer = s_ReadPrepare) then
-					-- wait that RAM reads the desired address
-					rd_valid <= '0';
-				elsif (s_SM_Ringbuffer = s_Read) then
+				if (s_SM_Ringbuffer = s_Read) then
 					-- read data from RAM
 					rd_data_l <= ram_data_l;
 					rd_data_r <= ram_data_r;
 					rd_valid <= '1';
+					
+				else
+					-- nothing to do here
+					rd_valid <= '0';
+
 				end if;
 			end if;
 		end if;
@@ -124,8 +125,10 @@ begin
 				ram_data_r <= (others => 'Z');
 				ram_nADSP <= '1';
 				ram_nADSC <= '1';
-				ram_nWH <= '1';
-				ram_nWL <= '1';
+				ram_nWH_L <= 'Z';
+				ram_nWL_L <= 'Z';
+				ram_nWH_R <= 'Z';
+				ram_nWL_R <= 'Z';
 				ram_nADV <= '1';
 				ram_nOE <= '1';
 				ram_nCS <= '1';
@@ -142,8 +145,10 @@ begin
 						ram_data_r <= wr_data_r;
 						ram_nCS <= '0';
 						ram_nADSC <= '0';
-						ram_nWH <= '0';
-						ram_nWL <= '0';
+						ram_nWH_L <= '0';
+						ram_nWL_L <= '0';
+						ram_nWH_R <= 'Z';
+						ram_nWL_R <= 'Z';
 						ram_nOE <= '1';
 						incr(head);
 
@@ -151,6 +156,11 @@ begin
 						if (rd_en = '1') then
 							rd_queued <= '1';
 						end if;
+						
+						-- as both SRAMs refuse to work when writing to both at the same time
+						-- we have to insert a second write-state for the second SRAM
+						s_SM_Ringbuffer <= s_Write2;
+						
 					elsif (rd_en = '1' or rd_queued = '1') and empty_i = '0' then
 						-- we have a current or queued read-request
 						rd_queued <= '0';
@@ -159,8 +169,10 @@ begin
 						ram_ad <= std_logic_vector(to_unsigned(tail, ram_ad'length));
 						ram_nCS <= '0';
 						ram_nADSC <= '0';
-						ram_nWH <= '1';
-						ram_nWL <= '1';
+						ram_nWH_L <= 'Z';
+						ram_nWL_L <= 'Z';
+						ram_nWH_R <= 'Z';
+						ram_nWL_R <= 'Z';
 						ram_nOE <= '0';
 						incr(tail);
 						
@@ -171,16 +183,28 @@ begin
 						ram_data_r <= (others => 'Z');
 						ram_nCS <= '1';
 						ram_nADSC <= '1';
-						ram_nWH <= '1';
-						ram_nWL <= '1';
+						ram_nWH_L <= 'Z';
+						ram_nWL_L <= 'Z';
+						ram_nWH_R <= 'Z';
+						ram_nWL_R <= 'Z';
 						ram_nOE <= '1';
 					end if;
+					
+				elsif (s_SM_Ringbuffer = s_Write2) then
+						ram_nWH_L <= 'Z';
+						ram_nWL_L <= 'Z';
+						ram_nWH_R <= '0'; -- write data to second SRAM
+						ram_nWL_R <= '0';
+						s_SM_Ringbuffer <= s_Idle;
+
 				elsif (s_SM_Ringbuffer = s_ReadPrepare) then
 					-- RAM has read the desired address, so go to read-state
 					s_SM_Ringbuffer <= s_Read;
+					
 				elsif (s_SM_Ringbuffer = s_Read) then
 					-- read is done on rising edge
 					s_SM_Ringbuffer <= s_Idle;
+					
 				end if;
 			end if;
 		end if;

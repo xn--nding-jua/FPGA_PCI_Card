@@ -135,8 +135,6 @@ set_location_assignment PIN_131 -to ram_nADSC
 set_location_assignment PIN_132 -to ram_nADSP
 set_location_assignment PIN_133 -to ram_nADV
 set_location_assignment PIN_127 -to ram_clk
-set_location_assignment PIN_137 -to ram_nWL
-set_location_assignment PIN_138 -to ram_nWH
 set_location_assignment PIN_159 -to ram_DQ_L[0]
 set_location_assignment PIN_161 -to ram_DQ_L[1]
 set_location_assignment PIN_162 -to ram_DQ_L[2]
@@ -173,3 +171,8 @@ set_location_assignment PIN_18 -to VGA_R
 set_location_assignment PIN_17 -to VGA_G
 set_location_assignment PIN_15 -to VGA_B
 set_location_assignment PIN_36 -to SpdifOut
+set_global_assignment -name MISC_FILE "C:/GitCheckout/GitHub/FPGA_PCI_Card/FPGA/PCICard.dpf"
+set_location_assignment PIN_138 -to ram_nWH_L
+set_location_assignment PIN_136 -to ram_nWH_R
+set_location_assignment PIN_137 -to ram_nWL_L
+set_location_assignment PIN_134 -to ram_nWL_R
