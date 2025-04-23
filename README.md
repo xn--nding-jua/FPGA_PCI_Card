@@ -22,16 +22,18 @@ Here is the progress I've already made with this card and project:
 - [x] Writing Windows95 application and communicating with the card
 - [X] Implementing memory-read/write using on-board SRAM
 - [x] Implementing Audio-Output (Analog via Sigma-Delta-Modulation/PDM and Digital via SPDIF)
+- [x] Working PCI-communication on Windows98 using TVicHW32-driver
+- [x] Sending data to card under DOS using Borland C++ and inline-assembly
 - [ ] Implementing some other cool functions
-- [ ] Developing of a full-featured audio-driver for Windows95 (and maybe Win3.11)
-- [ ] Developing of a driver for DOS (TSR)
-- [ ] Test if the card can be controlled from OS/2
+- [ ] Test if the card can be controlled from Win3.11 and/or OS/2 as well
 
 ## Current state
 
 My implementation of the configuration-space as well as the IO-space is working fine. The card is detected by the BIOS and the requested IO-range is assigned. Memory-space is prepared, but not yet tested:
 
 ![alt text](Documentation/CardProperties.png)
+
+Audio-data can be written to the two onboard SRAM-ICs and a Windows98-software to communicate via Interrupts is already working.
 
 ## Driver and Software
 
@@ -60,3 +62,7 @@ At the moment the Quartus-project contains the PCI-functions, a FIFO RingBuffer 
 At the moment I'm learning the basics of hardware development for computers using this project. So I will try different things without a very specific goal. Let's see, what will happen with this project :)
 
 ![alt text](Documentation/Testbench.jpg)
+
+A newer version of the audioplayer is able to enumerate the PCI-cards and can send data using the interrupt of the card:
+
+![alt text](Documentation/Win98.jpg)

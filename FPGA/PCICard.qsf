@@ -60,7 +60,7 @@ set_location_assignment PIN_75 -to nTRDY
 set_location_assignment PIN_73 -to nFRAME
 set_location_assignment PIN_55 -to nGNT
 set_location_assignment PIN_56 -to nREQ
-set_location_assignment PIN_54 -to nIRQA
+set_location_assignment PIN_61 -to nIRQA
 set_location_assignment PIN_94 -to nLOCK
 set_location_assignment PIN_45 -to LED
 set_location_assignment PIN_67 -to AD[31]
@@ -176,3 +176,4 @@ set_location_assignment PIN_138 -to ram_nWH_L
 set_location_assignment PIN_136 -to ram_nWH_R
 set_location_assignment PIN_137 -to ram_nWL_L
 set_location_assignment PIN_134 -to ram_nWL_R
+set_global_assignment -name VHDL_FILE buffer_irq.vhd

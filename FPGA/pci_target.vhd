@@ -122,6 +122,7 @@ entity pci_target is
 		
 		
 		-- interface to outside
+		IRQ			: in std_logic;
 		data0_i		: in std_logic_vector(31 downto 0);
 		data1_i		: in std_logic_vector(31 downto 0);
 		data2_i		: in std_logic_vector(31 downto 0);
@@ -150,6 +151,7 @@ architecture Behavioral of pci_target is
 	signal AD		 	: std_logic_vector(31 downto 0);
 	signal command		: std_logic_vector(3 downto 0);
 	
+	--constant irack	 	: std_logic_vector(3 downto 0) := "0000";
 	constant confread 	: std_logic_vector(3 downto 0) := "1010";
 	constant confwrite 	: std_logic_vector(3 downto 0) := "1011";
 	constant ioread 	: std_logic_vector(3 downto 0) := "0010";
@@ -171,6 +173,7 @@ architecture Behavioral of pci_target is
 	signal PAR_o		: std_logic;
 	signal PAR_oe		: std_logic := '0';
 	
+	signal zIRQ			: std_logic;
 	signal LED			: std_logic;
 	signal stateCounter	: integer range 0 to 10 := 0;
 begin
@@ -187,18 +190,9 @@ begin
 				nDEVSEL_io <= 'Z'; -- set outputs (bi-directional-pins) to High-Z
 				nSTOP_io <= 'Z';
 
-				-- "type 0" configuration-command (AD[1..0] = 00
-				-- for this the following command structure is valid
-				-- 31............11   10.....8   7......2   1..0
-				-- --- RESERVED ---   FCN NMBR   REG NMBR   TYPE
-				--
-				-- "type 1" requests are sent to another bus-segment:
-				-- 31....24    23....16   15....11    10.....8   7......2    1..0
-				-- RESERVED    BUS NMBR   DEV NMBR    FCN NMBR   REG NMBR    TYPE
-				
-			
+				-- =================== Configuration Space =====================
 				-- Address     Bit 32      16   15           0
-				-- 
+				-- =============================================================
 				-- 00          Unit ID        | Manufacturer ID
 				-- 04          Status         | Command
 				-- 08          Class Code               | Revision
@@ -211,17 +205,67 @@ begin
 				-- 38          Reserved
 				-- 3C          MaxLat|MnGNT   | INT-pin | INT-line
 				-- 40-FF       available for PCI unit
+				-- =============================================================
 				
-				conf_frame(0) <= x"25241172"; -- PID = 0x2524 | VID = 0x1172 = Altera
+				conf_frame(0) <= x"2524" & x"1172"; -- PID = 0x2524 | VID = 0x1172 = Altera
+
+				-- ===================== Command Register ======================
+				-- Bit	Description					State
+				-- =============================================================
+				-- 0	IO Space					1
+				-- 1	Memory Space				1
+				-- 2	Bus Master					0
+				-- 3	Special Cycles				0
+				-- 4	Mem. Write and Inv. enabled	0
+				-- 5	VGA Palette Snoop			0
+				-- 6	Parity Error Response		0
+				-- 7	Reserved					0
+				-- 8	SERR# Enable				0
+				-- 9	Fast Back-to-Back Enable	0 (will be set by BIOS if all targets are fast back-to-back capable)
+				-- 10	Interrupt Disable			0 = asserting INTx# is enabled / 1 = asserting INTx# is disabled
+				-- 11	Reserved					0
+				-- 12	Reserved					0
+				-- 13	Reserved					0
+				-- 14	Reserved					0
+				-- 15	Reserved					0
+				-- =============================================================
+				-- 
+				-- => Command Register = 0x0003
+				-- 
+				-- 
+				-- 
+				-- ====================== Status Register ======================
+				-- Bit	Description			State
+				-- =============================================================
+				-- 0	Reserved					0
+				-- 1	Reserved					0
+				-- 2	Reserved					0
+				-- 3	Interrupt Status			1 = Interrupts enabled
+				-- 4	Capabilities List			0 = capabilities list disabled
+				-- 5	66MHz Capable				0 = 33 MHz-only
+				-- 6	Reserved					0 (only up to PCI Rev 2.1: 0 = no user definable features)
+				-- 7	Fast Back-to-Back Capable	0 = disabled / 1 = enabled
+				-- 8	Master Data Parity Error	0 (only for Bus-Masters)
+				-- 9	DEVSEL-timing				0 (00 = fast, 01 = medium, 10 = slow, 11 = reserved)
+				-- 10	DEVSEL-timing				0 (00 = fast, 01 = medium, 10 = slow, 11 = reserved)
+				-- 11	Signaled Target Abort		0
+				-- 12	Received Target Abort		0
+				-- 13	Received Master Abort		0
+				-- 14	Signaled system Error		0
+				-- 15	Detected Parity Error		0
+				-- =============================================================
+				-- 
+				-- => Status Register = 0x0008
+
 				
-				-- command = 0x03 (b0=responses to io-space, b1=responses to mem-space, b10 = interrupt disable)
-				-- status = 0x00 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable)
-				conf_frame(1) <= x"00000003";  -- status and command
+				-- command = 0x0003 (b10 would be interrupt disable | b1=responses to mem-space | b0=responses to io-space)
+				-- status = 0x0008 (b10..b9: DEVSEL-timing 00=fast, 01=medium, 10=slow | b5=66MHz capable | b3 = Interrupt status)
+				conf_frame(1) <= "0000000000001000" & "0000000000000011";  -- status (0x0008) and command (0x0003)
 				
 				-- ClassCode = BaseClass, SubClass, RegisterClass
 				-- BaseClass = 0x00 = unknown, 0x02 network, 0x04 = multimedia, 0x07 simple communication controller, 0x09 = input device, 0xff unspecified
 				-- SubClass = 0x80 = other device, 0x00 .. 0x?? for specific devices of base-class
-				conf_frame(2) <= x"048000B2";  -- ClassCode | revision ID = 0xB2
+				conf_frame(2) <= x"048000" & x"B2";  -- ClassCode | revision ID = 0xB2
 
 				-- BIST | HeaderType | LatencyTimer | Cache Line Size (CLS)
 				conf_frame(3) <= x"00000000"; -- Cache Line Size (CLS)
@@ -237,11 +281,11 @@ begin
 				conf_frame(8) <= x"00000000"; -- BAR4 (unused)
 				conf_frame(9) <= x"00000000"; -- BAR5 (unused)
 				conf_frame(10) <= x"00000000"; -- CardBus CIS Pointer
-				conf_frame(11) <= x"00001172"; -- SubSystemID (0x0000) | System Vendor ID (0x1172)
+				conf_frame(11) <= x"0000" & x"1172"; -- SubSystemID (0x0000) | System Vendor ID (0x1172)
 				conf_frame(12) <= x"00000000"; -- Expansion ROM Base Address
 				conf_frame(13) <= x"00000000"; -- Reserved | Capabilities Pointer
 				conf_frame(14) <= x"00000000"; -- Reserved
-				conf_frame(15) <= x"00000200"; -- MaxLat | MinGnt | Interupt Pin | Interrupt Line
+				conf_frame(15) <= x"00" & x"00" & x"01" & x"00"; -- MaxLat | MinGnt | Interupt Pin (0x00 = none, 0x01 = INTA#, 0x02 = INTB#, 0x03 = INTC#, 0x04 = INTD#) | Interrupt Line (IRQ-Number set by BIOS)
 				-- all remaining bytes of the 256 bytes are not used for now and can be set to zero
 
 				s_SM_Transaction <= s_Idle;
@@ -307,6 +351,8 @@ begin
 								-- nCBE indicates the size of the transfer
 								dataPointer <= to_integer(unsigned(AD_io));
 								s_SM_Transaction <= s_iowrite;
+								
+								nIRQA <= 'Z'; -- deassert interrupt pin as we got new data
 							end if;
 
 --						elsif (nCBE_io = memread) then
@@ -328,8 +374,14 @@ begin
 --								dataPointer <= to_integer(unsigned(AD_io));
 --								s_SM_Transaction <= s_memwrite;
 --							end if;
---							
+
 						end if;
+					else
+						-- check if we need new data
+						if (IRQ = '1' and zIRQ = '0') then
+							nIRQA <= '0'; -- assert interrupt pin
+						end if;
+						zIRQ <= IRQ;
 					end if;
 					
 					
@@ -362,7 +414,6 @@ begin
 					-- set outputs
 					nSTOP_io <= '1';
 
-					-- next lines are working partially. Only the first DWORD is transmitted
 					if (dataPointer <= 15) then
 						-- dataPointer points to internal DWORD-address 0...x of conf-register and is incremented in risingEdge-process
 						--AD_o <= conf_frame(dataPointer); -- set data to output as DWORD ignoring byte-enable-signal
@@ -428,6 +479,11 @@ begin
 						end if;
 						conf_frame(4)(3 downto 0) <= "00" & "01"; -- BAR0: request 16 bytes IO-Space by setting 2 bits to 0
 						conf_frame(5)(19 downto 0) <= "0000000000000000" & "1000"; -- BAR1: request 1 MByte Memory-Space by setting BAR1 to 0xFFF00008
+
+						-- allow writing to Interrupt Line Register
+						if (dataPointer = 15) then
+							conf_frame(dataPointer)(7 downto 0) <= AD_io(7 downto 0);
+						end if;
 						
 						if (nFRAME_io = '0') then
 							-- during consecutive writing, we are using a linear DWORD-increment of dataPointer
@@ -490,6 +546,7 @@ begin
 						AD_o <= data0_i;
 					elsif ((dataPointer >= (ioport + 4)) and (dataPointer <= (ioport + 7))) then
 						--AD_o <= std_logic_vector(to_unsigned(43, 32)); -- output constant value "43"
+						--AD_o <= conf_frame(15); -- send content of MaxLat | MinGnt | Interupt Pin (0x01 = INTA) | Interrupt Line
 						AD_o <= data1_i;
 					elsif ((dataPointer >= (ioport + 8)) and (dataPointer <= (ioport + 11))) then
 						AD_o <= conf_frame(4); -- send content of BAR0
@@ -643,7 +700,6 @@ begin
 	nPERR_io <= 'Z';
 	nSERR_io <= 'Z';
 	nREQ_o <= 'Z';
-	nIRQA <= 'Z';
 	nLOCK <= 'Z';
 	
 	LED_o <= LED;

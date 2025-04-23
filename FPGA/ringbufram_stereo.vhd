@@ -13,7 +13,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity ringbufram_stereo is
 	generic (
 		RAM_SIZE	: natural := 15; -- 15 bit Address
-		RAM_WIDTH	: natural := 16 -- 16 bit DATA
+		RAM_WIDTH	: natural := 16; -- 16 bit DATA
+		MIN_SAMPLES	: natural := 250 -- minimum number of samples until an IRQ is asserted
 	);
 	port (
 		clk			: in std_logic;
@@ -31,6 +32,7 @@ entity ringbufram_stereo is
 		rd_data_r	: out std_logic_vector(RAM_WIDTH - 1 downto 0); -- SRAM supports 16 bit only
 		
 		-- Flags
+		reload		: out std_logic;
 		empty		: out std_logic;
 		empty_next	: out std_logic;
 		full		: out std_logic;
@@ -59,17 +61,18 @@ end ringbufram_stereo;
 
 architecture rtl of ringbufram_stereo is
 	type t_SM_Ringbuffer is (s_Idle, s_Write2, s_ReadPrepare, s_Read);
-	signal s_SM_Ringbuffer : t_SM_Ringbuffer := s_Idle;
+	signal s_SM_Ringbuffer	: t_SM_Ringbuffer := s_Idle;
 
 	subtype index_type is integer range 0 to (2**RAM_SIZE - 1);
-	signal head		: index_type;
-	signal tail		: index_type;
+	signal head				: index_type;
+	signal tail				: index_type;
 	
-	signal empty_i	: std_logic;
-	signal full_i	: std_logic;
-	signal fill_count_i	: integer range 0 to (2**RAM_SIZE - 1);
+	signal reload_i			: std_logic;
+	signal empty_i			: std_logic;
+	signal full_i			: std_logic;
+	signal fill_count_i		: integer range 0 to (2**RAM_SIZE - 1);
 
-	signal rd_queued	: std_logic;
+	signal rd_queued		: std_logic;
 	
 	-- Increment and wrap
 	procedure incr(signal index : inout index_type) is
@@ -82,15 +85,18 @@ architecture rtl of ringbufram_stereo is
 	end procedure;
 begin
 	-- Copy internal signals to output
+	reload <= reload_i;
 	empty <= empty_i;
 	full <= full_i;
 	fill_count <= to_unsigned(fill_count_i, fill_count'length);
 	
 	-- set the flags
+	reload_i <= '1' when fill_count_i < MIN_SAMPLES else '0';
 	empty_i <= '1' when fill_count_i = 0 else '0';
 	empty_next <= '1' when fill_count_i <= 1 else '0';
 	full_i <= '1' when fill_count_i >= (2**RAM_SIZE - 1) else '0';
 	full_next <= '1' when fill_count_i >= (2**RAM_SIZE - 2) else '0';
+	
 
 	-- process the RAM-functions
 	proc_ram : process(clk)

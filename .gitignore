@@ -5,6 +5,7 @@
 *.exe
 *.sys
 *.dll
+*.dcu
 
 # Quartus-files
 undo_redo.txt

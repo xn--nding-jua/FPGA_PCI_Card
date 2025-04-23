@@ -1,9 +1,9 @@
 object mainform: Tmainform
-  Left = 368
-  Top = 217
+  Left = 553
+  Top = 154
   BorderStyle = bsSingle
   Caption = 'AudioPlayer'
-  ClientHeight = 256
+  ClientHeight = 464
   ClientWidth = 448
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,6 +13,7 @@ object mainform: Tmainform
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -33,7 +34,7 @@ object mainform: Tmainform
     Top = 24
     Width = 124
     Height = 13
-    Caption = 'v1.0.1 built on 06.04.2025'
+    Caption = 'v1.2.0 built on 23.04.2025'
   end
   object GroupBox1: TGroupBox
     Left = 160
@@ -45,9 +46,9 @@ object mainform: Tmainform
     object Label7: TLabel
       Left = 8
       Top = 24
-      Width = 71
+      Width = 168
       Height = 13
-      Caption = 'Manual output:'
+      Caption = 'Manual output (no audio, just DAC):'
     end
     object Label8: TLabel
       Left = 8
@@ -86,7 +87,7 @@ object mainform: Tmainform
     Left = 8
     Top = 128
     Width = 433
-    Height = 121
+    Height = 145
     Caption = ' Audioplayer '
     TabOrder = 1
     object Label3: TLabel
@@ -105,14 +106,14 @@ object mainform: Tmainform
     end
     object Label11: TLabel
       Left = 232
-      Top = 86
+      Top = 110
       Width = 84
       Height = 13
       Caption = 'Samples in buffer:'
     end
     object Label12: TLabel
       Left = 232
-      Top = 102
+      Top = 126
       Width = 79
       Height = 13
       Caption = '0 Samples / 0ms'
@@ -139,11 +140,18 @@ object mainform: Tmainform
       Caption = '100%'
     end
     object Label16: TLabel
-      Left = 379
-      Top = 95
-      Width = 14
+      Left = 376
+      Top = 119
+      Width = 17
       Height = 13
       Caption = '0%'
+    end
+    object isrcalllbl: TLabel
+      Left = 232
+      Top = 94
+      Width = 52
+      Height = 13
+      Caption = '0 ISR-Calls'
     end
     object audiofileedit: TEdit
       Left = 8
@@ -155,17 +163,17 @@ object mainform: Tmainform
     end
     object Button1: TButton
       Left = 8
-      Top = 88
-      Width = 75
+      Top = 112
+      Width = 105
       Height = 25
       Caption = 'Play'
       TabOrder = 1
       OnClick = Button1Click
     end
     object Button2: TButton
-      Left = 88
-      Top = 88
-      Width = 75
+      Left = 120
+      Top = 112
+      Width = 107
       Height = 25
       Caption = 'Stop'
       TabOrder = 2
@@ -176,6 +184,7 @@ object mainform: Tmainform
       Top = 64
       Width = 217
       Height = 17
+      Smooth = True
       TabOrder = 3
     end
     object buffersizeedit: TEdit
@@ -190,13 +199,31 @@ object mainform: Tmainform
       Left = 392
       Top = 8
       Width = 33
-      Height = 105
+      Height = 129
       Max = 100
       Orientation = trVertical
       TabOrder = 5
       TickMarks = tmBoth
       TickStyle = tsManual
       OnChange = volumesliderChange
+    end
+    object pollingbtn: TRadioButton
+      Left = 8
+      Top = 88
+      Width = 105
+      Height = 17
+      Caption = 'Polling-Mode'
+      Checked = True
+      TabOrder = 6
+      TabStop = True
+    end
+    object irqbtn: TRadioButton
+      Left = 120
+      Top = 88
+      Width = 105
+      Height = 17
+      Caption = 'IRQ-Mode'
+      TabOrder = 7
     end
   end
   object GroupBox3: TGroupBox
@@ -220,6 +247,13 @@ object mainform: Tmainform
       Height = 13
       Caption = '0x'
     end
+    object Label17: TLabel
+      Left = 88
+      Top = 43
+      Width = 19
+      Height = 13
+      Caption = 'IRQ'
+    end
     object ioaddressedit: TEdit
       Left = 24
       Top = 40
@@ -228,12 +262,45 @@ object mainform: Tmainform
       TabOrder = 0
       Text = '6300'
     end
+    object irqedit: TEdit
+      Left = 112
+      Top = 40
+      Width = 25
+      Height = 21
+      TabOrder = 1
+      Text = '10'
+    end
+  end
+  object GroupBox4: TGroupBox
+    Left = 8
+    Top = 280
+    Width = 433
+    Height = 177
+    Caption = ' PCI Information '
+    TabOrder = 3
+    object pciinfo: TMemo
+      Left = 8
+      Top = 16
+      Width = 417
+      Height = 121
+      ScrollBars = ssVertical
+      TabOrder = 0
+    end
+    object Button3: TButton
+      Left = 328
+      Top = 144
+      Width = 91
+      Height = 25
+      Caption = 'Enum PCI Cards'
+      TabOrder = 1
+      OnClick = Button3Click
+    end
   end
   object Timer1: TTimer
     Enabled = False
     Interval = 100
     OnTimer = Timer1Timer
     Left = 336
-    Top = 144
+    Top = 232
   end
 end
