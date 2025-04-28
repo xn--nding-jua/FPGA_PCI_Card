@@ -10,6 +10,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'AudioPlayer';
   Application.CreateForm(Tmainform, mainform);
   Application.Run;
 end.

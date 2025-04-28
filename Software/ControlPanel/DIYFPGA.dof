@@ -1,6 +1,5 @@
 [FileVersion]
 Version=7.0
-
 [Compiler]
 A=8
 B=0
@@ -80,7 +79,6 @@ PrivatePropAccessor=1
 UnsafeType=1
 UnsafeCode=1
 UnsafeCast=1
-
 [Linker]
 MapFile=0
 OutputObjs=0
@@ -91,7 +89,6 @@ MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
-
 [Directories]
 OutputDir=
 UnitOutputDir=
@@ -102,14 +99,12 @@ Packages=Vcl40;Vclx40;Vcldb40;vcldbx40;VclSmp40;Qrpt40;TeeUI40;teedb40;tee40;Dss
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
-
 [Parameters]
 RunParams=
 HostApplication=
 Launcher=
 UseLauncher=0
 DebugCWD=
-
 [Version Info]
 IncludeVerInfo=0
 AutoIncBuild=0
@@ -124,7 +119,6 @@ Private=0
 DLL=0
 Locale=1038
 CodePage=1250
-
 [Version Info Keys]
 CompanyName=
 FileDescription=
@@ -136,3 +130,6 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

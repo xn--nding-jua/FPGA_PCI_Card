@@ -1,6 +1,5 @@
 [FileVersion]
 Version=7.0
-
 [Compiler]
 A=8
 B=0
@@ -80,7 +79,6 @@ PrivatePropAccessor=1
 UnsafeType=0
 UnsafeCode=0
 UnsafeCast=0
-
 [Linker]
 MapFile=0
 OutputObjs=0
@@ -91,7 +89,6 @@ MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
-
 [Directories]
 OutputDir=
 UnitOutputDir=
@@ -102,14 +99,12 @@ Packages=rtl;vcl;vclx;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsn
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
-
 [Parameters]
 RunParams=
 HostApplication=
 Launcher=
 UseLauncher=0
 DebugCWD=
-
 [Version Info]
 IncludeVerInfo=0
 AutoIncBuild=0
@@ -124,7 +119,6 @@ Private=0
 DLL=0
 Locale=1031
 CodePage=1252
-
 [Version Info Keys]
 CompanyName=
 FileDescription=

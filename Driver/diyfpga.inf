@@ -6,13 +6,13 @@
 ; Copyright   : © 2025 by Chris Noeding, Germany
 ;----------------------------------------------------------------------
 
-[version]
+[Version]
 Signature="$CHICAGO$"
 Class=MEDIA
 Provider=%NDNG%
 LayoutFile=layout.inf
 DriverVer=04/06/2025,1.0.1000.00001
-;DriverVer=mm/dd/yyyy
+;DriverVer=mm/dd/yyyy,w.x.y.z 
 
 [Manufacturer]
 %VENDOR%=Vendor

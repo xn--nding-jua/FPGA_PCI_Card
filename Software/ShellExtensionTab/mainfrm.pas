@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, TVicLib, Hw_Types;
+  Dialogs, StdCtrls, TVicLib, Hw_Types, ExtCtrls;
 
 type
   Tmainform = class(TForm)
@@ -20,6 +20,9 @@ type
     Label6: TLabel;
     statusreglbl: TLabel;
     Button1: TButton;
+    Image1: TImage;
+    Label5: TLabel;
+    Label7: TLabel;
     procedure Button1Click(Sender: TObject);
   private
     { Private-Deklarationen }

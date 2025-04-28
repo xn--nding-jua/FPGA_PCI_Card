@@ -45,6 +45,7 @@ type
     GroupBox4: TGroupBox;
     pciinfo: TMemo;
     Button3: TButton;
+    Image1: TImage;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
