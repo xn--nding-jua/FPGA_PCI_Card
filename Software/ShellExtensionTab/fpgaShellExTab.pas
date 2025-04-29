@@ -1,4 +1,4 @@
-unit DIYFPGA_ShellExTab;
+unit fpgaShellExTab;
 
 {$R 'DLG.res'}
 

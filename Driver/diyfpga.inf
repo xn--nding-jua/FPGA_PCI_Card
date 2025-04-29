@@ -1,80 +1,80 @@
 ; Description : Windows9x Driver for the DIY FPGA PCI Card
-; InfVersion  : 1.0
-; Comment     : More information under https://github/xn--nding-jua/FPGA_PCI_Card
-; Language    : German/English
-; OS          : Windows 95/98
-; Copyright   : © 2025 by Chris Noeding, Germany
-;----------------------------------------------------------------------
+; InfVersion  : 1.01
+; Comment     : More information under https://github.com/xn--nding-jua/FPGA_PCI_Card
+; Language    : English
+; OS          : Windows 95/98/ME
+; Copyright   : (c) 2025 by Chris Noeding, Germany
+; -------------------------------------------------------------------------
 
 [Version]
-Signature="$CHICAGO$"
-Class=MEDIA
-Provider=%NDNG%
-LayoutFile=layout.inf
-DriverVer=04/06/2025,1.0.1000.00001
-;DriverVer=mm/dd/yyyy,w.x.y.z 
+Signature = "$CHICAGO$"
+Class = MEDIA
+Provider = %NDNG%
+LayoutFile = layout.inf
+DriverVer = 04/29/2025,1.0.1000.00002 ;mm/dd/yyyy,w.x.y.z
+SetupClass = BASE
 
 [Manufacturer]
-%VENDOR%=Vendor
+%VENDOR% = Vendor
 
 [Vendor]
-%FPGA01.DeviceDesc%=dev.install,PCI\VEN_1172&DEV_2524
+%FPGA01.DeviceDesc% = DefaultInstall,PCI\VEN_1172&DEV_2524
 
 [ClassInstall]
-AddReg=dev.class.install
+AddReg = DefaultClassInstall
 
-[dev.class.install]
+[DefaultClassInstall]
 HKR,,,0,%ClassString%
 HKR,,Icon,0,"-1"
-;HKR,,Installer,0,mmci.dll
 
-;[DestinationDirs]
-;dev.copy=11
-;DestGrp=10,
-;DestGrp1=10,desktop
+[DefaultInstall]
+CopyFiles = TVicHW32.Files.Sys, FPGA.Files.Sys, FPGA.Files.Inf
+RegisterDlls = FPGA.Files.RegSvr
 
-[dev.install]
-;CopyFiles=dev.copy,DestGrp,DestGrp1
-;AddReg=dev.registry
-
-;[dev.copy]
-;driver.vxd
-;driver.drv
-
-;[DestGrp]
-;FPGA.ico,,,4
-
-;[DestGrp1]
-;Info.txt,,,4
-
-;[dev.registry]
-
-;[DefaultUninstall]
-;DelFiles=DestGrp
-;DelReg=FPGA.DelReg
-
-;[FPGA.DelReg]
-;HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\DIY_FPGA
-
-[SourceDisksName]
-1=%DiscDesc%,,
+[SourceDisksNames]
+1 = %DiskName%,"",1
 
 [SourceDisksFiles]
-;driver.vxd=1
-;driver.drv=1
-;FPGA.ico=1
-;Info.txt=1
+TVicHW32.vxd = 1
+TVicHW32.sys = 1
+TVicHW32.dll = 1
+fpgatab.dll = 1
+diyfpga.cpl = 1
+diyfpga.inf = 1
 
-[strings]
-; Provider
-NDNG="Noeding"
-; Manufacturer
-VENDOR="Noeding"
-; PCI-Device-Name
-FPGA01.DeviceDesc="DIY FPGA PCI Card Rev1"
-; Source-Disk-Name
-DiscDesc="DIY FPGA PCI Card Driver Disc"
-; DeviceClass
-ClassString="Audio-, Video- und Game-Controller"
+[DestinationDirs]
+; 10 = C:\Windows
+; 11 = C:\Windows\System
+; 12 = C:\Windows\System32
+; 17 = C:\Windows\Inf
+; 18 = C:\Windows\Help
+; 24 = C:\
+; -1 = absolute path
+TVicHW32.Files.Sys = 11
+FPGA.Files.Sys = 11
+FPGA.Files.Inf = 17
 
-;-----------------------------------------------------------------------
+[TVicHW32.Files.Sys]
+TVicHW32.vxd
+TVicHW32.sys
+TVicHW32.dll
+
+[FPGA.Files.Sys]
+fpgatab.dll
+diyfpga.cpl
+
+[FPGA.Files.Inf]
+diyfpga.inf
+
+[FPGA.Files.RegSvr]
+; Format: DIRID,[SubDir],Filename,Registerflag (flag 1 calls regsvr32)
+11,,fpgatab.dll, 1
+
+[Strings]
+NDNG = "Noeding"
+VENDOR = "Noeding"
+DiskName = "DIY FPGA PCI Card Driver Disk"
+FPGA01.DeviceDesc = "DIY FPGA PCI Card Rev1"
+ClassString = "Audio-, Video- und Game-Controller"
+
+; -------------------------------------------------------------------------

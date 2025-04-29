@@ -2,11 +2,11 @@
 // It allows the user to control the DIY FPGA PCI Card through
 // the regular Windows-property-windows
 
-library DIYFPGA_DriverDlg;
+library fpgatab;
 
 uses
   ComServ,
-  DIYFPGA_ShellExTab in 'DIYFPGA_ShellExTab.pas',
+  fpgaShellExTab in 'fpgaShellExTab.pas',
   mainfrm in 'mainfrm.pas' {mainform};
 
 exports
