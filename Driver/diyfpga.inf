@@ -1,5 +1,5 @@
 ; Description : Windows9x Driver for the DIY FPGA PCI Card
-; InfVersion  : 1.01
+; InfVersion  : 1.02
 ; Comment     : More information under https://github.com/xn--nding-jua/FPGA_PCI_Card
 ; Language    : English
 ; OS          : Windows 95/98/ME
@@ -11,7 +11,7 @@ Signature = "$CHICAGO$"
 Class = MEDIA
 Provider = %NDNG%
 LayoutFile = layout.inf
-DriverVer = 04/29/2025,1.0.1000.00002 ;mm/dd/yyyy,w.x.y.z
+DriverVer = 04/29/2025,1.0.1000.00003 ;mm/dd/yyyy,w.x.y.z
 SetupClass = BASE
 
 [Manufacturer]
@@ -29,7 +29,8 @@ HKR,,Icon,0,"-1"
 
 [DefaultInstall]
 CopyFiles = TVicHW32.Files.Sys, FPGA.Files.Sys, FPGA.Files.Inf
-RegisterDlls = FPGA.Files.RegSvr
+;AddReg    = FPGA.Add.Reg
+RegisterDlls = FPGA.Files.Sys ; Windows9x is not using "DIRID,,Filename,Flag" but only a filelist
 
 [SourceDisksNames]
 1 = %DiskName%,"",1
@@ -66,9 +67,8 @@ diyfpga.cpl
 [FPGA.Files.Inf]
 diyfpga.inf
 
-[FPGA.Files.RegSvr]
-; Format: DIRID,[SubDir],Filename,Registerflag (flag 1 calls regsvr32)
-11,,fpgatab.dll, 1
+;[FPGA.Add.Reg]
+;HKLM,Software\Microsoft\Windows\CurrentVersion\Run,"Name for Entry",,"Command to run"
 
 [Strings]
 NDNG = "Noeding"
