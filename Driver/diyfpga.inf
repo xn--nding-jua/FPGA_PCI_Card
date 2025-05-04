@@ -1,6 +1,7 @@
 ; Description : Windows9x Driver for the DIY FPGA PCI Card
-; InfVersion  : 1.02
+; InfVersion  : 1.05
 ; Comment     : More information under https://github.com/xn--nding-jua/FPGA_PCI_Card
+; Comment     : For more projects have a look at https://chrisdevblog.com as well
 ; Language    : English
 ; OS          : Windows 95/98/ME
 ; Copyright   : (c) 2025 by Chris Noeding, Germany
@@ -11,7 +12,7 @@ Signature = "$CHICAGO$"
 Class = MEDIA
 Provider = %NDNG%
 LayoutFile = layout.inf
-DriverVer = 04/29/2025,1.0.1000.00003 ;mm/dd/yyyy,w.x.y.z
+DriverVer = 05/04/2025,1.0.1000.00005 ;mm/dd/yyyy,w.x.y.z
 SetupClass = BASE
 
 [Manufacturer]
@@ -29,8 +30,13 @@ HKR,,Icon,0,"-1"
 
 [DefaultInstall]
 CopyFiles = TVicHW32.Files.Sys, FPGA.Files.Sys, FPGA.Files.Inf
-;AddReg    = FPGA.Add.Reg
+AddReg    = FPGA.Add.Reg
 RegisterDlls = FPGA.Files.Sys ; Windows9x is not using "DIRID,,Filename,Flag" but only a filelist
+
+[Uninstall]
+DelFiles = TVicHW32.Files.Sys, FPGA.Files.Sys, FPGA.Files.Inf
+DelReg = DelCLSIDKey
+
 
 [SourceDisksNames]
 1 = %DiskName%,"",1
@@ -40,6 +46,7 @@ TVicHW32.vxd = 1
 TVicHW32.sys = 1
 TVicHW32.dll = 1
 fpgatab.dll = 1
+fpgaprop.dll = 1
 diyfpga.cpl = 1
 diyfpga.inf = 1
 
@@ -62,13 +69,20 @@ TVicHW32.dll
 
 [FPGA.Files.Sys]
 fpgatab.dll
+fpgaprop.dll
 diyfpga.cpl
 
 [FPGA.Files.Inf]
 diyfpga.inf
 
-;[FPGA.Add.Reg]
+[FPGA.Add.Reg]
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Controls Folder\Display\shellex\PropertySheetHandlers\DiyFpgaPropertySheet",,,"{21C1AC3C-8392-4E9C-A8DD-4D3EEEF5729C}"
+HKCR,CLSID\{21C1AC3C-8392-4E9C-A8DD-4D3EEEF5729C}\InProcServer32,,,"%11%\fpgatab.dll"
+HKCR,CLSID\{21C1AC3C-8392-4E9C-A8DD-4D3EEEF5729C}\InProcServer32,ThreadingModel,,"Apartment"
 ;HKLM,Software\Microsoft\Windows\CurrentVersion\Run,"Name for Entry",,"Command to run"
+
+[DelCLSIDKey]
+HKCR,CLSID,{21C1AC3C-8392-4E9C-A8DD-4D3EEEF5729C}
 
 [Strings]
 NDNG = "Noeding"

@@ -1,5 +1,6 @@
 [FileVersion]
 Version=7.0
+
 [Compiler]
 A=8
 B=0
@@ -79,6 +80,7 @@ PrivatePropAccessor=1
 UnsafeType=0
 UnsafeCode=0
 UnsafeCast=0
+
 [Linker]
 MapFile=0
 OutputObjs=0
@@ -89,6 +91,7 @@ MinStackSize=16384
 MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
+
 [Directories]
 OutputDir=
 UnitOutputDir=
@@ -99,17 +102,19 @@ Packages=rtl;vcl;vclx;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsn
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
+
 [Parameters]
 RunParams=
 HostApplication=
 Launcher=
 UseLauncher=0
 DebugCWD=
+
 [Version Info]
-IncludeVerInfo=0
+IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=1
-MinorVer=0
+MinorVer=2
 Release=0
 Build=0
 Debug=0
@@ -119,14 +124,18 @@ Private=0
 DLL=0
 Locale=1031
 CodePage=1252
+
 [Version Info Keys]
-CompanyName=
-FileDescription=
-FileVersion=1.0.0.0
-InternalName=
-LegalCopyright=
+CompanyName=PHOENIXstudios
+FileDescription=FPGA AudioPlayer
+FileVersion=1.2.0.0
+InternalName=AudioPlayer.exe
+LegalCopyright=(c) 2025 Chris Noeding
 LegalTrademarks=
 OriginalFilename=
 ProductName=
-ProductVersion=1.0.0.0
-Comments=
+ProductVersion=1.2.0.0
+Comments=https://github.com/xn--nding-jua/FPGA_PCI_Card
+
+[Excluded Packages]
+c:\programme\borland\delphi7\Projects\Bpl\TVICHW32.bpl=(untitled)
