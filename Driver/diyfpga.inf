@@ -27,6 +27,7 @@ AddReg = DefaultClassInstall
 [DefaultClassInstall]
 HKR,,,0,%ClassString%
 HKR,,Icon,0,"-1"
+HKR,,EnumPropPages,,"fpgaprop.dll,FpgaEnumPropPages"
 
 [DefaultInstall]
 CopyFiles = TVicHW32.Files.Sys, FPGA.Files.Sys, FPGA.Files.Inf
